@@ -1332,11 +1332,14 @@ export function MotionPanel({ state, commit, busy, notify }: PanelProps) {
           checked={motion}
           onChange={(e) => setMotion(e.target.checked)}
         />
-        カード選択時の短いアニメーション
+        カードの動きとドラッグ
       </label>
       <Hint>
-        オフにすると、カードは動かずに開きます。OS
-        の「動きを減らす」が有効な場合も、自動的に動きを抑えます。カードが常に動く演出は使っていません。
+        カードを横にドラッグすると、指について動きます。少し長押しすると上下左右に動かせます。離すと元の位置に戻り、並び順や学習記録は変わりません。縦スワイプは一覧のスクロール、短いタップは記録です。
+      </Hint>
+      <Hint>
+        オフにすると、ドラッグと選択時の演出を停止します。OS
+        の「動きを減らす」が有効な場合も停止します。
       </Hint>
       <FormFooter busy={busy} />
       <ErrorMessage message={action.error} />

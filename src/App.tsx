@@ -31,6 +31,7 @@ import {
   type Problem,
   type State,
 } from "./model";
+import { FloatingCard, useReducedMotion } from "./FloatingCard";
 import { loadState, saveState } from "./storage";
 import { ErrorMessage, Modal, PanelTop } from "./ui";
 import {
@@ -57,6 +58,7 @@ const items = [
 ] as const;
 type Page = (typeof items)[number][0] | "menu" | "manage";
 export default function App() {
+  const reducedMotion = useReducedMotion();
   const [state, setState] = useState<State | null>(null),
     [bootError, setBootError] = useState("");
   const stateRef = useRef<State>(initialState());
@@ -184,7 +186,9 @@ export default function App() {
         .sort((a, b) => b.at.localeCompare(a.at))
     : [];
   return (
-    <main className={`universe ${state.settings.motion ? "" : "still"}`}>
+    <main
+      className={`universe ${state.settings.motion && !reducedMotion ? "" : "still"}`}
+    >
       <button
         id="menu-trigger"
         className="menu-trigger icon-button"
@@ -237,6 +241,9 @@ export default function App() {
           </button>
         ))}
       </div>
+      <span id="card-gesture-help" className="sr-only">
+        タップで記録。横にドラッグ、または長押しで上下左右へ動かせます。離すと元の場所に戻ります。
+      </span>
       <section
         id="card-field"
         className="card-field"
@@ -250,14 +257,13 @@ export default function App() {
               const reason = candidateReason(state, p, today),
                 highlighted = daily.has(p.id);
               return (
-                <button
+                <FloatingCard
+                  motion={state.settings.motion && !reducedMotion}
                   key={p.id}
                   className={`problem-card grade-${p.latest_grade || "new"} ${highlighted ? "suggested" : ""}`}
                   style={
                     {
                       "--offset": `${[0, 8, -3, 5, -5, 3][index % 6]}px`,
-                      "--tilt": `${[0, -0.5, 0.4, -0.3, 0.5][index % 5]}deg`,
-                      "--delay": `${Math.min(index, 20) * 18}ms`,
                     } as CSSProperties
                   }
                   aria-label={`問題 ${p.number}、☆${p.stars}、${p.latest_grade ? `${p.latest_grade} ${GRADES[p.latest_grade][0]}` : "未着手"}${highlighted ? "、今日の新規候補" : ""}`}
@@ -289,7 +295,7 @@ export default function App() {
                     {p.latest_grade === "E" && <span>要再学習</span>}
                     {reason === "復習候補" && <span>復習候補</span>}
                   </span>
-                </button>
+                </FloatingCard>
               );
             })}
           </div>

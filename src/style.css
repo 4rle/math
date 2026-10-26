@@ -7,10 +7,10 @@
   font-synthesis: none;
   font-weight: 400;
   color-scheme: dark;
-  --bg: #0b1019;
-  --surface: #141c28;
-  --line: #2a3443;
-  --muted: #9ca9ba;
+  --bg: #0a0f16;
+  --surface: #141d28;
+  --line: #303d4d;
+  --muted: #a5b2c2;
   --gold: #ddc28d;
   --gold-dim: #766446;
   --blue: #9cb9e4;
@@ -109,7 +109,8 @@ hr {
   min-height: 240px;
   overflow: hidden;
   background:
-    radial-gradient(ellipse at 50% 42%, #15202e55 0, transparent 65%), #0b1019;
+    radial-gradient(ellipse at 50% 12%, #24344442 0, transparent 65%),
+    radial-gradient(ellipse at 80% 90%, #202a3424 0, transparent 60%), #0a0f16;
 }
 .universe:before,
 .universe:after {
@@ -161,7 +162,7 @@ hr {
   left: max(16px, env(safe-area-inset-left));
   top: calc(16px + env(safe-area-inset-top));
   background: #101722c9;
-  border: 1px solid #ffffff0a;
+  border: 1px solid #ffffff16;
   border-radius: 12px;
 }
 .book-tabs {
@@ -175,12 +176,14 @@ hr {
   gap: 4px;
   border: 1px solid #2c3643;
   border-radius: 12px;
-  background: #101722ed;
-  box-shadow: 0 4px 24px #0002;
+  background: #111923f0;
+  box-shadow:
+    0 8px 32px #0004,
+    inset 0 1px 0 #ffffff05;
 }
 .book-tabs button {
   width: 100px;
-  min-height: 36px;
+  min-height: 40px;
   border-radius: 8px;
   font-size: 14px;
   letter-spacing: 0.08em;
@@ -188,14 +191,18 @@ hr {
   transition: background 0.18s;
 }
 .book-tabs button[aria-selected="true"] {
-  background: #263040;
-  color: #f0e0bd;
-  box-shadow: inset 0 0 0 1px #d7be871a;
+  background: #2b323b;
+  color: #f0dfbc;
+  box-shadow:
+    inset 0 0 0 1px #d7be8729,
+    0 2px 6px #0002;
 }
 .book-tabs button:hover {
   color: #f0e0bd;
 }
 .card-field {
+  position: relative;
+  z-index: 1;
   height: 100%;
   overflow: auto;
   overscroll-behavior: contain;
@@ -208,42 +215,95 @@ hr {
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(143px, 1fr));
-  gap: 27px 24px;
+  gap: 32px 26px;
   align-content: start;
   max-width: 1500px;
   margin: 0 auto;
 }
 .problem-card {
   min-width: 0;
-  min-height: 142px;
+  min-height: 158px;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   text-align: left;
-  padding: 15px 16px 13px;
-  border: 1px solid #2a3444;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #1b2533eb, #141c28f5);
+  padding: 16px 17px 13px;
+  border: 1px solid #354253;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #202c39, #151e2a 80%);
   box-shadow:
-    0 8px 22px #00000024,
-    inset 0 1px 0 #ffffff04;
-  transform: translateY(var(--offset)) rotate(var(--tilt));
+    0 14px 24px -10px #0008,
+    0 2px 5px #0003,
+    inset 0 1px 0 #ffffff0a;
+  transform: translate3d(
+      var(--drag-x, 0px),
+      calc(var(--offset, 0px) + var(--drag-y, 0px)),
+      0
+    )
+    rotate(calc(var(--tilt, 0deg) + var(--drag-angle, 0deg)))
+    scale(var(--drag-scale, 1));
   transition:
-    transform 0.16s,
-    border-color 0.16s,
-    background 0.16s;
+    border-color 0.18s,
+    box-shadow 0.18s;
   content-visibility: auto;
-  contain-intrinsic-size: auto 144px;
+  contain-intrinsic-size: auto 158px;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: pan-x pan-y pinch-zoom;
 }
-.problem-card:hover {
-  transform: translateY(calc(var(--offset) - 4px)) rotate(0);
-  border-color: #5e7086;
-  background: linear-gradient(135deg, #202c3c, #1b2533);
-  z-index: 1;
+.problem-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(120deg, #ffffff07, transparent 48%);
 }
-.problem-card:active {
-  transform: translateY(var(--offset)) scale(0.98);
+.problem-card.suggested::after {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  right: 11px;
+  top: 11px;
+  border: 1px solid #aabdc211;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.problem-card[data-drag-state="dragging"],
+.problem-card.suggested[data-drag-state="dragging"] {
+  cursor: grabbing;
+  z-index: 12;
+  border-color: #bda77c;
+  box-shadow:
+    0 28px 48px -10px #000a,
+    0 10px 14px -5px #0006,
+    inset 0 1px 0 #fff2;
+  will-change: transform;
+  content-visibility: visible;
+}
+.problem-card[data-drag-state="returning"] {
+  z-index: 11;
+  will-change: transform;
+}
+@media (hover: hover) {
+  .universe:not(.still) .problem-card {
+    cursor: grab;
+  }
+  .universe:not(.still) .problem-card[data-drag-state="dragging"] {
+    cursor: grabbing;
+  }
+  .problem-card:hover {
+    border-color: #8392a5;
+    box-shadow:
+      0 20px 30px -10px #0009,
+      inset 0 1px 0 #ffffff12;
+  }
+}
+.problem-card:focus-visible {
+  outline-offset: 5px;
 }
 .card-top {
   display: flex;
@@ -251,20 +311,22 @@ hr {
   justify-content: space-between;
   font-size: 11px;
   letter-spacing: 0.08em;
-  color: #98a5b7;
+  color: #b2bfd0;
 }
 .candidate-mark {
   display: flex;
-  color: #ddc28d;
+  position: relative;
+  z-index: 1;
+  color: #e8cd95;
 }
 .problem-number {
   font-family: "Avenir Next", ui-sans-serif, system-ui, sans-serif;
-  font-size: clamp(28px, 3vw, 37px);
+  font-size: clamp(32px, 3vw, 41px);
   line-height: 1.15;
-  font-weight: 500;
-  letter-spacing: 0.015em;
+  font-weight: 450;
+  letter-spacing: -0.025em;
   font-variant-numeric: tabular-nums;
-  margin: 14px 0 13px;
+  margin: 18px 0 16px;
   color: #e3eaf3;
   overflow-wrap: anywhere;
 }
@@ -272,9 +334,12 @@ hr {
   display: flex;
   align-items: center;
   gap: 7px;
-  font-size: 10px;
-  letter-spacing: 0.05em;
-  color: #a8b4c4;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: #b6c2d2;
+  border-top: 1px solid #acbcd013;
+  padding-top: 10px;
+  margin-top: auto;
   line-height: 1.5;
 }
 .card-state i {
@@ -285,7 +350,7 @@ hr {
 }
 .card-state > span {
   margin-left: auto;
-  font-size: 9px;
+  font-size: 10px;
   color: #b3bdca;
 }
 .grade-A {
@@ -300,17 +365,17 @@ hr {
   --grade-color: var(--red);
 }
 .grade-new {
-  --grade-color: #9aa9bd;
+  --grade-color: #b0bdd0;
 }
 .problem-card .card-state {
   color: var(--grade-color);
 }
 .problem-card.suggested {
-  border-color: #786a4e;
-  background: linear-gradient(135deg, #282c30, #1d2530);
+  border-color: #89764f;
+  background: linear-gradient(145deg, #343635, #222b32 80%);
   box-shadow:
-    0 8px 24px #0003,
-    inset 0 1px 0 #d7c2970a;
+    0 14px 28px -10px #0008,
+    inset 0 1px 0 #efdaac14;
 }
 .suggested .problem-number {
   color: #efdfbc;
@@ -346,7 +411,7 @@ hr {
 }
 .empty-field p {
   font-size: 12px;
-  color: #98a5b7;
+  color: #b2bfd0;
   line-height: 1.8;
 }
 .boot {
@@ -363,10 +428,12 @@ hr {
 dialog {
   color: inherit;
   border: 1px solid #3a4656;
-  background: #131c28;
-  border-radius: 18px;
+  background: #131d29;
+  border-radius: 20px;
   padding: 0;
-  box-shadow: 0 28px 120px #0009;
+  box-shadow:
+    0 32px 120px #0009,
+    inset 0 1px 0 #ffffff08;
   max-height: calc(100dvh - 40px);
   max-width: calc(100vw - 32px);
   scrollbar-width: thin;
@@ -392,7 +459,7 @@ dialog::backdrop {
   border-bottom: 1px solid var(--line);
   position: sticky;
   top: 0;
-  background: #131c28;
+  background: #131d29;
   z-index: 2;
 }
 .panel-top h1 {
@@ -1043,8 +1110,8 @@ input[type="date"] {
   color: #b4c0d1;
 }
 .grade-dialog {
-  width: 500px;
-  padding: 26px;
+  width: 510px;
+  padding: 28px;
   overflow: auto;
   animation: card-lift 0.22s cubic-bezier(0.2, 0.75, 0.3, 1) both;
 }
@@ -1080,7 +1147,7 @@ input[type="date"] {
 }
 .current-grade {
   color: var(--grade-color);
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.8;
   max-width: 100%;
   overflow-wrap: anywhere;
@@ -1092,13 +1159,13 @@ input[type="date"] {
 }
 .grade-option {
   display: flex;
-  gap: 15px;
+  gap: 14px;
   align-items: center;
-  min-height: 63px;
-  padding: 10px 15px;
-  background: #182332;
-  border: 1px solid #303e51;
-  border-radius: 9px;
+  min-height: 67px;
+  padding: 11px 14px;
+  background: #192534;
+  border: 1px solid #3b4a5e;
+  border-radius: 11px;
   text-align: left;
   transition:
     background 0.12s,
@@ -1109,23 +1176,29 @@ input[type="date"] {
   border-color: var(--grade-color);
 }
 .grade-letter {
-  font-size: 21px;
+  font-size: 19px;
   color: var(--grade-color);
   font-weight: 500;
-  min-width: 22px;
+  min-width: 34px;
+  height: 38px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--grade-color) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--grade-color) 25%, transparent);
 }
 .grade-option > span:nth-child(2) {
   flex: 1;
 }
 .grade-option strong {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
   display: block;
   color: #dde4ee;
 }
 .grade-option small {
   display: block;
-  font-size: 10px;
+  font-size: 11px;
   color: #9daabc;
   margin-top: 4px;
   line-height: 1.7;
@@ -1241,7 +1314,7 @@ input[type="date"] {
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   }
   .problem-card {
-    min-height: 155px;
+    min-height: 168px;
     padding: 18px;
   }
 }
@@ -1260,7 +1333,7 @@ input[type="date"] {
     gap: 20px 15px;
   }
   .problem-card {
-    min-height: 132px;
+    min-height: 148px;
     padding: 13px 12px 12px;
     border-radius: 10px;
   }
@@ -1268,11 +1341,11 @@ input[type="date"] {
     font-size: 30px;
   }
   .card-state {
-    font-size: 9px;
-    gap: 5px;
+    font-size: 11px;
+    gap: 6px;
   }
   .card-state > span {
-    font-size: 8px;
+    font-size: 10px;
   }
   .settings-dialog.menu-dialog {
     margin: auto;
@@ -1310,7 +1383,7 @@ input[type="date"] {
     gap: 22px 18px;
   }
   .problem-card {
-    min-height: 140px;
+    min-height: 156px;
     padding: 15px;
   }
   .problem-number {
@@ -1348,7 +1421,7 @@ input[type="date"] {
     gap: 22px 18px;
   }
   .problem-card {
-    min-height: 122px;
+    min-height: 137px;
     padding: 12px;
   }
   .problem-number {
@@ -1380,7 +1453,7 @@ input[type="date"] {
     padding-right: 22px;
   }
   .grade-option {
-    min-height: 45px;
+    min-height: 47px;
     padding: 6px 12px;
     gap: 10px;
   }
@@ -1392,7 +1465,9 @@ input[type="date"] {
     font-size: 12px;
   }
   .grade-letter {
-    font-size: 18px;
+    font-size: 17px;
+    height: 30px;
+    min-width: 28px;
   }
   .grade-dialog > .error-message,
   .grade-dialog > .saving,

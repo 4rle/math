@@ -303,7 +303,7 @@ for (const viewport of [
     await expect(first).toHaveAttribute("aria-label", /E 解説でも不明/);
     await menu(page, "表示と動き");
     await page
-      .getByRole("checkbox", { name: "カード選択時の短いアニメーション" })
+      .getByRole("checkbox", { name: "カードの動きとドラッグ" })
       .uncheck();
     await page.getByRole("button", { name: "設定を保存", exact: true }).click();
     await close(page);
@@ -375,4 +375,196 @@ test("別のタブの更新を古い状態で上書きしない", async ({ page,
   expect(saved.attempts).toHaveLength(1);
   expect(saved.problems.find((p) => p.number === 125)?.latest_grade).toBe("C");
   await other.close();
+});
+
+// Dragging is temporary play, and must never create a study attempt or reorder cards.
+test("マウスでドラッグすると追従し、離すと戻る。記録と隣のカードは変わらない", async ({
+  page,
+}, testInfo) => {
+  await seed(page, populated());
+  const card = page.getByRole("button", { name: /^問題 125、/ });
+  const neighbor = page.getByRole("button", { name: /^問題 128、/ });
+  const original = (await card.boundingBox())!,
+    nextOriginal = (await neighbor.boundingBox())!;
+  const before = await readState(page);
+  await page.mouse.move(
+    original.x + original.width / 2,
+    original.y + original.height / 2,
+  );
+  await page.mouse.down();
+  await page.mouse.move(
+    original.x + original.width / 2 + 110,
+    original.y + original.height / 2 + 65,
+    { steps: 12 },
+  );
+  await expect(card).toHaveAttribute("data-drag-state", "dragging");
+  expect((await card.boundingBox())!.x).toBeGreaterThan(original.x + 50);
+  expect((await neighbor.boundingBox())!.x).toBeCloseTo(nextOriginal.x, 1);
+  await page.screenshot({ path: testInfo.outputPath("drag.png") });
+  await page.mouse.up();
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await expect(card).toHaveAttribute("data-drag-state", "idle");
+  expect((await card.boundingBox())!.x).toBeCloseTo(original.x, 1);
+  expect((await card.boundingBox())!.y).toBeCloseTo(original.y, 1);
+  expect(await readState(page)).toEqual(before);
+  await card.click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(card).toBeFocused();
+});
+
+test("戻り途中の再ドラッグ、キャプチャ中断でも元の位置に復帰する", async ({
+  page,
+}) => {
+  await seed(page, populated());
+  const card = page.getByRole("button", { name: /^問題 125、/ });
+  const original = (await card.boundingBox())!;
+  for (let i = 0; i < 2; i++) {
+    const rect = (await card.boundingBox())!;
+    await page.mouse.move(rect.x + rect.width / 2, rect.y + rect.height / 2);
+    await page.mouse.down();
+    await page.mouse.move(
+      rect.x + rect.width / 2 + 90,
+      rect.y + rect.height / 2 + 40,
+      { steps: 8 },
+    );
+    await expect(card).toHaveAttribute("data-drag-state", "dragging");
+    if (i === 0) {
+      await page.mouse.up();
+      await expect(card).toHaveAttribute("data-drag-state", "returning");
+    } else {
+      await card.evaluate((el) =>
+        el.dispatchEvent(
+          new PointerEvent("pointercancel", { bubbles: true, pointerId: 1 }),
+        ),
+      );
+      await page.mouse.up();
+    }
+  }
+  await expect(card).toHaveAttribute("data-drag-state", "idle");
+  expect((await card.boundingBox())!.x).toBeCloseTo(original.x, 1);
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+});
+
+for (const viewport of [
+  { width: 390, height: 844 },
+  { width: 844, height: 390 },
+]) {
+  test.describe(`指のジェスチャー ${viewport.width}×${viewport.height}`, () => {
+    test.use({ hasTouch: true, viewport });
+    test("横ドラッグと長押しの自由移動、キャンセル後もタップで記録できる", async ({
+      page,
+      context,
+    }) => {
+      await seed(page, populated());
+      const cdp = await context.newCDPSession(page);
+      const card = page.getByRole("button", { name: /^問題 125、/ });
+      const original = (await card.boundingBox())!;
+      const x = original.x + original.width / 2,
+        y = original.y + original.height / 2;
+      const point = (dx = 0, dy = 0) => [{ x: x + dx, y: y + dy, id: 1 }];
+      await cdp.send("Input.dispatchTouchEvent", {
+        type: "touchStart",
+        touchPoints: point(),
+      });
+      await cdp.send("Input.dispatchTouchEvent", {
+        type: "touchMove",
+        touchPoints: point(65, 10),
+      });
+      await expect(card).toHaveAttribute("data-drag-state", "dragging");
+      expect((await card.boundingBox())!.x).toBeGreaterThan(original.x + 25);
+      await cdp.send("Input.dispatchTouchEvent", {
+        type: "touchEnd",
+        touchPoints: [],
+      });
+      await expect(card).toHaveAttribute("data-drag-state", "idle");
+      await expect(page.getByRole("dialog")).toHaveCount(0);
+      expect(
+        await page.locator(".card-field").evaluate((el) => el.scrollTop),
+      ).toBe(0);
+      await cdp.send("Input.dispatchTouchEvent", {
+        type: "touchStart",
+        touchPoints: point(),
+      });
+      await expect(card).toHaveAttribute("data-drag-state", "dragging"); // 200ms hold
+      await cdp.send("Input.dispatchTouchEvent", {
+        type: "touchMove",
+        touchPoints: point(10, 70),
+      });
+      await expect
+        .poll(async () => (await card.boundingBox())!.y)
+        .toBeGreaterThan(original.y + 25);
+      await cdp.send("Input.dispatchTouchEvent", {
+        type: "touchCancel",
+        touchPoints: [],
+      });
+      await expect(card).toHaveAttribute("data-drag-state", "idle");
+      expect((await card.boundingBox())!.y).toBeCloseTo(original.y, 1);
+      await page.touchscreen.tap(x, y);
+      await expect(page.getByRole("dialog")).toBeVisible();
+      await page.getByRole("button", { name: /^C 解説を少し確認/ }).tap();
+      await expect(page.getByRole("dialog")).toHaveCount(0);
+      expect((await readState(page)).attempts).toHaveLength(1);
+    });
+    test("カード上の縦スワイプで一覧をスクロールできる", async ({
+      page,
+      context,
+    }) => {
+      await seed(page, populated());
+      const cdp = await context.newCDPSession(page);
+      const startY = Math.min(550, viewport.height - 50);
+      await cdp.send("Input.dispatchTouchEvent", {
+        type: "touchStart",
+        touchPoints: [{ x: 100, y: startY, id: 1 }],
+      });
+      for (const dy of [20, 50, 90, 150, 210]) {
+        const y = startY - dy;
+        await cdp.send("Input.dispatchTouchEvent", {
+          type: "touchMove",
+          touchPoints: [{ x: 100, y, id: 1 }],
+        });
+      }
+      await cdp.send("Input.dispatchTouchEvent", {
+        type: "touchEnd",
+        touchPoints: [],
+      });
+      await expect
+        .poll(() => page.locator(".card-field").evaluate((el) => el.scrollTop))
+        .toBeGreaterThan(80);
+      await expect(page.getByRole("dialog")).toHaveCount(0);
+      expect((await readState(page)).attempts).toHaveLength(0);
+    });
+  });
+}
+
+test("動き停止・OSの動きを減らす設定ではドラッグせず、キーボードで記録できる", async ({
+  page,
+}) => {
+  const state = populated();
+  state.settings.motion = false;
+  await seed(page, state);
+  const card = page.getByRole("button", { name: /^問題 125、/ });
+  let original = (await card.boundingBox())!;
+  await page.mouse.move(original.x + 50, original.y + 50);
+  await page.mouse.down();
+  await page.mouse.move(original.x + 100, original.y + 85, { steps: 5 });
+  expect((await card.boundingBox())!.x).toBeCloseTo(original.x, 1);
+  await page.mouse.up();
+  if (await page.getByRole("dialog").count())
+    await page.keyboard.press("Escape");
+  const enabled = populated();
+  await seed(page, enabled);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(page.locator(".universe")).toHaveClass(/still/);
+  original = (await card.boundingBox())!;
+  await page.mouse.move(original.x + 50, original.y + 50);
+  await page.mouse.down();
+  await page.mouse.move(original.x + 100, original.y + 85, { steps: 5 });
+  expect((await card.boundingBox())!.x).toBeCloseTo(original.x, 1);
+  await page.mouse.up();
+  if (await page.getByRole("dialog").count())
+    await page.keyboard.press("Escape");
+  await card.focus();
+  await page.keyboard.press("Enter");
+  await expect(page.getByRole("dialog")).toBeVisible();
 });
