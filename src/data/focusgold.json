@@ -1,0 +1,5000 @@
+[
+  {
+    "book": "1A",
+    "number": 1,
+    "stars": 1,
+    "title": "多項式の加法・減法",
+    "page": "27"
+  },
+  {
+    "book": "1A",
+    "number": 2,
+    "stars": 1,
+    "title": "乗法公式による展開",
+    "page": "28"
+  },
+  {
+    "book": "1A",
+    "number": 3,
+    "stars": 2,
+    "title": "展開の工夫(1) おき換え",
+    "page": "29"
+  },
+  {
+    "book": "1A",
+    "number": 4,
+    "stars": 2,
+    "title": "展開の工夫(2) 順序・組み合わせ",
+    "page": "30"
+  },
+  {
+    "book": "1A",
+    "number": 5,
+    "stars": 2,
+    "title": "因数分解の基本",
+    "page": "31"
+  },
+  {
+    "book": "1A",
+    "number": 6,
+    "stars": 2,
+    "title": "たすき掛け",
+    "page": "32"
+  },
+  {
+    "book": "1A",
+    "number": 7,
+    "stars": 3,
+    "title": "次数が同じ場合(1)",
+    "page": "33"
+  },
+  {
+    "book": "1A",
+    "number": 8,
+    "stars": 3,
+    "title": "次数が同じ場合(2)",
+    "page": "34"
+  },
+  {
+    "book": "1A",
+    "number": 9,
+    "stars": 2,
+    "title": "次数の低い文字に着目",
+    "page": "35"
+  },
+  {
+    "book": "1A",
+    "number": 10,
+    "stars": 3,
+    "title": "a²-b²=(a+b)(a-b)の利用",
+    "page": "36"
+  },
+  {
+    "book": "1A",
+    "number": 11,
+    "stars": 2,
+    "title": "おき換えによる因数分解",
+    "page": "37"
+  },
+  {
+    "book": "1A",
+    "number": 12,
+    "stars": 2,
+    "title": "次数が同じ場合(3)",
+    "page": "38"
+  },
+  {
+    "book": "1A",
+    "number": 13,
+    "stars": 3,
+    "title": "特殊な3次式の因数分解",
+    "page": "39"
+  },
+  {
+    "book": "1A",
+    "number": 14,
+    "stars": 3,
+    "title": "複2次式",
+    "page": "40"
+  },
+  {
+    "book": "1A",
+    "number": 15,
+    "stars": 1,
+    "title": "循環小数",
+    "page": "46"
+  },
+  {
+    "book": "1A",
+    "number": 16,
+    "stars": 2,
+    "title": "分母の有理化",
+    "page": "48"
+  },
+  {
+    "book": "1A",
+    "number": 17,
+    "stars": 2,
+    "title": "2重根号",
+    "page": "49"
+  },
+  {
+    "book": "1A",
+    "number": 18,
+    "stars": 2,
+    "title": "式の値(1) 対称式",
+    "page": "50"
+  },
+  {
+    "book": "1A",
+    "number": 19,
+    "stars": 3,
+    "title": "式の値(2) 3文字の対称式",
+    "page": "52"
+  },
+  {
+    "book": "1A",
+    "number": 20,
+    "stars": 2,
+    "title": "式の値(3)",
+    "page": "53"
+  },
+  {
+    "book": "1A",
+    "number": 21,
+    "stars": 3,
+    "title": "整数部分と小数部分",
+    "page": "54"
+  },
+  {
+    "book": "1A",
+    "number": 22,
+    "stars": 2,
+    "title": "不等式の性質",
+    "page": "60"
+  },
+  {
+    "book": "1A",
+    "number": 23,
+    "stars": 1,
+    "title": "1次不等式、連立1次不等式",
+    "page": "61"
+  },
+  {
+    "book": "1A",
+    "number": 24,
+    "stars": 2,
+    "title": "不等式を満たす整数",
+    "page": "62"
+  },
+  {
+    "book": "1A",
+    "number": 25,
+    "stars": 2,
+    "title": "不等式の応用",
+    "page": "63"
+  },
+  {
+    "book": "1A",
+    "number": 26,
+    "stars": 2,
+    "title": "絶対値記号のはずし方",
+    "page": "64"
+  },
+  {
+    "book": "1A",
+    "number": 27,
+    "stars": 3,
+    "title": "絶対値を含む方程式・不等式(1)",
+    "page": "66"
+  },
+  {
+    "book": "1A",
+    "number": 28,
+    "stars": 3,
+    "title": "絶対値を含む方程式・不等式(2)",
+    "page": "67"
+  },
+  {
+    "book": "1A",
+    "number": 29,
+    "stars": 2,
+    "title": "文字係数の不等式",
+    "page": "68"
+  },
+  {
+    "book": "1A",
+    "number": 30,
+    "stars": 3,
+    "title": "値域から1次関数の係数決定",
+    "page": "80"
+  },
+  {
+    "book": "1A",
+    "number": 31,
+    "stars": 3,
+    "title": "定義域によって式が異なる関数のグラフ",
+    "page": "81"
+  },
+  {
+    "book": "1A",
+    "number": 32,
+    "stars": 1,
+    "title": "平行移動(1)",
+    "page": "82"
+  },
+  {
+    "book": "1A",
+    "number": 33,
+    "stars": 2,
+    "title": "平行移動(2)",
+    "page": "84"
+  },
+  {
+    "book": "1A",
+    "number": 34,
+    "stars": 2,
+    "title": "対称移動",
+    "page": "86"
+  },
+  {
+    "book": "1A",
+    "number": 35,
+    "stars": 2,
+    "title": "平行移動・対称移動",
+    "page": "87"
+  },
+  {
+    "book": "1A",
+    "number": 36,
+    "stars": 2,
+    "title": "2次関数の決定(1)",
+    "page": "88"
+  },
+  {
+    "book": "1A",
+    "number": 37,
+    "stars": 2,
+    "title": "2次関数の決定(2)",
+    "page": "89"
+  },
+  {
+    "book": "1A",
+    "number": 38,
+    "stars": 3,
+    "title": "2次関数の決定(3)",
+    "page": "92"
+  },
+  {
+    "book": "1A",
+    "number": 39,
+    "stars": 1,
+    "title": "定義域が定められたときの最大・最小",
+    "page": "97"
+  },
+  {
+    "book": "1A",
+    "number": 40,
+    "stars": 3,
+    "title": "最大・最小による係数の決定",
+    "page": "98"
+  },
+  {
+    "book": "1A",
+    "number": 41,
+    "stars": 3,
+    "title": "定義域が広がるときの最大・最小",
+    "page": "100"
+  },
+  {
+    "book": "1A",
+    "number": 42,
+    "stars": 3,
+    "title": "軸が動くときの最大・最小",
+    "page": "102"
+  },
+  {
+    "book": "1A",
+    "number": 43,
+    "stars": 3,
+    "title": "区間が動くときの最大・最小",
+    "page": "104"
+  },
+  {
+    "book": "1A",
+    "number": 44,
+    "stars": 3,
+    "title": "最小値の最大・最小",
+    "page": "106"
+  },
+  {
+    "book": "1A",
+    "number": 45,
+    "stars": 3,
+    "title": "おき換えによる最大・最小",
+    "page": "107"
+  },
+  {
+    "book": "1A",
+    "number": 46,
+    "stars": 3,
+    "title": "最大・最小の応用問題",
+    "page": "108"
+  },
+  {
+    "book": "1A",
+    "number": 47,
+    "stars": 1,
+    "title": "2次方程式の解法(1)",
+    "page": "113"
+  },
+  {
+    "book": "1A",
+    "number": 48,
+    "stars": 2,
+    "title": "2次方程式の解法(2)",
+    "page": "116"
+  },
+  {
+    "book": "1A",
+    "number": 49,
+    "stars": 2,
+    "title": "実数解の個数と判別式",
+    "page": "117"
+  },
+  {
+    "book": "1A",
+    "number": 50,
+    "stars": 2,
+    "title": "2次方程式が実数解をもつ条件(1)",
+    "page": "118"
+  },
+  {
+    "book": "1A",
+    "number": 51,
+    "stars": 2,
+    "title": "2次方程式が実数解をもつ条件(2)",
+    "page": "119"
+  },
+  {
+    "book": "1A",
+    "number": 52,
+    "stars": 2,
+    "title": "方程式の解の意味",
+    "page": "120"
+  },
+  {
+    "book": "1A",
+    "number": 53,
+    "stars": 3,
+    "title": "共通解",
+    "page": "121"
+  },
+  {
+    "book": "1A",
+    "number": 54,
+    "stars": 2,
+    "title": "式の値(4)",
+    "page": "124"
+  },
+  {
+    "book": "1A",
+    "number": 55,
+    "stars": 2,
+    "title": "文字係数の方程式",
+    "page": "125"
+  },
+  {
+    "book": "1A",
+    "number": 56,
+    "stars": 4,
+    "title": "完全平方式",
+    "page": "126"
+  },
+  {
+    "book": "1A",
+    "number": 57,
+    "stars": 2,
+    "title": "放物線とx軸との共有点",
+    "page": "127"
+  },
+  {
+    "book": "1A",
+    "number": 58,
+    "stars": 2,
+    "title": "x軸から切りとる線分の長さ",
+    "page": "128"
+  },
+  {
+    "book": "1A",
+    "number": 59,
+    "stars": 2,
+    "title": "グラフと係数の符号",
+    "page": "130"
+  },
+  {
+    "book": "1A",
+    "number": 60,
+    "stars": 2,
+    "title": "連立2次方程式",
+    "page": "132"
+  },
+  {
+    "book": "1A",
+    "number": 61,
+    "stars": 2,
+    "title": "放物線と直線の共有点(1)",
+    "page": "133"
+  },
+  {
+    "book": "1A",
+    "number": 62,
+    "stars": 2,
+    "title": "放物線と直線の共有点(2)",
+    "page": "134"
+  },
+  {
+    "book": "1A",
+    "number": 63,
+    "stars": 1,
+    "title": "2次不等式(1)",
+    "page": "135"
+  },
+  {
+    "book": "1A",
+    "number": 64,
+    "stars": 1,
+    "title": "2次不等式(2)",
+    "page": "136"
+  },
+  {
+    "book": "1A",
+    "number": 65,
+    "stars": 2,
+    "title": "連立2次不等式",
+    "page": "139"
+  },
+  {
+    "book": "1A",
+    "number": 66,
+    "stars": 3,
+    "title": "文字係数の2次不等式",
+    "page": "141"
+  },
+  {
+    "book": "1A",
+    "number": 67,
+    "stars": 2,
+    "title": "不等式の解から係数決定",
+    "page": "142"
+  },
+  {
+    "book": "1A",
+    "number": 68,
+    "stars": 2,
+    "title": "2次方程式が実数解をもつ条件(3)",
+    "page": "143"
+  },
+  {
+    "book": "1A",
+    "number": 69,
+    "stars": 3,
+    "title": "解の存在範囲(1)",
+    "page": "144"
+  },
+  {
+    "book": "1A",
+    "number": 70,
+    "stars": 3,
+    "title": "解の存在範囲(2)",
+    "page": "146"
+  },
+  {
+    "book": "1A",
+    "number": 71,
+    "stars": 3,
+    "title": "解の存在範囲(3)",
+    "page": "147"
+  },
+  {
+    "book": "1A",
+    "number": 72,
+    "stars": 3,
+    "title": "解の存在範囲(4)",
+    "page": "148"
+  },
+  {
+    "book": "1A",
+    "number": 73,
+    "stars": 3,
+    "title": "解の存在範囲(5)",
+    "page": "149"
+  },
+  {
+    "book": "1A",
+    "number": 74,
+    "stars": 4,
+    "title": "解の存在範囲(6)",
+    "page": "150"
+  },
+  {
+    "book": "1A",
+    "number": 75,
+    "stars": 3,
+    "title": "不等式を満たす整数",
+    "page": "152"
+  },
+  {
+    "book": "1A",
+    "number": 76,
+    "stars": 3,
+    "title": "すべての実数で成り立つ不等式",
+    "page": "153"
+  },
+  {
+    "book": "1A",
+    "number": 77,
+    "stars": 3,
+    "title": "ある区間でつねに成り立つ不等式",
+    "page": "154"
+  },
+  {
+    "book": "1A",
+    "number": 78,
+    "stars": 4,
+    "title": "解の存在範囲(7)",
+    "page": "155"
+  },
+  {
+    "book": "1A",
+    "number": 79,
+    "stars": 3,
+    "title": "2つの2次方程式が実数解をもつ条件",
+    "page": "156"
+  },
+  {
+    "book": "1A",
+    "number": 80,
+    "stars": 2,
+    "title": "2次不等式の応用",
+    "page": "157"
+  },
+  {
+    "book": "1A",
+    "number": 81,
+    "stars": 2,
+    "title": "条件つき2変数関数(1)",
+    "page": "158"
+  },
+  {
+    "book": "1A",
+    "number": 82,
+    "stars": 2,
+    "title": "条件つき2変数関数(2)",
+    "page": "160"
+  },
+  {
+    "book": "1A",
+    "number": 83,
+    "stars": 3,
+    "title": "条件なし2変数関数",
+    "page": "161"
+  },
+  {
+    "book": "1A",
+    "number": 84,
+    "stars": 2,
+    "title": "絶対値記号を含む関数のグラフ(1)",
+    "page": "162"
+  },
+  {
+    "book": "1A",
+    "number": 85,
+    "stars": 3,
+    "title": "絶対値記号を含む関数のグラフ(2)",
+    "page": "163"
+  },
+  {
+    "book": "1A",
+    "number": 86,
+    "stars": 3,
+    "title": "絶対値記号を含む関数のグラフ(3)",
+    "page": "164"
+  },
+  {
+    "book": "1A",
+    "number": 87,
+    "stars": 3,
+    "title": "絶対値記号を含む2次方程式",
+    "page": "166"
+  },
+  {
+    "book": "1A",
+    "number": 88,
+    "stars": 4,
+    "title": "2つの放物線の位置関係",
+    "page": "168"
+  },
+  {
+    "book": "1A",
+    "number": 89,
+    "stars": 1,
+    "title": "集合の表し方(1)",
+    "page": "182"
+  },
+  {
+    "book": "1A",
+    "number": 90,
+    "stars": 2,
+    "title": "集合の表し方(2)",
+    "page": "183"
+  },
+  {
+    "book": "1A",
+    "number": 91,
+    "stars": 2,
+    "title": "数直線の利用",
+    "page": "184"
+  },
+  {
+    "book": "1A",
+    "number": 92,
+    "stars": 2,
+    "title": "集合の包含関係の証明",
+    "page": "185"
+  },
+  {
+    "book": "1A",
+    "number": 93,
+    "stars": 3,
+    "title": "集合の相等の証明",
+    "page": "186"
+  },
+  {
+    "book": "1A",
+    "number": 94,
+    "stars": 1,
+    "title": "集合の要素の個数(1)",
+    "page": "187"
+  },
+  {
+    "book": "1A",
+    "number": 95,
+    "stars": 1,
+    "title": "集合の要素の個数(2)",
+    "page": "188"
+  },
+  {
+    "book": "1A",
+    "number": 96,
+    "stars": 2,
+    "title": "集合の要素の個数の最大・最小",
+    "page": "189"
+  },
+  {
+    "book": "1A",
+    "number": 97,
+    "stars": 3,
+    "title": "3つの集合の要素の個数",
+    "page": "190"
+  },
+  {
+    "book": "1A",
+    "number": 98,
+    "stars": 1,
+    "title": "命題の真偽",
+    "page": "195"
+  },
+  {
+    "book": "1A",
+    "number": 99,
+    "stars": 1,
+    "title": "命題と集合",
+    "page": "196"
+  },
+  {
+    "book": "1A",
+    "number": 100,
+    "stars": 2,
+    "title": "必要条件・十分条件(1)",
+    "page": "197"
+  },
+  {
+    "book": "1A",
+    "number": 101,
+    "stars": 2,
+    "title": "必要条件・十分条件(2)",
+    "page": "198"
+  },
+  {
+    "book": "1A",
+    "number": 102,
+    "stars": 1,
+    "title": "条件の否定",
+    "page": "199"
+  },
+  {
+    "book": "1A",
+    "number": 103,
+    "stars": 3,
+    "title": "「すべて」と「ある」の否定",
+    "page": "200"
+  },
+  {
+    "book": "1A",
+    "number": 104,
+    "stars": 1,
+    "title": "逆・裏・対偶",
+    "page": "203"
+  },
+  {
+    "book": "1A",
+    "number": 105,
+    "stars": 2,
+    "title": "命題と対偶",
+    "page": "204"
+  },
+  {
+    "book": "1A",
+    "number": 106,
+    "stars": 2,
+    "title": "背理法(1)",
+    "page": "205"
+  },
+  {
+    "book": "1A",
+    "number": 107,
+    "stars": 2,
+    "title": "背理法(2)",
+    "page": "206"
+  },
+  {
+    "book": "1A",
+    "number": 108,
+    "stars": 1,
+    "title": "三角比の定義",
+    "page": "221"
+  },
+  {
+    "book": "1A",
+    "number": 109,
+    "stars": 1,
+    "title": "三角比の相互関係(1)",
+    "page": "222"
+  },
+  {
+    "book": "1A",
+    "number": 110,
+    "stars": 2,
+    "title": "15°の三角比",
+    "page": "223"
+  },
+  {
+    "book": "1A",
+    "number": 111,
+    "stars": 2,
+    "title": "余角・補角の公式",
+    "page": "224"
+  },
+  {
+    "book": "1A",
+    "number": 112,
+    "stars": 2,
+    "title": "三角比の相互関係(2)",
+    "page": "225"
+  },
+  {
+    "book": "1A",
+    "number": 113,
+    "stars": 2,
+    "title": "三角比の式の値",
+    "page": "226"
+  },
+  {
+    "book": "1A",
+    "number": 114,
+    "stars": 2,
+    "title": "三角方程式(1)",
+    "page": "227"
+  },
+  {
+    "book": "1A",
+    "number": 115,
+    "stars": 3,
+    "title": "三角方程式(2)",
+    "page": "228"
+  },
+  {
+    "book": "1A",
+    "number": 116,
+    "stars": 2,
+    "title": "2直線のなす角",
+    "page": "229"
+  },
+  {
+    "book": "1A",
+    "number": 117,
+    "stars": 2,
+    "title": "三角不等式(1)",
+    "page": "230"
+  },
+  {
+    "book": "1A",
+    "number": 118,
+    "stars": 3,
+    "title": "三角不等式(2)",
+    "page": "232"
+  },
+  {
+    "book": "1A",
+    "number": 119,
+    "stars": 3,
+    "title": "三角比の2次関数",
+    "page": "233"
+  },
+  {
+    "book": "1A",
+    "number": 120,
+    "stars": 4,
+    "title": "三角比の2次方程式の解の個数",
+    "page": "234"
+  },
+  {
+    "book": "1A",
+    "number": 121,
+    "stars": 4,
+    "title": "三角比を係数にもつ2次方程式",
+    "page": "235"
+  },
+  {
+    "book": "1A",
+    "number": 122,
+    "stars": 2,
+    "title": "正弦定理の基本",
+    "page": "240"
+  },
+  {
+    "book": "1A",
+    "number": 123,
+    "stars": 2,
+    "title": "余弦定理の基本",
+    "page": "241"
+  },
+  {
+    "book": "1A",
+    "number": 124,
+    "stars": 2,
+    "title": "三角形の決定",
+    "page": "242"
+  },
+  {
+    "book": "1A",
+    "number": 125,
+    "stars": 3,
+    "title": "正弦と余弦の融合",
+    "page": "246"
+  },
+  {
+    "book": "1A",
+    "number": 126,
+    "stars": 3,
+    "title": "三角形の成立条件",
+    "page": "247"
+  },
+  {
+    "book": "1A",
+    "number": 127,
+    "stars": 3,
+    "title": "三角形の形状",
+    "page": "249"
+  },
+  {
+    "book": "1A",
+    "number": 128,
+    "stars": 2,
+    "title": "三角形の面積",
+    "page": "253"
+  },
+  {
+    "book": "1A",
+    "number": 129,
+    "stars": 2,
+    "title": "多角形の面積(1)",
+    "page": "255"
+  },
+  {
+    "book": "1A",
+    "number": 130,
+    "stars": 1,
+    "title": "多角形の面積(2)",
+    "page": "256"
+  },
+  {
+    "book": "1A",
+    "number": 131,
+    "stars": 2,
+    "title": "三角形の面積と内接円の半径",
+    "page": "257"
+  },
+  {
+    "book": "1A",
+    "number": 132,
+    "stars": 2,
+    "title": "円に内接する四角形(1)",
+    "page": "258"
+  },
+  {
+    "book": "1A",
+    "number": 133,
+    "stars": 2,
+    "title": "円に内接する四角形(2)",
+    "page": "259"
+  },
+  {
+    "book": "1A",
+    "number": 134,
+    "stars": 2,
+    "title": "角の二等分線の長さ(1)",
+    "page": "261"
+  },
+  {
+    "book": "1A",
+    "number": 135,
+    "stars": 3,
+    "title": "角の二等分線の長さ(2)",
+    "page": "263"
+  },
+  {
+    "book": "1A",
+    "number": 136,
+    "stars": 2,
+    "title": "中線定理",
+    "page": "265"
+  },
+  {
+    "book": "1A",
+    "number": 137,
+    "stars": 3,
+    "title": "三角比と内心・外心",
+    "page": "266"
+  },
+  {
+    "book": "1A",
+    "number": 138,
+    "stars": 3,
+    "title": "空間図形と測量",
+    "page": "267"
+  },
+  {
+    "book": "1A",
+    "number": 139,
+    "stars": 3,
+    "title": "正四面体の種々の量",
+    "page": "268"
+  },
+  {
+    "book": "1A",
+    "number": 140,
+    "stars": 3,
+    "title": "空間図形での最短距離",
+    "page": "270"
+  },
+  {
+    "book": "1A",
+    "number": 141,
+    "stars": 4,
+    "title": "球と接する立体",
+    "page": "271"
+  },
+  {
+    "book": "1A",
+    "number": 142,
+    "stars": 1,
+    "title": "相対度数分布表",
+    "page": "288"
+  },
+  {
+    "book": "1A",
+    "number": 143,
+    "stars": 1,
+    "title": "データの傾向",
+    "page": "290"
+  },
+  {
+    "book": "1A",
+    "number": 144,
+    "stars": 2,
+    "title": "代表値と度数分布表(1)",
+    "page": "291"
+  },
+  {
+    "book": "1A",
+    "number": 145,
+    "stars": 2,
+    "title": "代表値と度数分布表(2)",
+    "page": "292"
+  },
+  {
+    "book": "1A",
+    "number": 146,
+    "stars": 2,
+    "title": "代表値と四分位数",
+    "page": "293"
+  },
+  {
+    "book": "1A",
+    "number": 147,
+    "stars": 1,
+    "title": "四分位数と箱ひげ図(1)",
+    "page": "294"
+  },
+  {
+    "book": "1A",
+    "number": 148,
+    "stars": 2,
+    "title": "四分位数と箱ひげ図(2)",
+    "page": "295"
+  },
+  {
+    "book": "1A",
+    "number": 149,
+    "stars": 2,
+    "title": "箱ひげ図",
+    "page": "296"
+  },
+  {
+    "book": "1A",
+    "number": 150,
+    "stars": 2,
+    "title": "ヒストグラムと箱ひげ図",
+    "page": "297"
+  },
+  {
+    "book": "1A",
+    "number": 151,
+    "stars": 3,
+    "title": "分散と標準偏差",
+    "page": "298"
+  },
+  {
+    "book": "1A",
+    "number": 152,
+    "stars": 3,
+    "title": "変量の変換",
+    "page": "300"
+  },
+  {
+    "book": "1A",
+    "number": 153,
+    "stars": 2,
+    "title": "散布図と相関係数(1)",
+    "page": "302"
+  },
+  {
+    "book": "1A",
+    "number": 154,
+    "stars": 2,
+    "title": "散布図と相関係数(2)",
+    "page": "304"
+  },
+  {
+    "book": "1A",
+    "number": 155,
+    "stars": 3,
+    "title": "総合問題",
+    "page": "306"
+  },
+  {
+    "book": "1A",
+    "number": 156,
+    "stars": 3,
+    "title": "仮説検定の考え方",
+    "page": "310"
+  },
+  {
+    "book": "1A",
+    "number": 157,
+    "stars": 1,
+    "title": "和の法則と積の法則",
+    "page": "329"
+  },
+  {
+    "book": "1A",
+    "number": 158,
+    "stars": 1,
+    "title": "補集合の考え方の利用",
+    "page": "330"
+  },
+  {
+    "book": "1A",
+    "number": 159,
+    "stars": 2,
+    "title": "支払える金額の種類",
+    "page": "331"
+  },
+  {
+    "book": "1A",
+    "number": 160,
+    "stars": 3,
+    "title": "約数の個数",
+    "page": "332"
+  },
+  {
+    "book": "1A",
+    "number": 161,
+    "stars": 3,
+    "title": "約数の積",
+    "page": "334"
+  },
+  {
+    "book": "1A",
+    "number": 162,
+    "stars": 2,
+    "title": "条件のついた並び方(1)",
+    "page": "339"
+  },
+  {
+    "book": "1A",
+    "number": 163,
+    "stars": 2,
+    "title": "条件のついた並び方(2)",
+    "page": "340"
+  },
+  {
+    "book": "1A",
+    "number": 164,
+    "stars": 2,
+    "title": "辞書式配列",
+    "page": "341"
+  },
+  {
+    "book": "1A",
+    "number": 165,
+    "stars": 2,
+    "title": "整数を作る問題(1)",
+    "page": "342"
+  },
+  {
+    "book": "1A",
+    "number": 166,
+    "stars": 3,
+    "title": "整数を作る問題(2)",
+    "page": "343"
+  },
+  {
+    "book": "1A",
+    "number": 167,
+    "stars": 2,
+    "title": "円順列(1)",
+    "page": "344"
+  },
+  {
+    "book": "1A",
+    "number": 168,
+    "stars": 2,
+    "title": "円順列(2)",
+    "page": "345"
+  },
+  {
+    "book": "1A",
+    "number": 169,
+    "stars": 1,
+    "title": "重複順列(1)",
+    "page": "346"
+  },
+  {
+    "book": "1A",
+    "number": 170,
+    "stars": 2,
+    "title": "重複順列(2)",
+    "page": "347"
+  },
+  {
+    "book": "1A",
+    "number": 171,
+    "stars": 2,
+    "title": "部屋割りの問題",
+    "page": "348"
+  },
+  {
+    "book": "1A",
+    "number": 172,
+    "stars": 2,
+    "title": "色分けの問題(1) (平面)",
+    "page": "349"
+  },
+  {
+    "book": "1A",
+    "number": 173,
+    "stars": 2,
+    "title": "色分けの問題(2) (立体)",
+    "page": "350"
+  },
+  {
+    "book": "1A",
+    "number": 174,
+    "stars": 3,
+    "title": "色分けの問題(3) (立体)",
+    "page": "352"
+  },
+  {
+    "book": "1A",
+    "number": 175,
+    "stars": 1,
+    "title": "特定のものを含む組合せ",
+    "page": "356"
+  },
+  {
+    "book": "1A",
+    "number": 176,
+    "stars": 2,
+    "title": "長方形の個数",
+    "page": "357"
+  },
+  {
+    "book": "1A",
+    "number": 177,
+    "stars": 3,
+    "title": "三角形の個数(1)",
+    "page": "358"
+  },
+  {
+    "book": "1A",
+    "number": 178,
+    "stars": 3,
+    "title": "三角形の個数(2)",
+    "page": "359"
+  },
+  {
+    "book": "1A",
+    "number": 179,
+    "stars": 2,
+    "title": "グループの分け方",
+    "page": "360"
+  },
+  {
+    "book": "1A",
+    "number": 180,
+    "stars": 1,
+    "title": "同じものを含む順列",
+    "page": "362"
+  },
+  {
+    "book": "1A",
+    "number": 181,
+    "stars": 2,
+    "title": "一定の順序を含む順列(1)",
+    "page": "363"
+  },
+  {
+    "book": "1A",
+    "number": 182,
+    "stars": 3,
+    "title": "整数を作る問題(3)",
+    "page": "364"
+  },
+  {
+    "book": "1A",
+    "number": 183,
+    "stars": 1,
+    "title": "最短経路の問題(1)",
+    "page": "365"
+  },
+  {
+    "book": "1A",
+    "number": 184,
+    "stars": 2,
+    "title": "最短経路の問題(2)",
+    "page": "366"
+  },
+  {
+    "book": "1A",
+    "number": 185,
+    "stars": 3,
+    "title": "円順列(3) (じゅず順列の応用)",
+    "page": "368"
+  },
+  {
+    "book": "1A",
+    "number": 186,
+    "stars": 3,
+    "title": "重複組合せ",
+    "page": "369"
+  },
+  {
+    "book": "1A",
+    "number": 187,
+    "stars": 4,
+    "title": "整数解の個数",
+    "page": "370"
+  },
+  {
+    "book": "1A",
+    "number": 188,
+    "stars": 3,
+    "title": "完全順列",
+    "page": "372"
+  },
+  {
+    "book": "1A",
+    "number": 189,
+    "stars": 4,
+    "title": "一定の順序を含む順列(2)",
+    "page": "374"
+  },
+  {
+    "book": "1A",
+    "number": 190,
+    "stars": 2,
+    "title": "順列と確率(1)",
+    "page": "388"
+  },
+  {
+    "book": "1A",
+    "number": 191,
+    "stars": 2,
+    "title": "順列と確率(2)",
+    "page": "389"
+  },
+  {
+    "book": "1A",
+    "number": 192,
+    "stars": 2,
+    "title": "組合せと確率",
+    "page": "390"
+  },
+  {
+    "book": "1A",
+    "number": 193,
+    "stars": 3,
+    "title": "同じものを含む順列と確率",
+    "page": "391"
+  },
+  {
+    "book": "1A",
+    "number": 194,
+    "stars": 4,
+    "title": "実数解をもつ確率",
+    "page": "392"
+  },
+  {
+    "book": "1A",
+    "number": 195,
+    "stars": 1,
+    "title": "確率の加法定理(1)、余事象の確率(1)",
+    "page": "393"
+  },
+  {
+    "book": "1A",
+    "number": 196,
+    "stars": 2,
+    "title": "確率の加法定理(2)",
+    "page": "394"
+  },
+  {
+    "book": "1A",
+    "number": 197,
+    "stars": 2,
+    "title": "和事象の確率",
+    "page": "396"
+  },
+  {
+    "book": "1A",
+    "number": 198,
+    "stars": 3,
+    "title": "余事象の確率(2)",
+    "page": "397"
+  },
+  {
+    "book": "1A",
+    "number": 199,
+    "stars": 2,
+    "title": "じゃんけんの確率",
+    "page": "398"
+  },
+  {
+    "book": "1A",
+    "number": 200,
+    "stars": 1,
+    "title": "期待値",
+    "page": "400"
+  },
+  {
+    "book": "1A",
+    "number": 201,
+    "stars": 1,
+    "title": "有利・不利の問題",
+    "page": "401"
+  },
+  {
+    "book": "1A",
+    "number": 202,
+    "stars": 3,
+    "title": "図形と期待値",
+    "page": "402"
+  },
+  {
+    "book": "1A",
+    "number": 203,
+    "stars": 1,
+    "title": "独立な試行(1)",
+    "page": "407"
+  },
+  {
+    "book": "1A",
+    "number": 204,
+    "stars": 2,
+    "title": "独立な試行(2)",
+    "page": "408"
+  },
+  {
+    "book": "1A",
+    "number": 205,
+    "stars": 1,
+    "title": "反復試行(1)",
+    "page": "410"
+  },
+  {
+    "book": "1A",
+    "number": 206,
+    "stars": 4,
+    "title": "反復試行(2) k回先に勝つ",
+    "page": "411"
+  },
+  {
+    "book": "1A",
+    "number": 207,
+    "stars": 3,
+    "title": "反復試行(3) 点の移動",
+    "page": "412"
+  },
+  {
+    "book": "1A",
+    "number": 208,
+    "stars": 3,
+    "title": "反復試行(4)",
+    "page": "413"
+  },
+  {
+    "book": "1A",
+    "number": 209,
+    "stars": 3,
+    "title": "反復試行(5) さいころの最大・最小",
+    "page": "414"
+  },
+  {
+    "book": "1A",
+    "number": 210,
+    "stars": 4,
+    "title": "反復試行(6) 最大確率",
+    "page": "416"
+  },
+  {
+    "book": "1A",
+    "number": 211,
+    "stars": 2,
+    "title": "反復試行と期待値",
+    "page": "417"
+  },
+  {
+    "book": "1A",
+    "number": 212,
+    "stars": 1,
+    "title": "条件付き確率(1)",
+    "page": "418"
+  },
+  {
+    "book": "1A",
+    "number": 213,
+    "stars": 3,
+    "title": "条件付き確率(2) 原因の確率(1)",
+    "page": "419"
+  },
+  {
+    "book": "1A",
+    "number": 214,
+    "stars": 2,
+    "title": "確率の乗法定理(1)",
+    "page": "420"
+  },
+  {
+    "book": "1A",
+    "number": 215,
+    "stars": 1,
+    "title": "確率の乗法定理(2)",
+    "page": "424"
+  },
+  {
+    "book": "1A",
+    "number": 216,
+    "stars": 3,
+    "title": "原因の確率(2)",
+    "page": "425"
+  },
+  {
+    "book": "1A",
+    "number": 217,
+    "stars": 1,
+    "title": "角の二等分線の性質",
+    "page": "440"
+  },
+  {
+    "book": "1A",
+    "number": 218,
+    "stars": 1,
+    "title": "中線上の点の性質(1)",
+    "page": "444"
+  },
+  {
+    "book": "1A",
+    "number": 219,
+    "stars": 1,
+    "title": "中線上の点の性質(2)",
+    "page": "445"
+  },
+  {
+    "book": "1A",
+    "number": 220,
+    "stars": 2,
+    "title": "三角形の性質",
+    "page": "448"
+  },
+  {
+    "book": "1A",
+    "number": 221,
+    "stars": 2,
+    "title": "三角形の重心・内心",
+    "page": "450"
+  },
+  {
+    "book": "1A",
+    "number": 222,
+    "stars": 2,
+    "title": "三角形の外心と重心",
+    "page": "451"
+  },
+  {
+    "book": "1A",
+    "number": 223,
+    "stars": 2,
+    "title": "三角形の傍心",
+    "page": "452"
+  },
+  {
+    "book": "1A",
+    "number": 224,
+    "stars": 3,
+    "title": "オイラー線",
+    "page": "456"
+  },
+  {
+    "book": "1A",
+    "number": 225,
+    "stars": 2,
+    "title": "2つの三角形の面積比(1)",
+    "page": "457"
+  },
+  {
+    "book": "1A",
+    "number": 226,
+    "stars": 3,
+    "title": "2つの三角形の面積比(2)",
+    "page": "458"
+  },
+  {
+    "book": "1A",
+    "number": 227,
+    "stars": 2,
+    "title": "メネラウスの定理・チェバの定理",
+    "page": "460"
+  },
+  {
+    "book": "1A",
+    "number": 228,
+    "stars": 3,
+    "title": "メネラウスの定理・チェバの定理の逆",
+    "page": "464"
+  },
+  {
+    "book": "1A",
+    "number": 229,
+    "stars": 3,
+    "title": "2つの四面体の体積比",
+    "page": "465"
+  },
+  {
+    "book": "1A",
+    "number": 230,
+    "stars": 3,
+    "title": "相似な図形の面積比・体積比",
+    "page": "466"
+  },
+  {
+    "book": "1A",
+    "number": 231,
+    "stars": 2,
+    "title": "円に内接する四角形",
+    "page": "473"
+  },
+  {
+    "book": "1A",
+    "number": 232,
+    "stars": 3,
+    "title": "円周角の定理の逆",
+    "page": "474"
+  },
+  {
+    "book": "1A",
+    "number": 233,
+    "stars": 3,
+    "title": "四角形が円に内接する条件",
+    "page": "475"
+  },
+  {
+    "book": "1A",
+    "number": 234,
+    "stars": 1,
+    "title": "接弦定理の利用",
+    "page": "476"
+  },
+  {
+    "book": "1A",
+    "number": 235,
+    "stars": 3,
+    "title": "円周角と接弦定理",
+    "page": "477"
+  },
+  {
+    "book": "1A",
+    "number": 236,
+    "stars": 1,
+    "title": "方べきの定理(1)",
+    "page": "478"
+  },
+  {
+    "book": "1A",
+    "number": 237,
+    "stars": 2,
+    "title": "方べきの定理(2)",
+    "page": "479"
+  },
+  {
+    "book": "1A",
+    "number": 238,
+    "stars": 2,
+    "title": "方べきの定理の逆(1)",
+    "page": "480"
+  },
+  {
+    "book": "1A",
+    "number": 239,
+    "stars": 2,
+    "title": "方べきの定理の逆(2)",
+    "page": "481"
+  },
+  {
+    "book": "1A",
+    "number": 240,
+    "stars": 3,
+    "title": "方べきの定理の応用",
+    "page": "482"
+  },
+  {
+    "book": "1A",
+    "number": 241,
+    "stars": 1,
+    "title": "2円の位置関係(1)",
+    "page": "484"
+  },
+  {
+    "book": "1A",
+    "number": 242,
+    "stars": 2,
+    "title": "2円の位置関係(2)",
+    "page": "485"
+  },
+  {
+    "book": "1A",
+    "number": 243,
+    "stars": 1,
+    "title": "共通接線",
+    "page": "486"
+  },
+  {
+    "book": "1A",
+    "number": 244,
+    "stars": 2,
+    "title": "2円の位置関係(3)",
+    "page": "487"
+  },
+  {
+    "book": "1A",
+    "number": 245,
+    "stars": 3,
+    "title": "トレミーの定理",
+    "page": "488"
+  },
+  {
+    "book": "1A",
+    "number": 246,
+    "stars": 2,
+    "title": "作図題の基本",
+    "page": "499"
+  },
+  {
+    "book": "1A",
+    "number": 247,
+    "stars": 4,
+    "title": "長さが与えられた線分の作図",
+    "page": "500"
+  },
+  {
+    "book": "1A",
+    "number": 248,
+    "stars": 3,
+    "title": "2次方程式を満たす解の線分の作図",
+    "page": "501"
+  },
+  {
+    "book": "1A",
+    "number": 249,
+    "stars": 4,
+    "title": "線分の和の最小値",
+    "page": "502"
+  },
+  {
+    "book": "1A",
+    "number": 250,
+    "stars": 4,
+    "title": "線分の最大・最小の作図",
+    "page": "503"
+  },
+  {
+    "book": "1A",
+    "number": 251,
+    "stars": 3,
+    "title": "面積の二等分線の作図",
+    "page": "504"
+  },
+  {
+    "book": "1A",
+    "number": 252,
+    "stars": 2,
+    "title": "平面に垂直な直線",
+    "page": "511"
+  },
+  {
+    "book": "1A",
+    "number": 253,
+    "stars": 3,
+    "title": "立体の切断・体積(1)",
+    "page": "512"
+  },
+  {
+    "book": "1A",
+    "number": 254,
+    "stars": 4,
+    "title": "立体の切断・体積(2)",
+    "page": "514"
+  },
+  {
+    "book": "1A",
+    "number": 255,
+    "stars": 3,
+    "title": "多面体の面・辺・頂点の数",
+    "page": "516"
+  },
+  {
+    "book": "1A",
+    "number": 256,
+    "stars": 4,
+    "title": "多面体の体積",
+    "page": "522"
+  },
+  {
+    "book": "1A",
+    "number": 257,
+    "stars": 3,
+    "title": "多面体に内接する球の半径",
+    "page": "524"
+  },
+  {
+    "book": "1A",
+    "number": 258,
+    "stars": 4,
+    "title": "回転体の体積",
+    "page": "526"
+  },
+  {
+    "book": "1A",
+    "number": 259,
+    "stars": 4,
+    "title": "等面四面体",
+    "page": "528"
+  },
+  {
+    "book": "1A",
+    "number": 260,
+    "stars": 2,
+    "title": "最大公約数・最小公倍数(1)",
+    "page": "540"
+  },
+  {
+    "book": "1A",
+    "number": 261,
+    "stars": 1,
+    "title": "約数に関する問題",
+    "page": "541"
+  },
+  {
+    "book": "1A",
+    "number": 262,
+    "stars": 2,
+    "title": "等式を満たす自然数の組",
+    "page": "542"
+  },
+  {
+    "book": "1A",
+    "number": 263,
+    "stars": 2,
+    "title": "倍数の性質の利用",
+    "page": "543"
+  },
+  {
+    "book": "1A",
+    "number": 264,
+    "stars": 2,
+    "title": "最大公約数・最小公倍数(2)",
+    "page": "544"
+  },
+  {
+    "book": "1A",
+    "number": 265,
+    "stars": 2,
+    "title": "互いに素な自然数の性質(1)",
+    "page": "545"
+  },
+  {
+    "book": "1A",
+    "number": 266,
+    "stars": 2,
+    "title": "互いに素な自然数の性質(2)",
+    "page": "546"
+  },
+  {
+    "book": "1A",
+    "number": 267,
+    "stars": 3,
+    "title": "互いに素な自然数の個数",
+    "page": "547"
+  },
+  {
+    "book": "1A",
+    "number": 268,
+    "stars": 3,
+    "title": "余りによる場合分け(1)",
+    "page": "554"
+  },
+  {
+    "book": "1A",
+    "number": 269,
+    "stars": 2,
+    "title": "連続する整数の積",
+    "page": "556"
+  },
+  {
+    "book": "1A",
+    "number": 270,
+    "stars": 3,
+    "title": "余りによる場合分け(2)",
+    "page": "557"
+  },
+  {
+    "book": "1A",
+    "number": 271,
+    "stars": 2,
+    "title": "合同式の利用(1)",
+    "page": "558"
+  },
+  {
+    "book": "1A",
+    "number": 272,
+    "stars": 2,
+    "title": "合同式の利用(2)",
+    "page": "559"
+  },
+  {
+    "book": "1A",
+    "number": 273,
+    "stars": 2,
+    "title": "文字式の互除法",
+    "page": "570"
+  },
+  {
+    "book": "1A",
+    "number": 274,
+    "stars": 2,
+    "title": "方程式の整数解(1)",
+    "page": "571"
+  },
+  {
+    "book": "1A",
+    "number": 275,
+    "stars": 2,
+    "title": "方程式の整数解(2)",
+    "page": "572"
+  },
+  {
+    "book": "1A",
+    "number": 276,
+    "stars": 3,
+    "title": "方程式の整数解(3)",
+    "page": "574"
+  },
+  {
+    "book": "1A",
+    "number": 277,
+    "stars": 3,
+    "title": "方程式の整数解(4)",
+    "page": "576"
+  },
+  {
+    "book": "1A",
+    "number": 278,
+    "stars": 3,
+    "title": "方程式の整数解(5)",
+    "page": "577"
+  },
+  {
+    "book": "1A",
+    "number": 279,
+    "stars": 3,
+    "title": "方程式の整数解(6)",
+    "page": "578"
+  },
+  {
+    "book": "1A",
+    "number": 280,
+    "stars": 3,
+    "title": "方程式の整数解(7)",
+    "page": "579"
+  },
+  {
+    "book": "1A",
+    "number": 281,
+    "stars": 3,
+    "title": "方程式の整数解(8)",
+    "page": "580"
+  },
+  {
+    "book": "1A",
+    "number": 282,
+    "stars": 3,
+    "title": "方程式の整数解(9)",
+    "page": "581"
+  },
+  {
+    "book": "1A",
+    "number": 283,
+    "stars": 4,
+    "title": "nを除くnの正の約数の和(完全数)",
+    "page": "582"
+  },
+  {
+    "book": "1A",
+    "number": 284,
+    "stars": 3,
+    "title": "不定方程式の応用",
+    "page": "584"
+  },
+  {
+    "book": "1A",
+    "number": 285,
+    "stars": 1,
+    "title": "n進法の表し方(1)",
+    "page": "592"
+  },
+  {
+    "book": "1A",
+    "number": 286,
+    "stars": 2,
+    "title": "n進法の表し方(2)",
+    "page": "595"
+  },
+  {
+    "book": "1A",
+    "number": 287,
+    "stars": 1,
+    "title": "循環小数(1)",
+    "page": "596"
+  },
+  {
+    "book": "1A",
+    "number": 288,
+    "stars": 3,
+    "title": "循環小数(2)",
+    "page": "597"
+  },
+  {
+    "book": "1A",
+    "number": 289,
+    "stars": 1,
+    "title": "一般のn進法",
+    "page": "599"
+  },
+  {
+    "book": "1A",
+    "number": 290,
+    "stars": 3,
+    "title": "n進法の活用",
+    "page": "600"
+  },
+  {
+    "book": "1A",
+    "number": 291,
+    "stars": 2,
+    "title": "n進法の表し方(3)",
+    "page": "601"
+  },
+  {
+    "book": "1A",
+    "number": 292,
+    "stars": 2,
+    "title": "n進法の順序",
+    "page": "602"
+  },
+  {
+    "book": "1A",
+    "number": 293,
+    "stars": 3,
+    "title": "部屋割り論法(1)",
+    "page": "603"
+  },
+  {
+    "book": "1A",
+    "number": 294,
+    "stars": 3,
+    "title": "部屋割り論法(2)",
+    "page": "604"
+  },
+  {
+    "book": "1A",
+    "number": 295,
+    "stars": 2,
+    "title": "ガウス記号を含む関数のグラフ",
+    "page": "605"
+  },
+  {
+    "book": "1A",
+    "number": 296,
+    "stars": 3,
+    "title": "ガウス記号",
+    "page": "606"
+  },
+  {
+    "book": "1A",
+    "number": 297,
+    "stars": 2,
+    "title": "ガウス記号の利用",
+    "page": "607"
+  },
+  {
+    "book": "1A",
+    "number": 298,
+    "stars": 3,
+    "title": "格子点",
+    "page": "608"
+  },
+  {
+    "book": "1A",
+    "number": 299,
+    "stars": 2,
+    "title": "整数の応用問題",
+    "page": "609"
+  },
+  {
+    "book": "1A",
+    "number": 300,
+    "stars": 1,
+    "title": "虫食い算",
+    "page": "617"
+  },
+  {
+    "book": "1A",
+    "number": 301,
+    "stars": 2,
+    "title": "敷き詰め問題",
+    "page": "618"
+  },
+  {
+    "book": "1A",
+    "number": 302,
+    "stars": 3,
+    "title": "石取りゲーム",
+    "page": "620"
+  },
+  {
+    "book": "1A",
+    "number": 303,
+    "stars": 3,
+    "title": "整数の活用",
+    "page": "626"
+  },
+  {
+    "book": "2B",
+    "number": 1,
+    "stars": 2,
+    "title": "因数分解と式の値",
+    "page": "23"
+  },
+  {
+    "book": "2B",
+    "number": 2,
+    "stars": 1,
+    "title": "多項式の除法",
+    "page": "24"
+  },
+  {
+    "book": "2B",
+    "number": 3,
+    "stars": 2,
+    "title": "等式 A=BQ+R",
+    "page": "26"
+  },
+  {
+    "book": "2B",
+    "number": 4,
+    "stars": 2,
+    "title": "割り算と式の値",
+    "page": "27"
+  },
+  {
+    "book": "2B",
+    "number": 5,
+    "stars": 2,
+    "title": "多項式の約数・倍数",
+    "page": "28"
+  },
+  {
+    "book": "2B",
+    "number": 6,
+    "stars": 1,
+    "title": "分数式の乗法・除法",
+    "page": "29"
+  },
+  {
+    "book": "2B",
+    "number": 7,
+    "stars": 2,
+    "title": "分数式の加法・減法",
+    "page": "30"
+  },
+  {
+    "book": "2B",
+    "number": 8,
+    "stars": 2,
+    "title": "繁分数式",
+    "page": "32"
+  },
+  {
+    "book": "2B",
+    "number": 9,
+    "stars": 1,
+    "title": "(a+b)^nの展開",
+    "page": "34"
+  },
+  {
+    "book": "2B",
+    "number": 10,
+    "stars": 2,
+    "title": "二項係数",
+    "page": "35"
+  },
+  {
+    "book": "2B",
+    "number": 11,
+    "stars": 2,
+    "title": "(a+b+c)^nの展開(1)",
+    "page": "36"
+  },
+  {
+    "book": "2B",
+    "number": 12,
+    "stars": 2,
+    "title": "(a+b+c)^nの展開(2)",
+    "page": "37"
+  },
+  {
+    "book": "2B",
+    "number": 13,
+    "stars": 3,
+    "title": "二項定理の利用",
+    "page": "38"
+  },
+  {
+    "book": "2B",
+    "number": 14,
+    "stars": 2,
+    "title": "二項係数の関係式(1)",
+    "page": "39"
+  },
+  {
+    "book": "2B",
+    "number": 15,
+    "stars": 3,
+    "title": "二項係数の関係式(2)",
+    "page": "40"
+  },
+  {
+    "book": "2B",
+    "number": 16,
+    "stars": 2,
+    "title": "恒等式",
+    "page": "44"
+  },
+  {
+    "book": "2B",
+    "number": 17,
+    "stars": 2,
+    "title": "分数式の恒等式",
+    "page": "46"
+  },
+  {
+    "book": "2B",
+    "number": 18,
+    "stars": 2,
+    "title": "割り算と恒等式",
+    "page": "47"
+  },
+  {
+    "book": "2B",
+    "number": 19,
+    "stars": 2,
+    "title": "2文字の恒等式",
+    "page": "48"
+  },
+  {
+    "book": "2B",
+    "number": 20,
+    "stars": 3,
+    "title": "条件式のある恒等式",
+    "page": "49"
+  },
+  {
+    "book": "2B",
+    "number": 21,
+    "stars": 3,
+    "title": "恒等式を満たす多項式",
+    "page": "50"
+  },
+  {
+    "book": "2B",
+    "number": 22,
+    "stars": 1,
+    "title": "等式の証明",
+    "page": "54"
+  },
+  {
+    "book": "2B",
+    "number": 23,
+    "stars": 2,
+    "title": "条件付きの等式の証明",
+    "page": "55"
+  },
+  {
+    "book": "2B",
+    "number": 24,
+    "stars": 2,
+    "title": "少なくとも1つは1",
+    "page": "56"
+  },
+  {
+    "book": "2B",
+    "number": 25,
+    "stars": 3,
+    "title": "すべてが1",
+    "page": "57"
+  },
+  {
+    "book": "2B",
+    "number": 26,
+    "stars": 2,
+    "title": "比例式と等式の証明",
+    "page": "58"
+  },
+  {
+    "book": "2B",
+    "number": 27,
+    "stars": 3,
+    "title": "比例式の値",
+    "page": "59"
+  },
+  {
+    "book": "2B",
+    "number": 28,
+    "stars": 3,
+    "title": "不等式の証明(1)",
+    "page": "60"
+  },
+  {
+    "book": "2B",
+    "number": 29,
+    "stars": 2,
+    "title": "コーシー・シュワルツの不等式",
+    "page": "61"
+  },
+  {
+    "book": "2B",
+    "number": 30,
+    "stars": 2,
+    "title": "条件付きの不等式の証明",
+    "page": "62"
+  },
+  {
+    "book": "2B",
+    "number": 31,
+    "stars": 3,
+    "title": "不等式の証明(2)",
+    "page": "64"
+  },
+  {
+    "book": "2B",
+    "number": 32,
+    "stars": 2,
+    "title": "相加平均・相乗平均の関係(1)",
+    "page": "65"
+  },
+  {
+    "book": "2B",
+    "number": 33,
+    "stars": 3,
+    "title": "相加平均・相乗平均の関係(2)",
+    "page": "66"
+  },
+  {
+    "book": "2B",
+    "number": 34,
+    "stars": 2,
+    "title": "大小比較",
+    "page": "71"
+  },
+  {
+    "book": "2B",
+    "number": 35,
+    "stars": 3,
+    "title": "絶対値を含む不等式の証明",
+    "page": "72"
+  },
+  {
+    "book": "2B",
+    "number": 36,
+    "stars": 2,
+    "title": "複素数の相等",
+    "page": "82"
+  },
+  {
+    "book": "2B",
+    "number": 37,
+    "stars": 2,
+    "title": "平方して虚数になる複素数",
+    "page": "83"
+  },
+  {
+    "book": "2B",
+    "number": 38,
+    "stars": 2,
+    "title": "複素数と式の値",
+    "page": "84"
+  },
+  {
+    "book": "2B",
+    "number": 39,
+    "stars": 1,
+    "title": "2次方程式の解法",
+    "page": "90"
+  },
+  {
+    "book": "2B",
+    "number": 40,
+    "stars": 2,
+    "title": "2次方程式の解の判別(1)",
+    "page": "91"
+  },
+  {
+    "book": "2B",
+    "number": 41,
+    "stars": 2,
+    "title": "2次方程式の解の判別(2)",
+    "page": "92"
+  },
+  {
+    "book": "2B",
+    "number": 42,
+    "stars": 3,
+    "title": "2次方程式の解の判別(3)",
+    "page": "93"
+  },
+  {
+    "book": "2B",
+    "number": 43,
+    "stars": 3,
+    "title": "係数に虚数を含む2次方程式の解",
+    "page": "94"
+  },
+  {
+    "book": "2B",
+    "number": 44,
+    "stars": 2,
+    "title": "解と係数の関係(1)",
+    "page": "96"
+  },
+  {
+    "book": "2B",
+    "number": 45,
+    "stars": 2,
+    "title": "2つの数を解とする2次方程式",
+    "page": "98"
+  },
+  {
+    "book": "2B",
+    "number": 46,
+    "stars": 2,
+    "title": "解と係数の関係(2)",
+    "page": "100"
+  },
+  {
+    "book": "2B",
+    "number": 47,
+    "stars": 3,
+    "title": "解と係数の関係(3)",
+    "page": "101"
+  },
+  {
+    "book": "2B",
+    "number": 48,
+    "stars": 3,
+    "title": "2次式の因数分解",
+    "page": "102"
+  },
+  {
+    "book": "2B",
+    "number": 49,
+    "stars": 3,
+    "title": "2次方程式の解の存在範囲",
+    "page": "104"
+  },
+  {
+    "book": "2B",
+    "number": 50,
+    "stars": 3,
+    "title": "判別式による最大・最小",
+    "page": "106"
+  },
+  {
+    "book": "2B",
+    "number": 51,
+    "stars": 4,
+    "title": "判別式と解と係数の関係",
+    "page": "109"
+  },
+  {
+    "book": "2B",
+    "number": 52,
+    "stars": 2,
+    "title": "因数定理",
+    "page": "113"
+  },
+  {
+    "book": "2B",
+    "number": 53,
+    "stars": 2,
+    "title": "剰余の定理(1)",
+    "page": "114"
+  },
+  {
+    "book": "2B",
+    "number": 54,
+    "stars": 4,
+    "title": "割られる式の決定",
+    "page": "115"
+  },
+  {
+    "book": "2B",
+    "number": 55,
+    "stars": 4,
+    "title": "剰余の定理(2)",
+    "page": "116"
+  },
+  {
+    "book": "2B",
+    "number": 56,
+    "stars": 4,
+    "title": "1の3乗根 ω",
+    "page": "118"
+  },
+  {
+    "book": "2B",
+    "number": 57,
+    "stars": 4,
+    "title": "x²+x+1による割り算",
+    "page": "119"
+  },
+  {
+    "book": "2B",
+    "number": 58,
+    "stars": 2,
+    "title": "3次式の因数分解",
+    "page": "120"
+  },
+  {
+    "book": "2B",
+    "number": 59,
+    "stars": 2,
+    "title": "高次方程式の解法(1)",
+    "page": "122"
+  },
+  {
+    "book": "2B",
+    "number": 60,
+    "stars": 2,
+    "title": "高次方程式の解法(2)",
+    "page": "123"
+  },
+  {
+    "book": "2B",
+    "number": 61,
+    "stars": 3,
+    "title": "高次方程式の解法(3)",
+    "page": "124"
+  },
+  {
+    "book": "2B",
+    "number": 62,
+    "stars": 3,
+    "title": "相反方程式",
+    "page": "125"
+  },
+  {
+    "book": "2B",
+    "number": 63,
+    "stars": 4,
+    "title": "高次不等式",
+    "page": "126"
+  },
+  {
+    "book": "2B",
+    "number": 64,
+    "stars": 3,
+    "title": "3次方程式と虚数解",
+    "page": "127"
+  },
+  {
+    "book": "2B",
+    "number": 65,
+    "stars": 4,
+    "title": "3次方程式と実数解",
+    "page": "128"
+  },
+  {
+    "book": "2B",
+    "number": 66,
+    "stars": 3,
+    "title": "3次方程式の解と係数の関係(1)",
+    "page": "131"
+  },
+  {
+    "book": "2B",
+    "number": 67,
+    "stars": 3,
+    "title": "3次方程式の解と係数の関係(2)",
+    "page": "132"
+  },
+  {
+    "book": "2B",
+    "number": 68,
+    "stars": 2,
+    "title": "平面上の2点間の距離",
+    "page": "141"
+  },
+  {
+    "book": "2B",
+    "number": 69,
+    "stars": 2,
+    "title": "三角形の形状",
+    "page": "142"
+  },
+  {
+    "book": "2B",
+    "number": 70,
+    "stars": 2,
+    "title": "平面上の内分点・外分点と重心の座標",
+    "page": "143"
+  },
+  {
+    "book": "2B",
+    "number": 71,
+    "stars": 2,
+    "title": "座標の利用",
+    "page": "144"
+  },
+  {
+    "book": "2B",
+    "number": 72,
+    "stars": 2,
+    "title": "平行な直線・垂直な直線",
+    "page": "148"
+  },
+  {
+    "book": "2B",
+    "number": 73,
+    "stars": 2,
+    "title": "平行条件・垂直条件",
+    "page": "149"
+  },
+  {
+    "book": "2B",
+    "number": 74,
+    "stars": 2,
+    "title": "線分の垂直二等分線",
+    "page": "150"
+  },
+  {
+    "book": "2B",
+    "number": 75,
+    "stars": 2,
+    "title": "折れ線の長さの最小値",
+    "page": "151"
+  },
+  {
+    "book": "2B",
+    "number": 76,
+    "stars": 2,
+    "title": "三角形を作らない条件",
+    "page": "152"
+  },
+  {
+    "book": "2B",
+    "number": 77,
+    "stars": 2,
+    "title": "3点が一直線上にある条件",
+    "page": "153"
+  },
+  {
+    "book": "2B",
+    "number": 78,
+    "stars": 2,
+    "title": "定点を通る直線",
+    "page": "154"
+  },
+  {
+    "book": "2B",
+    "number": 79,
+    "stars": 3,
+    "title": "交点を通る直線群",
+    "page": "155"
+  },
+  {
+    "book": "2B",
+    "number": 80,
+    "stars": 2,
+    "title": "点と直線の距離",
+    "page": "157"
+  },
+  {
+    "book": "2B",
+    "number": 81,
+    "stars": 2,
+    "title": "点と直線の距離の利用",
+    "page": "158"
+  },
+  {
+    "book": "2B",
+    "number": 82,
+    "stars": 2,
+    "title": "三角形の面積",
+    "page": "162"
+  },
+  {
+    "book": "2B",
+    "number": 83,
+    "stars": 4,
+    "title": "三角形の面積の最大・最小",
+    "page": "163"
+  },
+  {
+    "book": "2B",
+    "number": 84,
+    "stars": 2,
+    "title": "円の方程式(1)",
+    "page": "167"
+  },
+  {
+    "book": "2B",
+    "number": 85,
+    "stars": 2,
+    "title": "円の方程式(2)",
+    "page": "168"
+  },
+  {
+    "book": "2B",
+    "number": 86,
+    "stars": 2,
+    "title": "方程式の表す図形",
+    "page": "169"
+  },
+  {
+    "book": "2B",
+    "number": 87,
+    "stars": 2,
+    "title": "円と直線の位置関係(1)",
+    "page": "170"
+  },
+  {
+    "book": "2B",
+    "number": 88,
+    "stars": 3,
+    "title": "円と直線の位置関係(2)",
+    "page": "171"
+  },
+  {
+    "book": "2B",
+    "number": 89,
+    "stars": 2,
+    "title": "弦の長さ(1)",
+    "page": "172"
+  },
+  {
+    "book": "2B",
+    "number": 90,
+    "stars": 2,
+    "title": "弦の長さ(2)",
+    "page": "173"
+  },
+  {
+    "book": "2B",
+    "number": 91,
+    "stars": 2,
+    "title": "円の接線",
+    "page": "174"
+  },
+  {
+    "book": "2B",
+    "number": 92,
+    "stars": 3,
+    "title": "傾きが与えられた円の接線",
+    "page": "175"
+  },
+  {
+    "book": "2B",
+    "number": 93,
+    "stars": 2,
+    "title": "円外の点から引いた接線(1)",
+    "page": "176"
+  },
+  {
+    "book": "2B",
+    "number": 94,
+    "stars": 2,
+    "title": "2円の位置関係",
+    "page": "178"
+  },
+  {
+    "book": "2B",
+    "number": 95,
+    "stars": 3,
+    "title": "共通接線",
+    "page": "180"
+  },
+  {
+    "book": "2B",
+    "number": 96,
+    "stars": 3,
+    "title": "2円の交点を通る図形",
+    "page": "182"
+  },
+  {
+    "book": "2B",
+    "number": 97,
+    "stars": 4,
+    "title": "円と直線の交点を通る円",
+    "page": "184"
+  },
+  {
+    "book": "2B",
+    "number": 98,
+    "stars": 4,
+    "title": "円外の点から引いた接線(2)",
+    "page": "185"
+  },
+  {
+    "book": "2B",
+    "number": 99,
+    "stars": 4,
+    "title": "放物線と円の共有点",
+    "page": "186"
+  },
+  {
+    "book": "2B",
+    "number": 100,
+    "stars": 3,
+    "title": "基本的な軌跡",
+    "page": "193"
+  },
+  {
+    "book": "2B",
+    "number": 101,
+    "stars": 2,
+    "title": "動点に対する軌跡(1)",
+    "page": "195"
+  },
+  {
+    "book": "2B",
+    "number": 102,
+    "stars": 2,
+    "title": "動点に対する軌跡(2)",
+    "page": "198"
+  },
+  {
+    "book": "2B",
+    "number": 103,
+    "stars": 2,
+    "title": "媒介変数と軌跡",
+    "page": "199"
+  },
+  {
+    "book": "2B",
+    "number": 104,
+    "stars": 3,
+    "title": "対称な直線・角の二等分線",
+    "page": "200"
+  },
+  {
+    "book": "2B",
+    "number": 105,
+    "stars": 2,
+    "title": "2直線の交点の軌跡(1)",
+    "page": "202"
+  },
+  {
+    "book": "2B",
+    "number": 106,
+    "stars": 2,
+    "title": "中点の軌跡",
+    "page": "204"
+  },
+  {
+    "book": "2B",
+    "number": 107,
+    "stars": 4,
+    "title": "反転による軌跡",
+    "page": "206"
+  },
+  {
+    "book": "2B",
+    "number": 108,
+    "stars": 3,
+    "title": "2直線の交点の軌跡(2)",
+    "page": "208"
+  },
+  {
+    "book": "2B",
+    "number": 109,
+    "stars": 3,
+    "title": "連立不等式と領域",
+    "page": "209"
+  },
+  {
+    "book": "2B",
+    "number": 110,
+    "stars": 2,
+    "title": "いろいろな不等式の表す領域(1)",
+    "page": "210"
+  },
+  {
+    "book": "2B",
+    "number": 111,
+    "stars": 2,
+    "title": "いろいろな不等式の表す領域(2)",
+    "page": "211"
+  },
+  {
+    "book": "2B",
+    "number": 112,
+    "stars": 4,
+    "title": "境界線の同じ側と反対側",
+    "page": "213"
+  },
+  {
+    "book": "2B",
+    "number": 113,
+    "stars": 2,
+    "title": "領域と最大・最小(1)",
+    "page": "214"
+  },
+  {
+    "book": "2B",
+    "number": 114,
+    "stars": 2,
+    "title": "線形計画法",
+    "page": "216"
+  },
+  {
+    "book": "2B",
+    "number": 115,
+    "stars": 3,
+    "title": "領域と最大・最小(2)",
+    "page": "217"
+  },
+  {
+    "book": "2B",
+    "number": 116,
+    "stars": 3,
+    "title": "領域と最大・最小(3)",
+    "page": "218"
+  },
+  {
+    "book": "2B",
+    "number": 117,
+    "stars": 2,
+    "title": "領域と最大・最小(4)",
+    "page": "219"
+  },
+  {
+    "book": "2B",
+    "number": 118,
+    "stars": 3,
+    "title": "直線の通過領域",
+    "page": "220"
+  },
+  {
+    "book": "2B",
+    "number": 119,
+    "stars": 4,
+    "title": "条件を満たす点の存在範囲",
+    "page": "221"
+  },
+  {
+    "book": "2B",
+    "number": 120,
+    "stars": 4,
+    "title": "命題と領域",
+    "page": "226"
+  },
+  {
+    "book": "2B",
+    "number": 121,
+    "stars": 1,
+    "title": "弧度法と三角関数の値",
+    "page": "239"
+  },
+  {
+    "book": "2B",
+    "number": 122,
+    "stars": 2,
+    "title": "三角関数の相互関係",
+    "page": "240"
+  },
+  {
+    "book": "2B",
+    "number": 123,
+    "stars": 2,
+    "title": "三角関数の式の値",
+    "page": "241"
+  },
+  {
+    "book": "2B",
+    "number": 124,
+    "stars": 3,
+    "title": "sinθ、cosθを解にもつ2次方程式",
+    "page": "242"
+  },
+  {
+    "book": "2B",
+    "number": 125,
+    "stars": 2,
+    "title": "いろいろな角の三角関数",
+    "page": "247"
+  },
+  {
+    "book": "2B",
+    "number": 126,
+    "stars": 1,
+    "title": "三角関数のグラフ(1)",
+    "page": "249"
+  },
+  {
+    "book": "2B",
+    "number": 127,
+    "stars": 2,
+    "title": "三角関数のグラフ(2)",
+    "page": "250"
+  },
+  {
+    "book": "2B",
+    "number": 128,
+    "stars": 1,
+    "title": "三角関数を含む方程式の基本",
+    "page": "251"
+  },
+  {
+    "book": "2B",
+    "number": 129,
+    "stars": 1,
+    "title": "三角関数を含む不等式の基本",
+    "page": "252"
+  },
+  {
+    "book": "2B",
+    "number": 130,
+    "stars": 2,
+    "title": "三角関数を含む方程式・不等式(1)",
+    "page": "253"
+  },
+  {
+    "book": "2B",
+    "number": 131,
+    "stars": 3,
+    "title": "三角関数を含む方程式・不等式(2)",
+    "page": "254"
+  },
+  {
+    "book": "2B",
+    "number": 132,
+    "stars": 2,
+    "title": "三角関数の最大・最小(1)",
+    "page": "256"
+  },
+  {
+    "book": "2B",
+    "number": 133,
+    "stars": 3,
+    "title": "三角関数を含む方程式の解の個数",
+    "page": "258"
+  },
+  {
+    "book": "2B",
+    "number": 134,
+    "stars": 1,
+    "title": "三角関数の加法定理(1)",
+    "page": "264"
+  },
+  {
+    "book": "2B",
+    "number": 135,
+    "stars": 2,
+    "title": "三角関数の加法定理(2)",
+    "page": "265"
+  },
+  {
+    "book": "2B",
+    "number": 136,
+    "stars": 2,
+    "title": "2直線のなす角",
+    "page": "266"
+  },
+  {
+    "book": "2B",
+    "number": 137,
+    "stars": 2,
+    "title": "2倍角・3倍角・半角の公式",
+    "page": "267"
+  },
+  {
+    "book": "2B",
+    "number": 138,
+    "stars": 3,
+    "title": "三角関数を含む方程式・不等式(3)",
+    "page": "268"
+  },
+  {
+    "book": "2B",
+    "number": 139,
+    "stars": 3,
+    "title": "3倍角の公式の応用",
+    "page": "270"
+  },
+  {
+    "book": "2B",
+    "number": 140,
+    "stars": 4,
+    "title": "三角関数の媒介変数表示",
+    "page": "271"
+  },
+  {
+    "book": "2B",
+    "number": 141,
+    "stars": 3,
+    "title": "(積)→(和)、(和)→(積)の公式の利用",
+    "page": "273"
+  },
+  {
+    "book": "2B",
+    "number": 142,
+    "stars": 4,
+    "title": "(和)→(積)の公式の利用",
+    "page": "276"
+  },
+  {
+    "book": "2B",
+    "number": 143,
+    "stars": 2,
+    "title": "三角関数の合成",
+    "page": "280"
+  },
+  {
+    "book": "2B",
+    "number": 144,
+    "stars": 3,
+    "title": "三角関数を含む方程式・不等式(4)",
+    "page": "284"
+  },
+  {
+    "book": "2B",
+    "number": 145,
+    "stars": 2,
+    "title": "三角関数の最大・最小(2)",
+    "page": "285"
+  },
+  {
+    "book": "2B",
+    "number": 146,
+    "stars": 2,
+    "title": "三角関数の最大・最小(3)",
+    "page": "286"
+  },
+  {
+    "book": "2B",
+    "number": 147,
+    "stars": 2,
+    "title": "三角関数の最大・最小(4)",
+    "page": "287"
+  },
+  {
+    "book": "2B",
+    "number": 148,
+    "stars": 2,
+    "title": "三角関数の最大・最小(5)",
+    "page": "288"
+  },
+  {
+    "book": "2B",
+    "number": 149,
+    "stars": 2,
+    "title": "三角関数の最大・最小(6)",
+    "page": "289"
+  },
+  {
+    "book": "2B",
+    "number": 150,
+    "stars": 3,
+    "title": "三角関数の最大・最小(7)",
+    "page": "290"
+  },
+  {
+    "book": "2B",
+    "number": 151,
+    "stars": 3,
+    "title": "図形への応用",
+    "page": "291"
+  },
+  {
+    "book": "2B",
+    "number": 152,
+    "stars": 4,
+    "title": "三角関数を含む方程式の解の存在条件",
+    "page": "292"
+  },
+  {
+    "book": "2B",
+    "number": 153,
+    "stars": 2,
+    "title": "分数の指数",
+    "page": "306"
+  },
+  {
+    "book": "2B",
+    "number": 154,
+    "stars": 2,
+    "title": "指数の計算と式の値",
+    "page": "307"
+  },
+  {
+    "book": "2B",
+    "number": 155,
+    "stars": 1,
+    "title": "指数の大小",
+    "page": "308"
+  },
+  {
+    "book": "2B",
+    "number": 156,
+    "stars": 2,
+    "title": "指数関数を含む方程式",
+    "page": "309"
+  },
+  {
+    "book": "2B",
+    "number": 157,
+    "stars": 2,
+    "title": "指数関数を含む不等式",
+    "page": "310"
+  },
+  {
+    "book": "2B",
+    "number": 158,
+    "stars": 3,
+    "title": "指数関数を含む連立方程式・不等式",
+    "page": "311"
+  },
+  {
+    "book": "2B",
+    "number": 159,
+    "stars": 2,
+    "title": "指数関数の最大・最小(1)",
+    "page": "312"
+  },
+  {
+    "book": "2B",
+    "number": 160,
+    "stars": 2,
+    "title": "指数関数の最大・最小(2)",
+    "page": "314"
+  },
+  {
+    "book": "2B",
+    "number": 161,
+    "stars": 2,
+    "title": "対数の計算(1)",
+    "page": "322"
+  },
+  {
+    "book": "2B",
+    "number": 162,
+    "stars": 2,
+    "title": "対数の計算(2)",
+    "page": "323"
+  },
+  {
+    "book": "2B",
+    "number": 163,
+    "stars": 3,
+    "title": "対数の計算(3)",
+    "page": "324"
+  },
+  {
+    "book": "2B",
+    "number": 164,
+    "stars": 3,
+    "title": "指数・対数の関係",
+    "page": "329"
+  },
+  {
+    "book": "2B",
+    "number": 165,
+    "stars": 3,
+    "title": "対数関数のグラフ",
+    "page": "330"
+  },
+  {
+    "book": "2B",
+    "number": 166,
+    "stars": 3,
+    "title": "対数の大小(1)",
+    "page": "332"
+  },
+  {
+    "book": "2B",
+    "number": 167,
+    "stars": 2,
+    "title": "対数関数を含む方程式(1)",
+    "page": "333"
+  },
+  {
+    "book": "2B",
+    "number": 168,
+    "stars": 2,
+    "title": "対数関数を含む方程式(2)",
+    "page": "334"
+  },
+  {
+    "book": "2B",
+    "number": 169,
+    "stars": 2,
+    "title": "対数関数を含む不等式(1)",
+    "page": "335"
+  },
+  {
+    "book": "2B",
+    "number": 170,
+    "stars": 2,
+    "title": "対数関数を含む不等式(2)",
+    "page": "336"
+  },
+  {
+    "book": "2B",
+    "number": 171,
+    "stars": 2,
+    "title": "無理数となる対数",
+    "page": "337"
+  },
+  {
+    "book": "2B",
+    "number": 172,
+    "stars": 3,
+    "title": "対数関数の最大・最小(1)",
+    "page": "338"
+  },
+  {
+    "book": "2B",
+    "number": 173,
+    "stars": 4,
+    "title": "対数関数の最大・最小(2)",
+    "page": "339"
+  },
+  {
+    "book": "2B",
+    "number": 174,
+    "stars": 4,
+    "title": "対数関数を含む不等式と領域",
+    "page": "340"
+  },
+  {
+    "book": "2B",
+    "number": 175,
+    "stars": 3,
+    "title": "対数の大小(2)",
+    "page": "341"
+  },
+  {
+    "book": "2B",
+    "number": 176,
+    "stars": 3,
+    "title": "桁数と小数第何位",
+    "page": "342"
+  },
+  {
+    "book": "2B",
+    "number": 177,
+    "stars": 4,
+    "title": "最高位の数字",
+    "page": "343"
+  },
+  {
+    "book": "2B",
+    "number": 178,
+    "stars": 3,
+    "title": "常用対数の応用",
+    "page": "344"
+  },
+  {
+    "book": "2B",
+    "number": 179,
+    "stars": 2,
+    "title": "極限より係数決定",
+    "page": "354"
+  },
+  {
+    "book": "2B",
+    "number": 180,
+    "stars": 2,
+    "title": "平均変化率と微分係数",
+    "page": "355"
+  },
+  {
+    "book": "2B",
+    "number": 181,
+    "stars": 2,
+    "title": "微分係数",
+    "page": "356"
+  },
+  {
+    "book": "2B",
+    "number": 182,
+    "stars": 2,
+    "title": "導関数の計算(1)",
+    "page": "357"
+  },
+  {
+    "book": "2B",
+    "number": 183,
+    "stars": 2,
+    "title": "導関数の計算(2)",
+    "page": "358"
+  },
+  {
+    "book": "2B",
+    "number": 184,
+    "stars": 2,
+    "title": "積と累乗の微分",
+    "page": "360"
+  },
+  {
+    "book": "2B",
+    "number": 185,
+    "stars": 2,
+    "title": "導関数と微分係数",
+    "page": "361"
+  },
+  {
+    "book": "2B",
+    "number": 186,
+    "stars": 2,
+    "title": "関数の決定",
+    "page": "362"
+  },
+  {
+    "book": "2B",
+    "number": 187,
+    "stars": 3,
+    "title": "多項式が(x-a)²で割り切れる条件",
+    "page": "363"
+  },
+  {
+    "book": "2B",
+    "number": 188,
+    "stars": 2,
+    "title": "接線の方程式",
+    "page": "364"
+  },
+  {
+    "book": "2B",
+    "number": 189,
+    "stars": 2,
+    "title": "与えられた点を通る接線",
+    "page": "366"
+  },
+  {
+    "book": "2B",
+    "number": 190,
+    "stars": 3,
+    "title": "接線に垂直な直線（法線）",
+    "page": "367"
+  },
+  {
+    "book": "2B",
+    "number": 191,
+    "stars": 3,
+    "title": "3次関数のグラフと接線",
+    "page": "368"
+  },
+  {
+    "book": "2B",
+    "number": 192,
+    "stars": 2,
+    "title": "共通接線(1)",
+    "page": "370"
+  },
+  {
+    "book": "2B",
+    "number": 193,
+    "stars": 2,
+    "title": "共通接線(2)",
+    "page": "372"
+  },
+  {
+    "book": "2B",
+    "number": 194,
+    "stars": 2,
+    "title": "3次関数のグラフ",
+    "page": "376"
+  },
+  {
+    "book": "2B",
+    "number": 195,
+    "stars": 2,
+    "title": "4次関数のグラフ",
+    "page": "377"
+  },
+  {
+    "book": "2B",
+    "number": 196,
+    "stars": 3,
+    "title": "極値をもたない条件",
+    "page": "379"
+  },
+  {
+    "book": "2B",
+    "number": 197,
+    "stars": 3,
+    "title": "絶対値記号を含む関数のグラフ",
+    "page": "382"
+  },
+  {
+    "book": "2B",
+    "number": 198,
+    "stars": 3,
+    "title": "極値より関数の決定",
+    "page": "383"
+  },
+  {
+    "book": "2B",
+    "number": 199,
+    "stars": 3,
+    "title": "極大値と極小値の差",
+    "page": "384"
+  },
+  {
+    "book": "2B",
+    "number": 200,
+    "stars": 3,
+    "title": "極大値と極小値の和",
+    "page": "385"
+  },
+  {
+    "book": "2B",
+    "number": 201,
+    "stars": 2,
+    "title": "区間における最大・最小",
+    "page": "387"
+  },
+  {
+    "book": "2B",
+    "number": 202,
+    "stars": 3,
+    "title": "最大・最小の応用(1)",
+    "page": "388"
+  },
+  {
+    "book": "2B",
+    "number": 203,
+    "stars": 3,
+    "title": "最大・最小の応用(2)",
+    "page": "389"
+  },
+  {
+    "book": "2B",
+    "number": 204,
+    "stars": 2,
+    "title": "最大・最小の応用(3)",
+    "page": "390"
+  },
+  {
+    "book": "2B",
+    "number": 205,
+    "stars": 3,
+    "title": "最大・最小より関数の決定",
+    "page": "391"
+  },
+  {
+    "book": "2B",
+    "number": 206,
+    "stars": 3,
+    "title": "いろいろな関数の最大・最小(1)",
+    "page": "392"
+  },
+  {
+    "book": "2B",
+    "number": 207,
+    "stars": 3,
+    "title": "いろいろな関数の最大・最小(2)",
+    "page": "393"
+  },
+  {
+    "book": "2B",
+    "number": 208,
+    "stars": 4,
+    "title": "条件付きの最大・最小",
+    "page": "394"
+  },
+  {
+    "book": "2B",
+    "number": 209,
+    "stars": 3,
+    "title": "体積の最大値",
+    "page": "395"
+  },
+  {
+    "book": "2B",
+    "number": 210,
+    "stars": 2,
+    "title": "実数解の個数(1)",
+    "page": "398"
+  },
+  {
+    "book": "2B",
+    "number": 211,
+    "stars": 2,
+    "title": "実数解の個数(2)",
+    "page": "399"
+  },
+  {
+    "book": "2B",
+    "number": 212,
+    "stars": 2,
+    "title": "不等式の証明",
+    "page": "400"
+  },
+  {
+    "book": "2B",
+    "number": 213,
+    "stars": 4,
+    "title": "不等式を満たす定数の値の範囲",
+    "page": "401"
+  },
+  {
+    "book": "2B",
+    "number": 214,
+    "stars": 3,
+    "title": "3本の接線が引けるための条件(1)",
+    "page": "402"
+  },
+  {
+    "book": "2B",
+    "number": 215,
+    "stars": 3,
+    "title": "3本の接線が引けるための条件(2)",
+    "page": "403"
+  },
+  {
+    "book": "2B",
+    "number": 216,
+    "stars": 3,
+    "title": "三角不等式",
+    "page": "404"
+  },
+  {
+    "book": "2B",
+    "number": 217,
+    "stars": 3,
+    "title": "運動と微分",
+    "page": "407"
+  },
+  {
+    "book": "2B",
+    "number": 218,
+    "stars": 2,
+    "title": "不定積分",
+    "page": "417"
+  },
+  {
+    "book": "2B",
+    "number": 219,
+    "stars": 1,
+    "title": "原始関数を求める",
+    "page": "418"
+  },
+  {
+    "book": "2B",
+    "number": 220,
+    "stars": 3,
+    "title": "曲線の決定",
+    "page": "419"
+  },
+  {
+    "book": "2B",
+    "number": 221,
+    "stars": 2,
+    "title": "定積分(1) 偶関数・奇関数",
+    "page": "420"
+  },
+  {
+    "book": "2B",
+    "number": 222,
+    "stars": 3,
+    "title": "定積分(2) 絶対値記号を含む関数など",
+    "page": "421"
+  },
+  {
+    "book": "2B",
+    "number": 223,
+    "stars": 3,
+    "title": "絶対値記号を含む関数の定積分",
+    "page": "422"
+  },
+  {
+    "book": "2B",
+    "number": 224,
+    "stars": 2,
+    "title": "(x-α)(x-β)の定積分",
+    "page": "423"
+  },
+  {
+    "book": "2B",
+    "number": 225,
+    "stars": 2,
+    "title": "関数の直交性",
+    "page": "424"
+  },
+  {
+    "book": "2B",
+    "number": 226,
+    "stars": 3,
+    "title": "定積分の不等式の証明",
+    "page": "425"
+  },
+  {
+    "book": "2B",
+    "number": 227,
+    "stars": 2,
+    "title": "関数の決定(1)",
+    "page": "426"
+  },
+  {
+    "book": "2B",
+    "number": 228,
+    "stars": 2,
+    "title": "関数の決定(2)",
+    "page": "428"
+  },
+  {
+    "book": "2B",
+    "number": 229,
+    "stars": 3,
+    "title": "定積分で表された関数の極値",
+    "page": "429"
+  },
+  {
+    "book": "2B",
+    "number": 230,
+    "stars": 1,
+    "title": "曲線とx軸の間の面積",
+    "page": "434"
+  },
+  {
+    "book": "2B",
+    "number": 231,
+    "stars": 1,
+    "title": "直線・曲線の間の面積",
+    "page": "435"
+  },
+  {
+    "book": "2B",
+    "number": 232,
+    "stars": 2,
+    "title": "不等式の表す領域の面積",
+    "page": "437"
+  },
+  {
+    "book": "2B",
+    "number": 233,
+    "stars": 3,
+    "title": "放物線と接線の囲む面積(1)",
+    "page": "438"
+  },
+  {
+    "book": "2B",
+    "number": 234,
+    "stars": 3,
+    "title": "放物線と接線の囲む面積(2)",
+    "page": "440"
+  },
+  {
+    "book": "2B",
+    "number": 235,
+    "stars": 4,
+    "title": "3次関数のグラフと面積",
+    "page": "442"
+  },
+  {
+    "book": "2B",
+    "number": 236,
+    "stars": 3,
+    "title": "3次関数のグラフと接線の間の面積",
+    "page": "444"
+  },
+  {
+    "book": "2B",
+    "number": 237,
+    "stars": 3,
+    "title": "面積の比",
+    "page": "446"
+  },
+  {
+    "book": "2B",
+    "number": 238,
+    "stars": 3,
+    "title": "面積の最小値",
+    "page": "447"
+  },
+  {
+    "book": "2B",
+    "number": 239,
+    "stars": 3,
+    "title": "絶対値記号を含む関数と面積",
+    "page": "448"
+  },
+  {
+    "book": "2B",
+    "number": 240,
+    "stars": 2,
+    "title": "面積の相等",
+    "page": "450"
+  },
+  {
+    "book": "2B",
+    "number": 241,
+    "stars": 3,
+    "title": "放物線と円の間の面積",
+    "page": "452"
+  },
+  {
+    "book": "2B",
+    "number": 242,
+    "stars": 4,
+    "title": "4次関数のグラフと面積",
+    "page": "454"
+  },
+  {
+    "book": "2B",
+    "number": 243,
+    "stars": 2,
+    "title": "曲線とy軸の間の面積",
+    "page": "457"
+  },
+  {
+    "book": "2B",
+    "number": 244,
+    "stars": 2,
+    "title": "体積(1)",
+    "page": "460"
+  },
+  {
+    "book": "2B",
+    "number": 245,
+    "stars": 3,
+    "title": "体積(2)",
+    "page": "461"
+  },
+  {
+    "book": "2B",
+    "number": "B1.1",
+    "stars": 2,
+    "title": "等差数列の一般項",
+    "page": "B1-4"
+  },
+  {
+    "book": "2B",
+    "number": "B1.2",
+    "stars": 2,
+    "title": "3つの数が等差数列",
+    "page": "B1-5"
+  },
+  {
+    "book": "2B",
+    "number": "B1.3",
+    "stars": 2,
+    "title": "調和数列",
+    "page": "B1-6"
+  },
+  {
+    "book": "2B",
+    "number": "B1.4",
+    "stars": 2,
+    "title": "等差数列の和",
+    "page": "B1-7"
+  },
+  {
+    "book": "2B",
+    "number": "B1.5",
+    "stars": 2,
+    "title": "数列の共通項",
+    "page": "B1-8"
+  },
+  {
+    "book": "2B",
+    "number": "B1.6",
+    "stars": 3,
+    "title": "2つの等差数列に共通な数列",
+    "page": "B1-9"
+  },
+  {
+    "book": "2B",
+    "number": "B1.7",
+    "stars": 2,
+    "title": "等差数列の和の最大値",
+    "page": "B1-10"
+  },
+  {
+    "book": "2B",
+    "number": "B1.8",
+    "stars": 3,
+    "title": "既約分数の和",
+    "page": "B1-11"
+  },
+  {
+    "book": "2B",
+    "number": "B1.9",
+    "stars": 2,
+    "title": "等比数列の一般項",
+    "page": "B1-12"
+  },
+  {
+    "book": "2B",
+    "number": "B1.10",
+    "stars": 2,
+    "title": "3つの数が等比数列",
+    "page": "B1-13"
+  },
+  {
+    "book": "2B",
+    "number": "B1.11",
+    "stars": 2,
+    "title": "等比数列の和",
+    "page": "B1-14"
+  },
+  {
+    "book": "2B",
+    "number": "B1.12",
+    "stars": 3,
+    "title": "和から等比数列の決定",
+    "page": "B1-15"
+  },
+  {
+    "book": "2B",
+    "number": "B1.13",
+    "stars": 3,
+    "title": "等差数列と等比数列に共通な数列",
+    "page": "B1-17"
+  },
+  {
+    "book": "2B",
+    "number": "B1.14",
+    "stars": 3,
+    "title": "複利計算",
+    "page": "B1-18"
+  },
+  {
+    "book": "2B",
+    "number": "B1.15",
+    "stars": 3,
+    "title": "いろいろな等比数列の和",
+    "page": "B1-20"
+  },
+  {
+    "book": "2B",
+    "number": "B1.16",
+    "stars": 3,
+    "title": "等比数列と図形",
+    "page": "B1-21"
+  },
+  {
+    "book": "2B",
+    "number": "B1.17",
+    "stars": 3,
+    "title": "等比数列の応用",
+    "page": "B1-22"
+  },
+  {
+    "book": "2B",
+    "number": "B1.18",
+    "stars": 2,
+    "title": "Σの計算(1)",
+    "page": "B1-29"
+  },
+  {
+    "book": "2B",
+    "number": "B1.19",
+    "stars": 2,
+    "title": "Σの計算(2)",
+    "page": "B1-30"
+  },
+  {
+    "book": "2B",
+    "number": "B1.20",
+    "stars": 2,
+    "title": "階差数列(1)",
+    "page": "B1-36"
+  },
+  {
+    "book": "2B",
+    "number": "B1.21",
+    "stars": 3,
+    "title": "階差数列(2)",
+    "page": "B1-37"
+  },
+  {
+    "book": "2B",
+    "number": "B1.22",
+    "stars": 3,
+    "title": "和S_nと一般項a_nの関係(1)",
+    "page": "B1-38"
+  },
+  {
+    "book": "2B",
+    "number": "B1.23",
+    "stars": 3,
+    "title": "和S_nと一般項a_nの関係(2)",
+    "page": "B1-39"
+  },
+  {
+    "book": "2B",
+    "number": "B1.24",
+    "stars": 3,
+    "title": "部分分数",
+    "page": "B1-42"
+  },
+  {
+    "book": "2B",
+    "number": "B1.25",
+    "stars": 3,
+    "title": "(等差数列)×(等比数列)の和",
+    "page": "B1-46"
+  },
+  {
+    "book": "2B",
+    "number": "B1.26",
+    "stars": 3,
+    "title": "いろいろな数列の和(1)",
+    "page": "B1-47"
+  },
+  {
+    "book": "2B",
+    "number": "B1.27",
+    "stars": 3,
+    "title": "いろいろな数列の和(2)",
+    "page": "B1-48"
+  },
+  {
+    "book": "2B",
+    "number": "B1.28",
+    "stars": 3,
+    "title": "群数列(1)",
+    "page": "B1-50"
+  },
+  {
+    "book": "2B",
+    "number": "B1.29",
+    "stars": 3,
+    "title": "群数列(2)",
+    "page": "B1-52"
+  },
+  {
+    "book": "2B",
+    "number": "B1.30",
+    "stars": 3,
+    "title": "群数列(3)",
+    "page": "B1-53"
+  },
+  {
+    "book": "2B",
+    "number": "B1.31",
+    "stars": 3,
+    "title": "格子点の個数",
+    "page": "B1-54"
+  },
+  {
+    "book": "2B",
+    "number": "B1.32",
+    "stars": 3,
+    "title": "漸化式と一般項",
+    "page": "B1-62"
+  },
+  {
+    "book": "2B",
+    "number": "B1.33",
+    "stars": 2,
+    "title": "漸化式 a_(n+1)=pa_n+q (p≠1)",
+    "page": "B1-63"
+  },
+  {
+    "book": "2B",
+    "number": "B1.34",
+    "stars": 2,
+    "title": "漸化式 a_(n+1)=pa_n+f(n) (p≠1)",
+    "page": "B1-65"
+  },
+  {
+    "book": "2B",
+    "number": "B1.35",
+    "stars": 3,
+    "title": "漸化式 a_(n+1)=pa_n+r^n (p≠1)",
+    "page": "B1-68"
+  },
+  {
+    "book": "2B",
+    "number": "B1.36",
+    "stars": 3,
+    "title": "漸化式 a_(n+1)=p・a_n^q",
+    "page": "B1-69"
+  },
+  {
+    "book": "2B",
+    "number": "B1.37",
+    "stars": 3,
+    "title": "漸化式 f(n)a_(n+1)=f(n+1)a_n+q",
+    "page": "B1-70"
+  },
+  {
+    "book": "2B",
+    "number": "B1.38",
+    "stars": 3,
+    "title": "漸化式 a_(n+1)=f(n)・a_n",
+    "page": "B1-71"
+  },
+  {
+    "book": "2B",
+    "number": "B1.39",
+    "stars": 3,
+    "title": "分数型の漸化式(1)",
+    "page": "B1-72"
+  },
+  {
+    "book": "2B",
+    "number": "B1.40",
+    "stars": 4,
+    "title": "分数型の漸化式(2)",
+    "page": "B1-73"
+  },
+  {
+    "book": "2B",
+    "number": "B1.41",
+    "stars": 4,
+    "title": "和S_nと漸化式",
+    "page": "B1-76"
+  },
+  {
+    "book": "2B",
+    "number": "B1.42",
+    "stars": 3,
+    "title": "隣接3項間の漸化式(1)",
+    "page": "B1-78"
+  },
+  {
+    "book": "2B",
+    "number": "B1.43",
+    "stars": 3,
+    "title": "隣接3項間の漸化式(2)",
+    "page": "B1-82"
+  },
+  {
+    "book": "2B",
+    "number": "B1.44",
+    "stars": 4,
+    "title": "隣接3項間の漸化式(3)",
+    "page": "B1-83"
+  },
+  {
+    "book": "2B",
+    "number": "B1.45",
+    "stars": 3,
+    "title": "連立漸化式",
+    "page": "B1-86"
+  },
+  {
+    "book": "2B",
+    "number": "B1.46",
+    "stars": 3,
+    "title": "無理数のn乗と漸化式",
+    "page": "B1-90"
+  },
+  {
+    "book": "2B",
+    "number": "B1.47",
+    "stars": 3,
+    "title": "漸化式と図形(1)",
+    "page": "B1-92"
+  },
+  {
+    "book": "2B",
+    "number": "B1.48",
+    "stars": 3,
+    "title": "漸化式と図形(2)",
+    "page": "B1-93"
+  },
+  {
+    "book": "2B",
+    "number": "B1.49",
+    "stars": 3,
+    "title": "漸化式と場合の数",
+    "page": "B1-94"
+  },
+  {
+    "book": "2B",
+    "number": "B1.50",
+    "stars": 3,
+    "title": "漸化式と確率(1)",
+    "page": "B1-96"
+  },
+  {
+    "book": "2B",
+    "number": "B1.51",
+    "stars": 3,
+    "title": "漸化式と確率(2)",
+    "page": "B1-97"
+  },
+  {
+    "book": "2B",
+    "number": "B1.52",
+    "stars": 3,
+    "title": "漸化式と確率(3)",
+    "page": "B1-98"
+  },
+  {
+    "book": "2B",
+    "number": "B1.53",
+    "stars": 4,
+    "title": "漸化式と確率(4)",
+    "page": "B1-100"
+  },
+  {
+    "book": "2B",
+    "number": "B1.54",
+    "stars": 3,
+    "title": "確率の最大",
+    "page": "B1-101"
+  },
+  {
+    "book": "2B",
+    "number": "B1.55",
+    "stars": 3,
+    "title": "nを含む確率(1)",
+    "page": "B1-102"
+  },
+  {
+    "book": "2B",
+    "number": "B1.56",
+    "stars": 4,
+    "title": "nを含む確率(2)",
+    "page": "B1-104"
+  },
+  {
+    "book": "2B",
+    "number": "B1.57",
+    "stars": 4,
+    "title": "複数の数列の漸化式",
+    "page": "B1-105"
+  },
+  {
+    "book": "2B",
+    "number": "B1.58",
+    "stars": 2,
+    "title": "数学的帰納法(1)・等式の証明",
+    "page": "B1-106"
+  },
+  {
+    "book": "2B",
+    "number": "B1.59",
+    "stars": 2,
+    "title": "数学的帰納法(2)・不等式の証明",
+    "page": "B1-107"
+  },
+  {
+    "book": "2B",
+    "number": "B1.60",
+    "stars": 2,
+    "title": "数学的帰納法(3)・命題の証明",
+    "page": "B1-108"
+  },
+  {
+    "book": "2B",
+    "number": "B1.61",
+    "stars": 3,
+    "title": "一般項を推測し数学的帰納法で証明(1)",
+    "page": "B1-109"
+  },
+  {
+    "book": "2B",
+    "number": "B1.62",
+    "stars": 3,
+    "title": "一般項を推測し数学的帰納法で証明(2)",
+    "page": "B1-110"
+  },
+  {
+    "book": "2B",
+    "number": "B1.63",
+    "stars": 4,
+    "title": "n=k-1、kを仮定する数学的帰納法",
+    "page": "B1-112"
+  },
+  {
+    "book": "2B",
+    "number": "B1.64",
+    "stars": 4,
+    "title": "n≦kを仮定する数学的帰納法",
+    "page": "B1-113"
+  },
+  {
+    "book": "2B",
+    "number": "B1.65",
+    "stars": 4,
+    "title": "数学的帰納法と合同式",
+    "page": "B1-114"
+  },
+  {
+    "book": "2B",
+    "number": "B1.66",
+    "stars": 4,
+    "title": "多項式の項の係数による数列",
+    "page": "B1-115"
+  },
+  {
+    "book": "2B",
+    "number": "B2.1",
+    "stars": 2,
+    "title": "確率分布と確率変数の平均",
+    "page": "B2-6"
+  },
+  {
+    "book": "2B",
+    "number": "B2.2",
+    "stars": 2,
+    "title": "1次式の確率変数の平均・分散・標準偏差",
+    "page": "B2-7"
+  },
+  {
+    "book": "2B",
+    "number": "B2.3",
+    "stars": 2,
+    "title": "確率変数の和の平均・分散",
+    "page": "B2-8"
+  },
+  {
+    "book": "2B",
+    "number": "B2.4",
+    "stars": 2,
+    "title": "二項分布の平均と標準偏差",
+    "page": "B2-9"
+  },
+  {
+    "book": "2B",
+    "number": "B2.5",
+    "stars": 3,
+    "title": "確率変数の平均・標準偏差",
+    "page": "B2-11"
+  },
+  {
+    "book": "2B",
+    "number": "B2.6",
+    "stars": 3,
+    "title": "漸化式と平均・分散",
+    "page": "B2-12"
+  },
+  {
+    "book": "2B",
+    "number": "B2.7",
+    "stars": 2,
+    "title": "確率密度関数と平均・標準偏差",
+    "page": "B2-20"
+  },
+  {
+    "book": "2B",
+    "number": "B2.8",
+    "stars": 2,
+    "title": "正規分布の標準化(1)",
+    "page": "B2-21"
+  },
+  {
+    "book": "2B",
+    "number": "B2.9",
+    "stars": 3,
+    "title": "正規分布の標準化(2)",
+    "page": "B2-22"
+  },
+  {
+    "book": "2B",
+    "number": "B2.10",
+    "stars": 2,
+    "title": "二項分布と正規分布(1)",
+    "page": "B2-23"
+  },
+  {
+    "book": "2B",
+    "number": "B2.11",
+    "stars": 3,
+    "title": "二項分布と正規分布(2)",
+    "page": "B2-24"
+  },
+  {
+    "book": "2B",
+    "number": "B2.12",
+    "stars": 3,
+    "title": "標本平均の平均・標準偏差",
+    "page": "B2-32"
+  },
+  {
+    "book": "2B",
+    "number": "B2.13",
+    "stars": 2,
+    "title": "標本平均の標準化",
+    "page": "B2-33"
+  },
+  {
+    "book": "2B",
+    "number": "B2.14",
+    "stars": 2,
+    "title": "母平均の推定",
+    "page": "B2-34"
+  },
+  {
+    "book": "2B",
+    "number": "B2.15",
+    "stars": 2,
+    "title": "母比率の推定",
+    "page": "B2-35"
+  },
+  {
+    "book": "2B",
+    "number": "B2.16",
+    "stars": 3,
+    "title": "仮説検定（片側検定・母平均の検定）",
+    "page": "B2-36"
+  },
+  {
+    "book": "2B",
+    "number": "B2.17",
+    "stars": 3,
+    "title": "仮説検定（片側検定・母比率の検定）",
+    "page": "B2-38"
+  },
+  {
+    "book": "2B",
+    "number": "B2.18",
+    "stars": 2,
+    "title": "仮説検定（両側検定）",
+    "page": "B2-39"
+  },
+  {
+    "book": "2B",
+    "number": "B2.19",
+    "stars": 4,
+    "title": "仮説検定と標本の最小値",
+    "page": "B2-40"
+  },
+  {
+    "book": "2B",
+    "number": "C1.1",
+    "stars": 2,
+    "title": "ベクトルの分解",
+    "page": "C1-6"
+  },
+  {
+    "book": "2B",
+    "number": "C1.2",
+    "stars": 2,
+    "title": "ベクトルの成分と大きさ(1)",
+    "page": "C1-7"
+  },
+  {
+    "book": "2B",
+    "number": "C1.3",
+    "stars": 2,
+    "title": "ベクトルの成分と大きさ(2)",
+    "page": "C1-8"
+  },
+  {
+    "book": "2B",
+    "number": "C1.4",
+    "stars": 2,
+    "title": "ベクトルの成分と分解",
+    "page": "C1-9"
+  },
+  {
+    "book": "2B",
+    "number": "C1.5",
+    "stars": 2,
+    "title": "ベクトルの平行条件",
+    "page": "C1-11"
+  },
+  {
+    "book": "2B",
+    "number": "C1.6",
+    "stars": 2,
+    "title": "平行四辺形とベクトル",
+    "page": "C1-12"
+  },
+  {
+    "book": "2B",
+    "number": "C1.7",
+    "stars": 1,
+    "title": "ベクトルの内積",
+    "page": "C1-17"
+  },
+  {
+    "book": "2B",
+    "number": "C1.8",
+    "stars": 2,
+    "title": "内積の計算法則",
+    "page": "C1-18"
+  },
+  {
+    "book": "2B",
+    "number": "C1.9",
+    "stars": 2,
+    "title": "2つのベクトルのなす角",
+    "page": "C1-20"
+  },
+  {
+    "book": "2B",
+    "number": "C1.10",
+    "stars": 3,
+    "title": "ベクトルの垂直条件",
+    "page": "C1-21"
+  },
+  {
+    "book": "2B",
+    "number": "C1.11",
+    "stars": 3,
+    "title": "ベクトルの不等式の証明",
+    "page": "C1-22"
+  },
+  {
+    "book": "2B",
+    "number": "C1.12",
+    "stars": 3,
+    "title": "内積とベクトルの大きさ(1)",
+    "page": "C1-25"
+  },
+  {
+    "book": "2B",
+    "number": "C1.13",
+    "stars": 2,
+    "title": "内積とベクトルの大きさ(2)",
+    "page": "C1-26"
+  },
+  {
+    "book": "2B",
+    "number": "C1.14",
+    "stars": 3,
+    "title": "内積とベクトルの大きさ(3)",
+    "page": "C1-27"
+  },
+  {
+    "book": "2B",
+    "number": "C1.15",
+    "stars": 4,
+    "title": "内積とベクトルの大きさ(4)",
+    "page": "C1-28"
+  },
+  {
+    "book": "2B",
+    "number": "C1.16",
+    "stars": 4,
+    "title": "内積とベクトルの大きさ(5)",
+    "page": "C1-29"
+  },
+  {
+    "book": "2B",
+    "number": "C1.17",
+    "stars": 3,
+    "title": "内積と三角形の面積",
+    "page": "C1-30"
+  },
+  {
+    "book": "2B",
+    "number": "C1.18",
+    "stars": 3,
+    "title": "三角形の形状",
+    "page": "C1-31"
+  },
+  {
+    "book": "2B",
+    "number": "C1.19",
+    "stars": 2,
+    "title": "分点と重心の位置ベクトル",
+    "page": "C1-36"
+  },
+  {
+    "book": "2B",
+    "number": "C1.20",
+    "stars": 2,
+    "title": "点Pの位置ベクトル(1)",
+    "page": "C1-37"
+  },
+  {
+    "book": "2B",
+    "number": "C1.21",
+    "stars": 3,
+    "title": "点Pの位置ベクトル(2)",
+    "page": "C1-38"
+  },
+  {
+    "book": "2B",
+    "number": "C1.22",
+    "stars": 4,
+    "title": "ベクトルと軌跡",
+    "page": "C1-40"
+  },
+  {
+    "book": "2B",
+    "number": "C1.23",
+    "stars": 3,
+    "title": "交点の位置ベクトル(1)",
+    "page": "C1-42"
+  },
+  {
+    "book": "2B",
+    "number": "C1.24",
+    "stars": 3,
+    "title": "交点の位置ベクトル(2)",
+    "page": "C1-46"
+  },
+  {
+    "book": "2B",
+    "number": "C1.25",
+    "stars": 3,
+    "title": "交点の位置ベクトル(3)",
+    "page": "C1-47"
+  },
+  {
+    "book": "2B",
+    "number": "C1.26",
+    "stars": 3,
+    "title": "角の二等分線のベクトル",
+    "page": "C1-50"
+  },
+  {
+    "book": "2B",
+    "number": "C1.27",
+    "stars": 3,
+    "title": "内心の位置ベクトル",
+    "page": "C1-52"
+  },
+  {
+    "book": "2B",
+    "number": "C1.28",
+    "stars": 3,
+    "title": "外心の位置ベクトル",
+    "page": "C1-53"
+  },
+  {
+    "book": "2B",
+    "number": "C1.29",
+    "stars": 3,
+    "title": "垂心の位置ベクトル",
+    "page": "C1-54"
+  },
+  {
+    "book": "2B",
+    "number": "C1.30",
+    "stars": 3,
+    "title": "オイラー線",
+    "page": "C1-55"
+  },
+  {
+    "book": "2B",
+    "number": "C1.31",
+    "stars": 2,
+    "title": "対称な点の位置ベクトル",
+    "page": "C1-60"
+  },
+  {
+    "book": "2B",
+    "number": "C1.32",
+    "stars": 2,
+    "title": "直線と円の方程式",
+    "page": "C1-61"
+  },
+  {
+    "book": "2B",
+    "number": "C1.33",
+    "stars": 3,
+    "title": "直線のベクトル方程式(1)",
+    "page": "C1-62"
+  },
+  {
+    "book": "2B",
+    "number": "C1.34",
+    "stars": 2,
+    "title": "直線のベクトル方程式(2)",
+    "page": "C1-63"
+  },
+  {
+    "book": "2B",
+    "number": "C1.35",
+    "stars": 2,
+    "title": "2直線のなす角",
+    "page": "C1-64"
+  },
+  {
+    "book": "2B",
+    "number": "C1.36",
+    "stars": 2,
+    "title": "円のベクトル方程式(1)",
+    "page": "C1-65"
+  },
+  {
+    "book": "2B",
+    "number": "C1.37",
+    "stars": 3,
+    "title": "円のベクトル方程式(2)",
+    "page": "C1-66"
+  },
+  {
+    "book": "2B",
+    "number": "C1.38",
+    "stars": 3,
+    "title": "円の接線、線分の垂直二等分線のベクトル方程式",
+    "page": "C1-68"
+  },
+  {
+    "book": "2B",
+    "number": "C1.39",
+    "stars": 3,
+    "title": "条件を満たす点の動く範囲(1)",
+    "page": "C1-72"
+  },
+  {
+    "book": "2B",
+    "number": "C1.40",
+    "stars": 3,
+    "title": "条件を満たす点の動く範囲(2)",
+    "page": "C1-74"
+  },
+  {
+    "book": "2B",
+    "number": "C1.41",
+    "stars": 3,
+    "title": "条件を満たす点の動く範囲(3)",
+    "page": "C1-76"
+  },
+  {
+    "book": "2B",
+    "number": "C1.42",
+    "stars": 2,
+    "title": "空間における直線と平面",
+    "page": "C1-89"
+  },
+  {
+    "book": "2B",
+    "number": "C1.43",
+    "stars": 1,
+    "title": "空間の点と平面(1)",
+    "page": "C1-90"
+  },
+  {
+    "book": "2B",
+    "number": "C1.44",
+    "stars": 1,
+    "title": "空間の点と平面(2)",
+    "page": "C1-91"
+  },
+  {
+    "book": "2B",
+    "number": "C1.45",
+    "stars": 1,
+    "title": "空間における2点間の距離と三角形の形状",
+    "page": "C1-92"
+  },
+  {
+    "book": "2B",
+    "number": "C1.46",
+    "stars": 1,
+    "title": "等距離にある点",
+    "page": "C1-93"
+  },
+  {
+    "book": "2B",
+    "number": "C1.47",
+    "stars": 1,
+    "title": "分点の座標",
+    "page": "C1-94"
+  },
+  {
+    "book": "2B",
+    "number": "C1.48",
+    "stars": 1,
+    "title": "空間のベクトル",
+    "page": "C1-100"
+  },
+  {
+    "book": "2B",
+    "number": "C1.49",
+    "stars": 1,
+    "title": "空間のベクトルの成分(1)",
+    "page": "C1-101"
+  },
+  {
+    "book": "2B",
+    "number": "C1.50",
+    "stars": 2,
+    "title": "空間のベクトルの成分(2)",
+    "page": "C1-102"
+  },
+  {
+    "book": "2B",
+    "number": "C1.51",
+    "stars": 2,
+    "title": "空間のベクトルの内積(1)",
+    "page": "C1-103"
+  },
+  {
+    "book": "2B",
+    "number": "C1.52",
+    "stars": 2,
+    "title": "空間のベクトルの内積(2)",
+    "page": "C1-104"
+  },
+  {
+    "book": "2B",
+    "number": "C1.53",
+    "stars": 2,
+    "title": "空間のベクトルのなす角",
+    "page": "C1-105"
+  },
+  {
+    "book": "2B",
+    "number": "C1.54",
+    "stars": 3,
+    "title": "空間のベクトルの大きさ",
+    "page": "C1-106"
+  },
+  {
+    "book": "2B",
+    "number": "C1.55",
+    "stars": 3,
+    "title": "垂直な単位ベクトル",
+    "page": "C1-107"
+  },
+  {
+    "book": "2B",
+    "number": "C1.56",
+    "stars": 4,
+    "title": "三角形の面積と四面体の高さ",
+    "page": "C1-110"
+  },
+  {
+    "book": "2B",
+    "number": "C1.57",
+    "stars": 4,
+    "title": "方向余弦",
+    "page": "C1-111"
+  },
+  {
+    "book": "2B",
+    "number": "C1.58",
+    "stars": 2,
+    "title": "空間の位置ベクトルと四面体の重心",
+    "page": "C1-116"
+  },
+  {
+    "book": "2B",
+    "number": "C1.59",
+    "stars": 3,
+    "title": "同一平面上にある条件",
+    "page": "C1-117"
+  },
+  {
+    "book": "2B",
+    "number": "C1.60",
+    "stars": 3,
+    "title": "空間の位置ベクトル(1)",
+    "page": "C1-119"
+  },
+  {
+    "book": "2B",
+    "number": "C1.61",
+    "stars": 4,
+    "title": "空間の位置ベクトル(2)",
+    "page": "C1-120"
+  },
+  {
+    "book": "2B",
+    "number": "C1.62",
+    "stars": 3,
+    "title": "空間の位置ベクトル(3)",
+    "page": "C1-121"
+  },
+  {
+    "book": "2B",
+    "number": "C1.63",
+    "stars": 3,
+    "title": "空間の位置ベクトル(4)",
+    "page": "C1-122"
+  },
+  {
+    "book": "2B",
+    "number": "C1.64",
+    "stars": 3,
+    "title": "空間の位置ベクトル(5)",
+    "page": "C1-123"
+  },
+  {
+    "book": "2B",
+    "number": "C1.65",
+    "stars": 3,
+    "title": "点の位置と体積比",
+    "page": "C1-124"
+  },
+  {
+    "book": "2B",
+    "number": "C1.66",
+    "stars": 2,
+    "title": "直線の方程式(1)",
+    "page": "C1-129"
+  },
+  {
+    "book": "2B",
+    "number": "C1.67",
+    "stars": 3,
+    "title": "直線の方程式(2)",
+    "page": "C1-130"
+  },
+  {
+    "book": "2B",
+    "number": "C1.68",
+    "stars": 3,
+    "title": "空間における交点の座標(1)",
+    "page": "C1-133"
+  },
+  {
+    "book": "2B",
+    "number": "C1.69",
+    "stars": 3,
+    "title": "空間における交点の座標(2)",
+    "page": "C1-134"
+  },
+  {
+    "book": "2B",
+    "number": "C1.70",
+    "stars": 3,
+    "title": "平面の方程式の決定",
+    "page": "C1-137"
+  },
+  {
+    "book": "2B",
+    "number": "C1.71",
+    "stars": 4,
+    "title": "2平面のなす角",
+    "page": "C1-138"
+  },
+  {
+    "book": "2B",
+    "number": "C1.72",
+    "stars": 4,
+    "title": "直線と平面のなす角",
+    "page": "C1-140"
+  },
+  {
+    "book": "2B",
+    "number": "C1.73",
+    "stars": 4,
+    "title": "対称な点の位置ベクトル",
+    "page": "C1-141"
+  },
+  {
+    "book": "2B",
+    "number": "C1.74",
+    "stars": 4,
+    "title": "平面への垂線の足",
+    "page": "C1-142"
+  },
+  {
+    "book": "2B",
+    "number": "C1.75",
+    "stars": 2,
+    "title": "球面の方程式(1)",
+    "page": "C1-145"
+  },
+  {
+    "book": "2B",
+    "number": "C1.76",
+    "stars": 3,
+    "title": "球面の方程式(2)",
+    "page": "C1-146"
+  },
+  {
+    "book": "2B",
+    "number": "C1.77",
+    "stars": 3,
+    "title": "球面と交わる直線",
+    "page": "C1-147"
+  },
+  {
+    "book": "2B",
+    "number": "C1.78",
+    "stars": 2,
+    "title": "2つの球面の交線と交線を含む平面の方程式",
+    "page": "C1-148"
+  },
+  {
+    "book": "2B",
+    "number": "C1.79",
+    "stars": 4,
+    "title": "球面と平面の交線",
+    "page": "C1-150"
+  },
+  {
+    "book": "2B",
+    "number": "C1.80",
+    "stars": 3,
+    "title": "点と平面の距離",
+    "page": "C1-152"
+  },
+  {
+    "book": "2B",
+    "number": "C1.81",
+    "stars": 3,
+    "title": "条件を満たす点の動く範囲(4)",
+    "page": "C1-154"
+  }
+]

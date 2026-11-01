@@ -27,7 +27,7 @@ async function readState(page: Page): Promise<State> {
       }),
   );
 }
-async function seed(page: Page, state: State) {
+async function seed(page: Page, state: State, legacy = false) {
   await page.goto("/");
   await expect(
     page.getByRole("button", { name: "メニューを開く" }),
@@ -47,7 +47,7 @@ async function seed(page: Page, state: State) {
           tx.onerror = () => reject(tx.error);
         };
       }),
-    state,
+    legacy ? state : { ...state, catalog_version: 1 },
   );
   await page.reload();
   await expect(
@@ -71,7 +71,7 @@ function populated() {
 test("空状態から登録、キャンセル、即記録、取り消し、参考書の分離と再読み込み", async ({
   page,
 }) => {
-  await page.goto("/");
+  await seed(page, initialState());
   await expect(page.getByText("最初の問題を、ここに。")).toBeVisible();
   expect(await page.locator("header, nav").count()).toBe(0);
   await menu(page, "問題の登録と管理");
@@ -102,7 +102,7 @@ test("空状態から登録、キャンセル、即記録、取り消し、参�
   const state = await readState(page);
   expect(state.attempts).toHaveLength(1);
   expect(state.problems[0].latest_grade).toBe("A");
-  await page.getByRole("tab", { name: "Ⅱ＋B", exact: true }).click();
+  await page.getByRole("tab", { name: "Ⅱ＋B＋C", exact: true }).click();
   await expect(page.getByText("最初の問題を、ここに。")).toBeVisible();
   await menu(page, "問題の登録と管理");
   await page.getByLabel("問題番号", { exact: true }).fill("125");
@@ -307,7 +307,7 @@ for (const viewport of [
       .uncheck();
     await page.getByRole("button", { name: "設定を保存", exact: true }).click();
     await close(page);
-    await expect(page.locator(".universe")).toHaveClass(/still/);
+    await expect(page.locator(".study-desk")).toHaveClass(/still/);
     await first.click();
     await page.keyboard.press("Escape");
     expect(errors).toEqual([]);
@@ -555,7 +555,7 @@ test("動き停止・OSの動きを減らす設定ではドラッグせず、キ
   const enabled = populated();
   await seed(page, enabled);
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await expect(page.locator(".universe")).toHaveClass(/still/);
+  await expect(page.locator(".study-desk")).toHaveClass(/still/);
   original = (await card.boundingBox())!;
   await page.mouse.move(original.x + 50, original.y + 50);
   await page.mouse.down();
@@ -568,3 +568,115 @@ test("動き停止・OSの動きを減らす設定ではドラッグせず、キ
   await page.keyboard.press("Enter");
   await expect(page.getByRole("dialog")).toBeVisible();
 });
+
+test("初回から2冊714問を表示し、Ⅱ＋B＋Cの接頭辞付き番号を記録・復元できる", async ({
+  page,
+}, testInfo) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  await expect(page.locator(".problem-card")).toHaveCount(303);
+  expect(await page.locator("header,nav").count()).toBe(0);
+  await page.screenshot({
+    path: testInfo.outputPath("black-gold-default.png"),
+  });
+  const initial = await readState(page);
+  expect(initial.problems).toHaveLength(714);
+  expect(initial.settings.stars).toEqual([1, 2, 3, 4]);
+  await page.getByRole("tab", { name: "Ⅱ＋B＋C", exact: true }).click();
+  await expect(page.locator(".problem-card")).toHaveCount(411);
+  const card = page.getByRole("button", { name: /^問題 C1.79、/ });
+  await card.scrollIntoViewIfNeeded();
+  await page.screenshot({
+    path: testInfo.outputPath("black-gold-c-numbers.png"),
+  });
+  await card.click();
+  await page.getByText("問題情報・メモ・学習履歴", { exact: false }).click();
+  await expect(
+    page.getByText("球面と平面の交線", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("掲載ページ：C1-150", { exact: true }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: /^C 解説を少し確認/ }).click();
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await page.reload();
+  await expect(page.locator(".problem-card")).toHaveCount(410);
+  const saved = await readState(page);
+  expect(saved.problems).toHaveLength(714);
+  expect(saved.problems.find((p) => p.number === "C1.79")?.latest_grade).toBe(
+    "C",
+  );
+  await page.getByRole("tab", { name: "Ⅲ＋C", exact: true }).click();
+  await expect(page.getByText("最初の問題を、ここに。")).toBeVisible();
+});
+
+test("旧データへ不足分だけ追加し、削除した同梱問題は再読み込みで復活しない", async ({
+  page,
+}) => {
+  const legacy = applyImport(
+    initialState(),
+    [{ book: "1A", number: 1, stars: 4, line: 1 }],
+    false,
+  );
+  legacy.settings.stars = [3, 4];
+  legacy.problems[0].memo = "既存メモ";
+  legacy.attempts.push({
+    id: "legacy",
+    problem_id: legacy.problems[0].id,
+    grade: "D",
+    at: "2026-10-25T00:00:00Z",
+    memo: "",
+  });
+  await seed(page, recompute(legacy), true);
+  let saved = await readState(page);
+  expect(saved.problems).toHaveLength(714);
+  expect(saved.catalog_version).toBe(1);
+  expect(saved.problems[0]).toMatchObject({
+    id: legacy.problems[0].id,
+    stars: 4,
+    latest_grade: "D",
+    memo: "既存メモ",
+  });
+  expect(saved.settings.stars).toEqual([3, 4]);
+  await menu(page, "問題の登録と管理");
+  await page.getByRole("button", { name: /登録一覧の編集/ }).click();
+  await page.getByLabel("問題番号・タイトルで検索").fill("2");
+  await page
+    .locator(".problem-row")
+    .filter({ has: page.getByText("2", { exact: true }) })
+    .click();
+  await page
+    .getByRole("button", { name: "この問題を削除", exact: true })
+    .click();
+  await page
+    .getByRole("button", { name: "問題と履歴を削除する", exact: true })
+    .click();
+  await close(page);
+  await page.reload();
+  saved = await readState(page);
+  expect(saved.problems).toHaveLength(713);
+  expect(saved.problems.some((p) => p.book === "1A" && p.number === 2)).toBe(
+    false,
+  );
+  expect(saved.attempts).toHaveLength(1);
+});
+
+for (const width of [320, 390, 844]) {
+  test(`長い参考書タブとメニューが重ならない ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: width === 844 ? 390 : 844 });
+    await page.goto("/");
+    const middle = page.getByRole("tab", { name: "Ⅱ＋B＋C", exact: true });
+    await expect(middle).toBeVisible();
+    const menuRect = (await page
+      .getByRole("button", { name: "メニューを開く" })
+      .boundingBox())!;
+    const tabsRect = (await page.getByRole("tablist").boundingBox())!;
+    expect(tabsRect.x).toBeGreaterThan(menuRect.x + menuRect.width + 4);
+    expect(tabsRect.x + tabsRect.width).toBeLessThanOrEqual(width);
+    await middle.click();
+    await expect(page.locator(".problem-card")).toHaveCount(411);
+    expect(
+      await page.evaluate(() => document.documentElement.scrollWidth),
+    ).toBe(width);
+  });
+}

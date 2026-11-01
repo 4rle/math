@@ -1,4 +1,5 @@
-import { initialState, recompute, validateBackup, type State } from "./model";
+import { installBundledCatalog } from "./catalog";
+import { initialState, validateBackup, type State } from "./model";
 const DATABASE = "focusgold-orbit";
 let dbPromise: Promise<IDBDatabase> | undefined;
 export function database() {
@@ -28,21 +29,39 @@ export function database() {
 export async function loadState(): Promise<State> {
   const db = await database();
   return new Promise((resolve, reject) => {
-    const tx = db.transaction("state", "readonly");
-    const request = tx.objectStore("state").get("current");
+    // Serialize first installation across tabs and resolve only after durable save.
+    const tx = db.transaction("state", "readwrite"),
+      store = tx.objectStore("state");
+    const request = store.get("current");
+    let result: State;
+    let failure: unknown;
     request.onsuccess = () => {
       try {
         const stored = request.result;
-        resolve(
-          stored
-            ? { ...validateBackup(stored), revision: stored.revision || 0 }
-            : initialState(),
-        );
+        const previous = stored
+          ? { ...validateBackup(stored), revision: stored.revision || 0 }
+          : initialState();
+        result = installBundledCatalog(previous);
+        if (result !== previous) {
+          result = { ...result, revision: previous.revision + 1 };
+          store.put(result, "current");
+        }
       } catch (err) {
-        reject(err);
+        failure = err;
+        tx.abort();
       }
     };
-    request.onerror = () => reject(request.error);
+    tx.oncomplete = () => resolve(result);
+    tx.onerror = () =>
+      reject(failure || tx.error || new Error("データを開けませんでした。"));
+    tx.onabort = () =>
+      reject(
+        failure ||
+          tx.error ||
+          new Error(
+            "初期データを保存できませんでした。空き容量とブラウザーの保存設定を確認してください。",
+          ),
+      );
   });
 }
 export async function saveState(state: State): Promise<State> {

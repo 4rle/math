@@ -8,11 +8,12 @@ import {
   History,
   ChartNoAxesCombined,
   Database,
-  Sparkles,
+  Diamond as CandidateMark,
   ChevronRight,
   Check,
   RotateCcw,
-  Orbit,
+  Bookmark,
+  Diamond,
   BookOpen,
 } from "lucide-react";
 import {
@@ -54,7 +55,7 @@ const items = [
   ["history", "学習履歴", History],
   ["progress", "進捗", ChartNoAxesCombined],
   ["data", "データ", Database],
-  ["motion", "表示と動き", Sparkles],
+  ["motion", "表示と動き", Diamond],
 ] as const;
 type Page = (typeof items)[number][0] | "menu" | "manage";
 export default function App() {
@@ -149,7 +150,7 @@ export default function App() {
   if (!state)
     return (
       <main className="boot">
-        <Orbit size={30} />
+        <Bookmark size={30} />
         <p>{bootError ? "データを開けませんでした" : "記録を読み込み中"}</p>
         <ErrorMessage message={bootError} />
         {bootError && (
@@ -187,7 +188,7 @@ export default function App() {
     : [];
   return (
     <main
-      className={`universe ${state.settings.motion && !reducedMotion ? "" : "still"}`}
+      className={`study-desk ${state.settings.motion && !reducedMotion ? "" : "still"}`}
     >
       <button
         id="menu-trigger"
@@ -282,13 +283,21 @@ export default function App() {
                     <span>☆{p.stars}</span>
                     {highlighted ? (
                       <span className="candidate-mark" title="今日の新規候補">
-                        <Sparkles size={13} />
+                        <CandidateMark
+                          size={10}
+                          fill="currentColor"
+                          strokeWidth={1}
+                        />
                       </span>
                     ) : reason === "模試前の確認" ? (
                       <CalendarDays size={13} />
                     ) : null}
                   </span>
-                  <span className="problem-number">{p.number}</span>
+                  <span
+                    className={`problem-number ${typeof p.number === "string" && p.number.length > 4 ? "prefixed-number" : ""}`}
+                  >
+                    {p.number}
+                  </span>
                   <span className="card-state">
                     <i />
                     {p.latest_grade || "未着手"}
@@ -301,8 +310,8 @@ export default function App() {
           </div>
         ) : (
           <div className="empty-field">
-            <div className="empty-orbit">
-              <Orbit size={34} strokeWidth={1} />
+            <div className="empty-emblem">
+              <Bookmark size={30} strokeWidth={1.2} />
             </div>
             <h1>
               {!bookProblems.length
@@ -399,7 +408,11 @@ export default function App() {
               {BOOKS[selected.book]}
               <span className="selected-stars">☆{selected.stars}</span>
             </span>
-            <span className="selected-number">{selected.number}</span>
+            <span
+              className={`selected-number ${typeof selected.number === "string" && selected.number.length > 4 ? "prefixed-number" : ""}`}
+            >
+              {selected.number}
+            </span>
             <span
               className={`current-grade grade-${selected.latest_grade || "new"}`}
             >
@@ -442,10 +455,18 @@ export default function App() {
           )}
           <details className="problem-details">
             <summary>
-              メモ・学習履歴
+              問題情報・メモ・学習履歴
               {selectedHistory.length ? ` (${selectedHistory.length})` : ""}
             </summary>
             <div className="detail-body">
+              {(selected.title || selected.page) && (
+                <div className="source-details">
+                  {selected.title && (
+                    <p className="source-title">{selected.title}</p>
+                  )}
+                  {selected.page && <p>掲載ページ：{selected.page}</p>}
+                </div>
+              )}
               <MemoEditor
                 key={selected.id}
                 problem={selected}

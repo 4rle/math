@@ -1,4 +1,14 @@
-export const BOOKS = { "1A": "Ⅰ＋A", "2B": "Ⅱ＋B", "3C": "Ⅲ＋C" } as const;
+import {
+  canonicalNumber,
+  compareNumbers,
+  parseRanges,
+  inNumberRange,
+  type ProblemNumber,
+} from "./problem-number";
+export { parseRanges } from "./problem-number";
+export const DIFFICULTIES = [1, 2, 3, 4] as const;
+export type Stars = (typeof DIFFICULTIES)[number];
+export const BOOKS = { "1A": "Ⅰ＋A", "2B": "Ⅱ＋B＋C", "3C": "Ⅲ＋C" } as const;
 export type Book = keyof typeof BOOKS;
 export const GRADES = {
   A: ["自力完答", "方針も解説も見ず、最後まで解けた"],
@@ -11,9 +21,11 @@ export type Grade = keyof typeof GRADES;
 export interface Problem {
   id: string;
   book: Book;
-  number: number;
-  stars: 3 | 4;
+  number: ProblemNumber;
+  stars: Stars;
   unit: string;
+  title?: string;
+  page?: string;
   memo: string;
   created_at: string;
   latest_grade: Grade | null;
@@ -50,6 +62,7 @@ export interface Settings {
 }
 export interface State {
   version: 1;
+  catalog_version?: 1;
   revision: number;
   problems: Problem[];
   attempts: Attempt[];
@@ -64,7 +77,7 @@ export const initialState = (): State => ({
   exams: [],
   settings: {
     book: "1A",
-    stars: [3, 4],
+    stars: [1, 2, 3, 4],
     unit: "",
     mode: "candidates",
     daily: 3,
@@ -96,40 +109,27 @@ export const dateOnly = (at: string) =>
     day: "numeric",
   }).format(new Date(at));
 export const normalize = (text: string) => text.normalize("NFKC").trim();
-const positive = (s: string) =>
-  /^\d+$/.test(s) && Number.isSafeInteger(Number(s)) && Number(s) > 0;
 export function parseNumbers(text: string): {
-  numbers: number[];
+  numbers: ProblemNumber[];
   errors: string[];
   duplicates: number;
 } {
   const tokens = normalize(text)
     .split(/[,、\s]+/)
     .filter(Boolean);
+  const parsed = tokens.map(canonicalNumber);
   const errors = tokens
-    .filter((t) => !positive(t))
-    .map((t) => `「${t}」は正の整数ではありません。`);
-  const valid = tokens.filter(positive).map(Number);
+    .filter((_, i) => parsed[i] === null)
+    .map(
+      (t) =>
+        `「${t}」は正の整数、または B1.1 / B2.1 / C1.1 の形式で入力してください。`,
+    );
+  const valid = parsed.filter((n): n is ProblemNumber => n !== null);
   return {
-    numbers: [...new Set(valid)].sort((a, b) => a - b),
+    numbers: [...new Set(valid)].sort(compareNumbers),
     errors,
     duplicates: valid.length - new Set(valid).size,
   };
-}
-export function parseRanges(text: string): [number, number][] {
-  if (!text.trim()) return [];
-  return normalize(text)
-    .split(/[,、\s]+/)
-    .filter(Boolean)
-    .map((part) => {
-      const match = part.match(/^(\d+)(?:[-–〜~](\d+))?$/);
-      if (!match || !positive(match[1]) || (match[2] && !positive(match[2])))
-        throw new Error(`範囲「${part}」を確認してください。例：125-140, 150`);
-      const a = Number(match[1]),
-        b = Number(match[2] || match[1]);
-      if (a > b) throw new Error("番号範囲は小さい番号から指定してください。");
-      return [a, b];
-    });
 }
 export function recompute(state: State): State {
   const byProblem = new Map<string, Attempt[]>();
@@ -170,7 +170,7 @@ export function examMatches(exam: Exam, p: Problem) {
     exam.book === p.book &&
     exam.stars.includes(p.stars) &&
     (!exam.unit || exam.unit === p.unit) &&
-    (!ranges.length || ranges.some(([a, b]) => a <= p.number && p.number <= b))
+    (!ranges.length || ranges.some((range) => inNumberRange(p.number, range)))
   );
 }
 export function examCandidates(state: State, p: Problem, today = jstDay()) {
@@ -209,10 +209,10 @@ export const inScope = (state: State, p: Problem) =>
 export function fieldProblems(state: State, today = jstDay()) {
   const scope = state.problems.filter((p) => inScope(state, p));
   if (state.settings.mode === "all")
-    return scope.sort((a, b) => a.number - b.number);
+    return scope.sort((a, b) => compareNumbers(a.number, b.number));
   const fresh = scope
     .filter((p) => !p.latest_grade)
-    .sort((a, b) => a.number - b.number);
+    .sort((a, b) => compareNumbers(a.number, b.number));
   const reviews = scope
     .filter((p) => p.latest_grade && candidateReason(state, p, today))
     .sort((a, b) => {
@@ -230,12 +230,12 @@ export function fieldProblems(state: State, today = jstDay()) {
           );
         return (
           Number(hadDifficult(b)) - Number(hadDifficult(a)) ||
-          a.number - b.number
+          compareNumbers(a.number, b.number)
         );
       }
       return (
         (a.last_attempt_at || "").localeCompare(b.last_attempt_at || "") ||
-        a.number - b.number
+        compareNumbers(a.number, b.number)
       );
     });
   // 未着手を先頭にしつつ、E や復習候補も最初の画面で見失わない。
@@ -263,16 +263,18 @@ export function dailyCandidates(state: State, today = jstDay()) {
   return new Set(
     state.problems
       .filter((p) => inScope(state, p) && !p.latest_grade)
-      .sort((a, b) => a.number - b.number)
+      .sort((a, b) => compareNumbers(a.number, b.number))
       .slice(0, Math.max(0, state.settings.daily - done))
       .map((p) => p.id),
   );
 }
 export interface ImportRow {
   book: Book;
-  stars: 3 | 4;
-  number: number;
+  stars: Stars;
+  number: ProblemNumber;
   unit?: string;
+  title?: string;
+  page?: string;
   line: number;
 }
 export interface ImportResult {
@@ -342,13 +344,17 @@ export function parseCSV(text: string): ImportResult {
   let duplicates = 0;
   for (const record of records) {
     const get = (key: string) => record.cells[header.indexOf(key)] || "";
-    const book = get("book"),
+    const book = get("book") === "2BC" ? "2B" : get("book"),
       stars = normalize(get("stars")),
       number = normalize(get("number"));
     const issues = [];
     if (!Object.hasOwn(BOOKS, book)) issues.push("book は 1A / 2B / 3C");
-    if (!["3", "4"].includes(stars)) issues.push("stars は 3 / 4");
-    if (!positive(number)) issues.push("number は正の整数");
+    if (!["1", "2", "3", "4"].includes(stars))
+      issues.push("stars は 1 / 2 / 3 / 4");
+    if (canonicalNumber(number) === null)
+      issues.push("number は正の整数または B1.1 / B2.1 / C1.1 の形式");
+    if (get("title").length > 200 || get("page").length > 100)
+      issues.push("title は200文字、page は100文字以内");
     if (get("unit").length > 200) issues.push("unit は200文字以内");
     if (record.cells.length !== header.length)
       issues.push("列数がヘッダーと一致しません");
@@ -358,16 +364,23 @@ export function parseCSV(text: string): ImportResult {
     }
     const row: ImportRow = {
       book: book as Book,
-      stars: Number(stars) as 3 | 4,
-      number: Number(number),
+      stars: Number(stars) as Stars,
+      number: canonicalNumber(number)!,
       ...(header.includes("unit") ? { unit: get("unit") } : {}),
+      ...(header.includes("title") ? { title: get("title") } : {}),
+      ...(header.includes("page") ? { page: get("page") } : {}),
       line: record.line,
     };
     const key = `${book}:${row.number}`,
       previous = seen.get(key);
     if (previous) {
       duplicates++;
-      if (previous.stars !== row.stars || previous.unit !== row.unit)
+      if (
+        previous.stars !== row.stars ||
+        previous.unit !== row.unit ||
+        previous.title !== row.title ||
+        previous.page !== row.page
+      )
         errors.push(
           `${record.line}行目：${previous.line}行目と同じ問題で難度・単元が異なります。`,
         );
@@ -407,6 +420,8 @@ export function applyImport(
         ...problems[index],
         ...(updateStars ? { stars: row.stars } : {}),
         ...(row.unit !== undefined ? { unit: row.unit } : {}),
+        ...(row.title !== undefined ? { title: row.title } : {}),
+        ...(row.page !== undefined ? { page: row.page } : {}),
       };
     else
       problems.push({
@@ -415,6 +430,8 @@ export function applyImport(
         stars: row.stars,
         number: row.number,
         unit: row.unit || "",
+        title: row.title || "",
+        page: row.page || "",
         memo: "",
         created_at: new Date().toISOString(),
         latest_grade: null,
@@ -428,10 +445,17 @@ export function applyImport(
 const csvCell = (v: string | number) =>
   '"' + String(v).replaceAll('"', '""') + '"';
 export const exportCSV = (state: State) =>
-  "\uFEFFbook,stars,number,unit\r\n" +
+  "\uFEFFbook,stars,number,unit,title,page\r\n" +
   [...state.problems]
-    .sort((a, b) => a.book.localeCompare(b.book) || a.number - b.number)
-    .map((p) => [p.book, p.stars, p.number, p.unit].map(csvCell).join(","))
+    .sort(
+      (a, b) =>
+        a.book.localeCompare(b.book) || compareNumbers(a.number, b.number),
+    )
+    .map((p) =>
+      [p.book, p.stars, p.number, p.unit, p.title || "", p.page || ""]
+        .map(csvCell)
+        .join(","),
+    )
     .join("\r\n");
 const validDate = (s: unknown) =>
   typeof s === "string" &&
@@ -456,6 +480,7 @@ export function validateBackup(input: unknown): State {
   const s = input as State;
   if (
     s.version !== 1 ||
+    (s.catalog_version !== undefined && s.catalog_version !== 1) ||
     !Array.isArray(s.problems) ||
     !Array.isArray(s.attempts) ||
     !Array.isArray(s.exams) ||
@@ -473,16 +498,18 @@ export function validateBackup(input: unknown): State {
       !p.id ||
       ids.has(p.id) ||
       !Object.hasOwn(BOOKS, p.book) ||
-      !integer(p.number, Number.MAX_SAFE_INTEGER) ||
-      ![3, 4].includes(p.stars) ||
+      canonicalNumber(p.number) === null ||
+      !DIFFICULTIES.includes(p.stars) ||
       !shortText(p.unit, 200) ||
+      (p.title !== undefined && !shortText(p.title, 200)) ||
+      (p.page !== undefined && !shortText(p.page, 100)) ||
       !shortText(p.memo) ||
       !validTime(p.created_at) ||
-      keys.has(`${p.book}:${p.number}`)
+      keys.has(`${p.book}:${canonicalNumber(p.number)}`)
     )
       return fail();
     ids.add(p.id);
-    keys.add(`${p.book}:${p.number}`);
+    keys.add(`${p.book}:${canonicalNumber(p.number)}`);
   }
   const attemptIDs = new Set<string>();
   for (const a of s.attempts) {
@@ -514,7 +541,7 @@ export function validateBackup(input: unknown): State {
       !Object.hasOwn(BOOKS, e.book) ||
       !Array.isArray(e.stars) ||
       !e.stars.length ||
-      e.stars.some((v) => ![3, 4].includes(v)) ||
+      e.stars.some((v) => !DIFFICULTIES.includes(v as Stars)) ||
       !shortText(e.unit, 200) ||
       !shortText(e.ranges, 2000)
     )
@@ -531,7 +558,7 @@ export function validateBackup(input: unknown): State {
     !Object.hasOwn(BOOKS, x.book) ||
     !Array.isArray(x.stars) ||
     !x.stars.length ||
-    x.stars.some((v) => ![3, 4].includes(v)) ||
+    x.stars.some((v) => !DIFFICULTIES.includes(v as Stars)) ||
     !shortText(x.unit, 200) ||
     !["candidates", "all"].includes(x.mode) ||
     !integer(x.daily, 100) ||
@@ -547,6 +574,7 @@ export function validateBackup(input: unknown): State {
     revision: 0,
     problems: s.problems.map((p) => ({
       ...p,
+      number: canonicalNumber(p.number)!,
       created_at: new Date(p.created_at).toISOString(),
     })),
     attempts: s.attempts.map((a) => ({

@@ -1,3 +1,4 @@
+import { compareNumbers } from "./problem-number";
 import { useMemo, useRef, useState, type FormEvent } from "react";
 import {
   ArrowDownToLine,
@@ -13,6 +14,8 @@ import {
 } from "lucide-react";
 import {
   BOOKS,
+  DIFFICULTIES,
+  type Stars,
   GRADES,
   addDays,
   applyImport,
@@ -93,7 +96,7 @@ function StarChecks({
   return (
     <fieldset className="inline-fieldset">
       <legend>難度</legend>
-      {[3, 4].map((n) => (
+      {DIFFICULTIES.map((n) => (
         <label className="choice" key={n}>
           <input
             type="checkbox"
@@ -135,7 +138,7 @@ export function RegisterPanel({
 }: PanelProps) {
   const [mode, setMode] = useState("manual"),
     [book, setBook] = useState(state.settings.book),
-    [stars, setStars] = useState<3 | 4>(3),
+    [stars, setStars] = useState<Stars>(3),
     [unit, setUnit] = useState(""),
     [text, setText] = useState(""),
     [csv, setCSV] = useState("");
@@ -199,10 +202,13 @@ export function RegisterPanel({
                 <select
                   aria-label="難度"
                   value={stars}
-                  onChange={(e) => setStars(Number(e.target.value) as 3 | 4)}
+                  onChange={(e) => setStars(Number(e.target.value) as Stars)}
                 >
-                  <option value={3}>☆3</option>
-                  <option value={4}>☆4</option>
+                  {DIFFICULTIES.map((stars) => (
+                    <option key={stars} value={stars}>
+                      ☆{stars}
+                    </option>
+                  ))}
                 </select>
               </label>
             </div>
@@ -231,8 +237,8 @@ export function RegisterPanel({
         ) : (
           <>
             <Hint>
-              book・stars・number 列が必須です。unit 列は任意。UTF-8（BOM
-              付き可）に対応しています。
+              book・stars・number 列が必須です。unit・title・page
+              列は任意。UTF-8（BOM 付き可）に対応しています。
             </Hint>
             <input
               ref={fileRef}
@@ -300,7 +306,8 @@ export function RegisterPanel({
           <p className="hint">
             入力内の重複 {preview.duplicates}{" "}
             件をまとめました。既存の履歴は保持されます。
-            {mode === "csv" && "unit 列がある場合、既存の単元も更新します。"}
+            {mode === "csv" &&
+              "unit・title・page 列がある場合、既存の情報も更新します。"}
           </p>
           <div className="number-preview">
             {preview.rows.slice(0, 60).map((row) => (
@@ -374,8 +381,12 @@ export function ManagePanel({ state, commit, busy, notify }: PanelProps) {
     [editing, setEditing] = useState<string | null>(null),
     [limit, setLimit] = useState(60);
   const problems = state.problems
-    .filter((p) => p.book === book && `${p.number} ${p.unit}`.includes(search))
-    .sort((a, b) => a.number - b.number);
+    .filter(
+      (p) =>
+        p.book === book &&
+        `${p.number} ${p.unit} ${p.title || ""}`.includes(search),
+    )
+    .sort((a, b) => compareNumbers(a.number, b.number));
   return (
     <div className="stack">
       <BookSelect
@@ -389,13 +400,13 @@ export function ManagePanel({ state, commit, busy, notify }: PanelProps) {
       <label className="search-input">
         <Search size={16} />
         <input
-          aria-label="問題番号・単元で検索"
+          aria-label="問題番号・タイトルで検索"
           value={search}
           onChange={(e) => {
             setSearch(e.target.value);
             setLimit(60);
           }}
-          placeholder="問題番号・単元で検索"
+          placeholder="問題番号・タイトルで検索"
         />
       </label>
       <p className="hint">
@@ -423,7 +434,7 @@ export function ManagePanel({ state, commit, busy, notify }: PanelProps) {
                 </span>
                 <strong>{p.number}</strong>
                 <span>☆{p.stars}</span>
-                <small>{p.unit || "単元なし"}</small>
+                <small>{p.title || p.unit || "単元なし"}</small>
                 <ChevronRight size={15} />
               </button>
             )}
@@ -463,7 +474,9 @@ function ProblemEditor({
         action.run(async () => {
           const parsed = parseNumbers(number);
           if (parsed.errors.length || parsed.numbers.length !== 1)
-            throw new Error("正の整数をひとつ入力してください。");
+            throw new Error(
+              "問題番号をひとつ入力してください。例：125 / B1.1 / C1.1",
+            );
           await commit((s) => {
             if (
               s.problems.some(
@@ -493,7 +506,7 @@ function ProblemEditor({
           <input
             value={number}
             onChange={(e) => setNumber(e.target.value)}
-            inputMode="numeric"
+            inputMode="text"
             required
           />
         </label>
@@ -502,10 +515,13 @@ function ProblemEditor({
           <select
             aria-label="難度"
             value={stars}
-            onChange={(e) => setStars(Number(e.target.value) as 3 | 4)}
+            onChange={(e) => setStars(Number(e.target.value) as Stars)}
           >
-            <option value={3}>☆3</option>
-            <option value={4}>☆4</option>
+            {DIFFICULTIES.map((stars) => (
+              <option key={stars} value={stars}>
+                ☆{stars}
+              </option>
+            ))}
           </select>
         </label>
       </div>
@@ -623,7 +639,7 @@ export function DisplayPanel({ state, commit, busy, notify }: PanelProps) {
         </label>
       </fieldset>
       <Hint>
-        今日の新規候補には、小さな星の印が付きます。ほかの問題も自由に選べます。
+        今日の新規候補には、小さな金色の菱形が付きます。ほかの問題も自由に選べます。
       </Hint>
       <FormFooter busy={busy} />
       <ErrorMessage message={action.error} />
@@ -847,7 +863,7 @@ function ExamEditor({
   const [name, setName] = useState(exam?.name || ""),
     [date, setDate] = useState(exam?.date || ""),
     [book, setBook] = useState<Book>(exam?.book || state.settings.book),
-    [stars, setStars] = useState(exam?.stars || [3, 4]),
+    [stars, setStars] = useState(exam?.stars || [...DIFFICULTIES]),
     [unit, setUnit] = useState(exam?.unit || ""),
     [ranges, setRanges] = useState(exam?.ranges || ""),
     [start, setStart] = useState(exam?.start_on || "");
@@ -929,7 +945,7 @@ function ExamEditor({
           maxLength={2000}
           value={ranges}
           onChange={(e) => setRanges(e.target.value)}
-          placeholder="125-140, 150, 161-170"
+          placeholder="125-140, B1.1-B1.10, C1.79"
         />
       </label>
       <Hint>
@@ -1129,7 +1145,7 @@ function AttemptEditor({
 
 export function ProgressPanel({ state }: PanelProps) {
   const [book, setBook] = useState(state.settings.book),
-    [stars, setStars] = useState([3, 4]);
+    [stars, setStars] = useState<number[]>([...DIFFICULTIES]);
   const problems = state.problems.filter(
     (p) => p.book === book && stars.includes(p.stars),
   );
@@ -1278,7 +1294,11 @@ export function DataPanel({ state, commit, busy, notify }: PanelProps) {
             disabled={busy || !confirmed}
             onClick={() =>
               action.run(async () => {
-                await commit((s) => ({ ...restoring, revision: s.revision }));
+                await commit((s) => ({
+                  ...restoring,
+                  revision: s.revision,
+                  catalog_version: 1,
+                }));
                 setRestoring(null);
                 notify("バックアップを復元しました");
               })
