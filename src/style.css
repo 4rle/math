@@ -1546,3 +1546,99 @@ input[type="date"] {
     width: 86px;
   }
 }
+/* The title remains on the card; long text expands its row instead of truncating it. */
+.card-title {
+  position: relative;
+  display: block;
+  font-size: 12px;
+  line-height: 1.75;
+  color: #d4c8ac;
+  overflow-wrap: anywhere;
+  margin: -5px 0 15px;
+  letter-spacing: 0.015em;
+}
+.problem-card {
+  min-height: 185px;
+}
+.problem-number {
+  margin-bottom: 13px;
+}
+.problem-card[data-reveal="waiting"] {
+  opacity: 0.18;
+  --reveal-y: 22px;
+}
+.problem-card[data-reveal="shown"] {
+  opacity: 1;
+  --reveal-y: 0px;
+  transition:
+    opacity 0.48s ease,
+    translate 0.55s cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 0.18s,
+    box-shadow 0.18s;
+}
+.problem-card {
+  translate: 0 var(--reveal-y, 0px);
+}
+.problem-card:focus-visible,
+.problem-card[data-drag-state="dragging"] {
+  opacity: 1;
+  translate: 0 0;
+}
+.account-emblem {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border: 1px solid #77613c;
+  border-radius: 12px;
+  color: var(--gold);
+  background: #a68b4d0b;
+}
+.account-intro {
+  font-size: 15px;
+  color: #e9d7b1;
+}
+.account-summary {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  color: var(--gold);
+}
+.account-summary > div {
+  min-width: 0;
+}
+.account-summary strong {
+  display: block;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+  font-weight: 500;
+}
+.account-summary span {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 8px;
+}
+.menu-foot {
+  gap: 12px;
+  flex-wrap: wrap;
+}
+@media (orientation: landscape) and (max-height: 560px) {
+  .problem-card {
+    min-height: 159px;
+  }
+  .card-title {
+    font-size: 11px;
+    margin: -2px 0 10px;
+  }
+}
+.still .problem-card {
+  opacity: 1;
+  translate: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .problem-card {
+    opacity: 1 !important;
+    translate: none !important;
+  }
+}

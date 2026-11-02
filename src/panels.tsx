@@ -40,6 +40,7 @@ import {
 import { download } from "./storage";
 import { ErrorMessage, Hint } from "./ui";
 export interface PanelProps {
+  accountActive?: boolean;
   state: State;
   commit: (change: (s: State) => State) => Promise<State>;
   busy: boolean;
@@ -1211,7 +1212,13 @@ export function ProgressPanel({ state }: PanelProps) {
     </div>
   );
 }
-export function DataPanel({ state, commit, busy, notify }: PanelProps) {
+export function DataPanel({
+  state,
+  commit,
+  busy,
+  notify,
+  accountActive,
+}: PanelProps) {
   const [restoring, setRestoring] = useState<State | null>(null),
     [confirmed, setConfirmed] = useState(false);
   const file = useRef<HTMLInputElement>(null);
@@ -1221,7 +1228,9 @@ export function DataPanel({ state, commit, busy, notify }: PanelProps) {
       <div className="info-note">
         <Database size={19} />
         <p>
-          データはこのブラウザーの中に保存されます。端末間の自動同期はありません。ブラウザーのデータを消す前や端末を移すときは、バックアップを保存してください。
+          {accountActive
+            ? "記録は端末に保存し、アカウントへ同期します。同期状態は「アカウントと同期」で確認できます。バックアップは別途 JSON で保存できます。"
+            : "現在はこの端末に保存しています。「アカウントと同期」からログインすると、別の端末と共有できます。端末内の記録はログイン後に取り込めます。"}
         </p>
       </div>
       <h2>完全バックアップ</h2>
@@ -1279,7 +1288,7 @@ export function DataPanel({ state, commit, busy, notify }: PanelProps) {
             <span>{restoring.exams.length} 件</span>
           </div>
           <p className="warning">
-            現在の問題・履歴・模試・設定をすべて置き換えます。元に戻せるよう、先に現在のバックアップを書き出してください。
+            現在の問題・履歴・模試・設定をすべて置き換えます。ログイン中はクラウドにも同期されます。元に戻せるよう、先に現在のバックアップを書き出してください。
           </p>
           <label className="check-line">
             <input
@@ -1358,7 +1367,7 @@ export function MotionPanel({ state, commit, busy, notify }: PanelProps) {
         カードを横にドラッグすると、指について動きます。少し長押しすると上下左右に動かせます。離すと元の位置に戻り、並び順や学習記録は変わりません。縦スワイプは一覧のスクロール、短いタップは記録です。
       </Hint>
       <Hint>
-        オフにすると、ドラッグと選択時の演出を停止します。OS
+        オフにすると、ドラッグ・選択・スクロール時の演出を停止します。OS
         の「動きを減らす」が有効な場合も停止します。
       </Hint>
       <FormFooter busy={busy} />

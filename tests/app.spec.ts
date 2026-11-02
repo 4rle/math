@@ -592,7 +592,7 @@ test("初回から2冊714問を表示し、Ⅱ＋B＋Cの接頭辞付き番号�
   await card.click();
   await page.getByText("問題情報・メモ・学習履歴", { exact: false }).click();
   await expect(
-    page.getByText("球面と平面の交線", { exact: true }),
+    page.getByRole("dialog").getByText("球面と平面の交線", { exact: true }),
   ).toBeVisible();
   await expect(
     page.getByText("掲載ページ：C1-150", { exact: true }),

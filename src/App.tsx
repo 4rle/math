@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import {
   Menu,
   X,
@@ -15,6 +15,7 @@ import {
   Bookmark,
   Diamond,
   BookOpen,
+  UserRound,
 } from "lucide-react";
 import {
   BOOKS,
@@ -24,7 +25,6 @@ import {
   dateOnly,
   dateTime,
   fieldProblems,
-  initialState,
   jstDay,
   uid,
   type Book,
@@ -33,7 +33,9 @@ import {
   type State,
 } from "./model";
 import { FloatingCard, useReducedMotion } from "./FloatingCard";
-import { loadState, saveState } from "./storage";
+import { useStudyData } from "./useStudyData";
+import { AccountPanel, syncLabels } from "./AccountPanel";
+import { CardReveal } from "./CardReveal";
 import { ErrorMessage, Modal, PanelTop } from "./ui";
 import {
   RegisterPanel,
@@ -48,6 +50,7 @@ import {
   type PanelProps,
 } from "./panels";
 const items = [
+  ["account", "アカウントと同期", UserRound],
   ["register", "問題の登録と管理", Plus],
   ["display", "表示する問題", SlidersHorizontal],
   ["learning", "学習の設定", BookOpen],
@@ -60,27 +63,18 @@ const items = [
 type Page = (typeof items)[number][0] | "menu" | "manage";
 export default function App() {
   const reducedMotion = useReducedMotion();
-  const [state, setState] = useState<State | null>(null),
-    [bootError, setBootError] = useState("");
-  const stateRef = useRef<State>(initialState());
+  const { state, bootError, busy, commit, account, remoteEpoch, setEditing } =
+    useStudyData();
   const [page, setPage] = useState<Page | null>(null),
     [selected, setSelected] = useState<Problem | null>(null);
   const [pendingGrade, setPendingGrade] = useState<Grade | null>(null);
-  const [busy, setBusy] = useState(false),
-    [error, setError] = useState("");
-  const lock = useRef(false);
+  const [error, setError] = useState("");
   const [toast, setToast] = useState<{ text: string; undoID?: string } | null>(
     null,
   );
   const [origin, setOrigin] = useState({ x: 0, y: 0 });
   const [today, setToday] = useState(jstDay());
   useEffect(() => {
-    loadState()
-      .then((s) => {
-        stateRef.current = s;
-        setState(s);
-      })
-      .catch((e) => setBootError(String(e.message || e)));
     const interval = setInterval(() => setToday(jstDay()), 30000);
     return () => clearInterval(interval);
   }, []);
@@ -89,21 +83,21 @@ export default function App() {
     const timer = setTimeout(() => setToast(null), 9000);
     return () => clearTimeout(timer);
   }, [toast]);
-  async function commit(change: (state: State) => State) {
-    if (lock.current)
-      throw new Error("保存中です。少し待ってから再試行してください。");
-    lock.current = true;
-    setBusy(true);
-    try {
-      const next = await saveState(change(stateRef.current));
-      stateRef.current = next;
-      setState(next);
-      return next;
-    } finally {
-      lock.current = false;
-      setBusy(false);
-    }
-  }
+  useEffect(() => {
+    setSelected(null);
+    setPendingGrade(null);
+    setError("");
+    setToast(null);
+  }, [account.user?.id, remoteEpoch]);
+  useEffect(() => {
+    if (account.recovery) setPage("account");
+  }, [account.recovery]);
+  useEffect(() => {
+    setEditing(!!selected || (page !== null && page !== "account"));
+  }, [selected, page, setEditing]);
+  useEffect(() => {
+    setPage((p) => (p === "account" ? p : null));
+  }, [account.user?.id]);
   const notify = (text: string) => setToast({ text });
   async function grade(grade: Grade) {
     if (!selected || busy) return;
@@ -253,7 +247,10 @@ export default function App() {
         key={state.settings.book}
       >
         {cards.length ? (
-          <div className="card-grid">
+          <CardReveal
+            enabled={state.settings.motion && !reducedMotion}
+            book={state.settings.book}
+          >
             {cards.map((p, index) => {
               const reason = candidateReason(state, p, today),
                 highlighted = daily.has(p.id);
@@ -267,7 +264,7 @@ export default function App() {
                       "--offset": `${[0, 8, -3, 5, -5, 3][index % 6]}px`,
                     } as CSSProperties
                   }
-                  aria-label={`問題 ${p.number}、☆${p.stars}、${p.latest_grade ? `${p.latest_grade} ${GRADES[p.latest_grade][0]}` : "未着手"}${highlighted ? "、今日の新規候補" : ""}`}
+                  aria-label={`問題 ${p.number}、☆${p.stars}、${p.latest_grade ? `${p.latest_grade} ${GRADES[p.latest_grade][0]}` : "未着手"}${highlighted ? "、今日の新規候補" : ""}${p.title ? `、${p.title}` : ""}`}
                   onClick={(e) => {
                     const rect = e.currentTarget.getBoundingClientRect();
                     setOrigin({
@@ -298,6 +295,7 @@ export default function App() {
                   >
                     {p.number}
                   </span>
+                  {p.title && <span className="card-title">{p.title}</span>}
                   <span className="card-state">
                     <i />
                     {p.latest_grade || "未着手"}
@@ -307,7 +305,7 @@ export default function App() {
                 </FloatingCard>
               );
             })}
-          </div>
+          </CardReveal>
         ) : (
           <div className="empty-field">
             <div className="empty-emblem">
@@ -359,14 +357,26 @@ export default function App() {
                   ))}
                 </div>
                 <div className="menu-foot">
-                  <span>この端末に保存</span>
+                  <span>
+                    {account.user
+                      ? syncLabels[account.sync.status]
+                      : "この端末に保存"}
+                  </span>
                   <span>{state.problems.length} 問登録済み</span>
                 </div>
               </>
+            ) : page === "account" ? (
+              <AccountPanel
+                key={account.user?.id || "guest"}
+                account={account}
+                state={state}
+                busy={busy}
+              />
             ) : (
               CurrentPanel && (
                 <CurrentPanel
                   state={state}
+                  accountActive={!!account.user}
                   commit={commit}
                   busy={busy}
                   notify={notify}
