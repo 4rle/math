@@ -1,3 +1,4 @@
+import { LiquidSurface } from "./LiquidSurface";
 import { useEffect, useRef, useState, type ButtonHTMLAttributes } from "react";
 
 export function useReducedMotion() {
@@ -252,6 +253,7 @@ export function FloatingCard({
         onClick?.(e);
       }}
     >
+      <LiquidSurface />
       {children}
     </button>
   );

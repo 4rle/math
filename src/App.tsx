@@ -1,3 +1,4 @@
+import { LiquidSurface } from "./LiquidSurface";
 import { useEffect, useState, type CSSProperties } from "react";
 import {
   X,
@@ -225,6 +226,7 @@ export default function App() {
                 })).catch((e) => notify(e.message));
             }}
           >
+            <LiquidSurface kind="tabs" />
             {(Object.entries(BOOKS) as [Book, string][]).map(([book, name]) => (
               <button
                 id={`tab-${book}`}
@@ -463,6 +465,7 @@ export default function App() {
                 className={`grade-option grade-${key} ${pendingGrade === key ? "pending-grade" : ""}`}
                 onClick={() => grade(key)}
               >
+                <LiquidSurface kind="button" />
                 <span className="grade-letter">{key}</span>
                 <span>
                   <strong>{label}</strong>

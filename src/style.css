@@ -1147,7 +1147,7 @@ input[type="date"] {
   background: color-mix(in srgb, var(--grade-color) 8%, transparent);
   border: 1px solid color-mix(in srgb, var(--grade-color) 25%, transparent);
 }
-.grade-option > span:nth-child(2) {
+.grade-option > span:nth-of-type(2) {
   flex: 1;
 }
 .grade-option strong {
@@ -1483,7 +1483,7 @@ input[type="date"] {
 .book-tabs button {
   white-space: nowrap;
 }
-.book-tabs button:nth-child(2) {
+.book-tabs button:nth-of-type(2) {
   width: 118px;
 }
 .book-tabs {
@@ -1524,12 +1524,12 @@ input[type="date"] {
   margin-bottom: 5px;
 }
 @media (max-width: 700px) {
-  .book-tabs button:nth-child(2) {
+  .book-tabs button:nth-of-type(2) {
     width: 106px;
   }
 }
 @media (max-width: 420px) {
-  .book-tabs button:nth-child(2) {
+  .book-tabs button:nth-of-type(2) {
     width: 96px;
   }
 }
@@ -1542,7 +1542,7 @@ input[type="date"] {
     font-size: 12px;
     letter-spacing: 0.02em;
   }
-  .book-tabs button:nth-child(2) {
+  .book-tabs button:nth-of-type(2) {
     width: 86px;
   }
 }
@@ -1643,7 +1643,7 @@ input[type="date"] {
   }
 }
 
-/* A bound volume in a single perspective space. No canvas or animation library. */
+/* CSS book geometry in one perspective space; glass materials live above it. */
 .book-scene {
   --turn: 0;
   --book-thickness: 50vw;

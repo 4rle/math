@@ -1,0 +1,15 @@
+# LiquidGlassの組み込み
+
+- 提供元：Youness Bouane / [ybouane/liquidglass](https://github.com/ybouane/liquidglass)
+- npm：[`@ybouane/liquidglass`](https://www.npmjs.com/package/@ybouane/liquidglass) **1.0.3** に固定
+- ライセンス：MIT（上流のREADMEとpackage.jsonの表記）
+
+`src/LiquidSurface.tsx`は、上流の公開された`LiquidGlass`コンストラクターと`renderer` APIを使うReact用アダプターです。屈折・ぼかし・Fresnel反射・ベベル・影のWebGLシェーダーは指定パッケージの実装をそのまま実行します。Three.jsや別のガラスライブラリへの置き換えではありません。
+
+カード、参考書タブ、選択時の評価パネル、A〜Eボタンに適用します。文字・フォーム・フォーカス・クリック処理はHTMLに残し、材質用canvasはポインター操作と読み上げの対象外にします。メニューと背表紙には適用しません。
+
+材質の入力は白い机の明暗を表すローカルなライティング画像です。評価パネルには背後のカードの材質canvasも合成します。文字を含むページ全体のライブキャプチャや、物理的な光線追跡は行いません。上流の自動DOMキャプチャとドラッグ処理を起動しないことで、既存のスクロール・カードドラッグ・評価操作との競合を避けます。
+
+描画器は全体で1つ。画面内にある素材だけを、サイズ変更・表示・ホバー・押下に応じて描画します。画面外のcanvasは1×1に戻し、描画サイズのキャッシュと解像度にも上限を設けます。静止中は描画ループを止めます。WebGL非対応時とコンテキスト喪失中には既存のCSS材質を使用し、復帰後に再描画します。
+
+上流1.0.3はnpmの`postinstall`から`patch-package`を呼び出しますが、そのコマンドをランタイム依存に含めていません。このため、このプロジェクトの開発依存に`patch-package`を追加しています。独自パッチは適用していません。Cloudflareを含め、通常のビルドでは開発依存も含めて`npm ci`→`npm run build`を実行してください。

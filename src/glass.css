@@ -529,3 +529,77 @@ input[type="radio"] {
     transform: none;
   }
 }
+
+/* Menu and spine are two regions of one physical side, with one transform. */
+.book-scene {
+  --book-thickness: 100vw;
+}
+.book-side {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--book-thickness);
+  height: 100%;
+  transform-origin: left center;
+  transform: rotateY(-90deg) translateX(-100%);
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+.book-side .flip-menu {
+  transform: none;
+  z-index: auto;
+}
+.book-side .book-spine {
+  left: 50%;
+  width: 50%;
+  transform: none;
+}
+/* Real LiquidGlass output sits below native, selectable/readable content. */
+.liquid-surface {
+  position: absolute;
+  left: -20px;
+  top: -20px;
+  width: calc(100% + 40px);
+  height: calc(100% + 40px);
+  pointer-events: none;
+  z-index: -1;
+}
+.liquid-surface:not([data-engine="liquidglass"]) {
+  visibility: hidden;
+}
+.problem-card,
+.book-tabs,
+.grade-dialog,
+.grade-option {
+  isolation: isolate;
+}
+.grade-option {
+  position: relative;
+}
+.book-scene .problem-card:has(> [data-engine="liquidglass"]),
+.book-scene .book-tabs:has(> [data-engine="liquidglass"]),
+.grade-dialog:has(> [data-engine="liquidglass"]),
+.grade-option:has(> [data-engine="liquidglass"]) {
+  background: transparent;
+  box-shadow: none;
+  border-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.book-scene .problem-card:has(> [data-engine="liquidglass"])::before,
+.book-scene .problem-card:has(> [data-engine="liquidglass"])::after {
+  display: none;
+}
+/* The material canvas is not a grid cell in the landscape evaluation dialog. */
+.grade-dialog > .liquid-surface {
+  position: absolute;
+}
+.grade-option.pending-grade:has(> [data-engine="liquidglass"]) {
+  outline: 1px solid #333;
+  outline-offset: -1px;
+}
+.grade-option.pending-grade .grade-letter {
+  color: #fff;
+  background: #171717;
+  border-color: #171717;
+}

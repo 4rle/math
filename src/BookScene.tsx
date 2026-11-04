@@ -11,7 +11,7 @@ type Props = {
   children: ReactNode;
 };
 
-/** One perspective space: the study surface, spine and page block rotate together. */
+/** Menu and spine share one physical side; the glass layers move independently. */
 export function BookScene({
   open,
   motion,
@@ -129,7 +129,9 @@ export function BookScene({
     };
     animate.current = settle;
     const distance = () =>
-      Math.max(220, Math.min(root.clientWidth * 0.72, 650));
+      current.current.open
+        ? Math.max(180, Math.min(root.clientWidth * 0.36, 650))
+        : Math.max(220, Math.min(root.clientWidth * 0.72, 650));
     const start = (
       x: number,
       y: number,
@@ -319,31 +321,33 @@ export function BookScene({
       >
         <Menu size={22} strokeWidth={1.5} />
       </button>
-      <div
-        id="book-menu"
-        className="flip-menu"
-        ref={menuRef}
-        inert={!open}
-        aria-hidden={!open}
-      >
-        <div className="flip-menu-top">
-          <span>CONTENTS</span>
-        </div>
-        {menu}
-        <p className="flip-hint" lang="en">
-          Swipe left to return <span aria-hidden="true">←</span>
-        </p>
-      </div>
-      <div className="book-volume" aria-hidden={open} inert={open}>
+      <div className="book-volume">
         <div className="book-back" />
         <div className="book-pages book-pages-top" />
         <div className="book-pages book-pages-bottom" />
-        <div className="book-spine" aria-hidden="true">
-          <span className="spine-rule spine-rule-top" />
-          <span className="spine-name">Focusgold Helper</span>
-          <span className="spine-rule spine-rule-bottom" />
+        <div className="book-side" aria-hidden={!open} inert={!open}>
+          <div
+            id="book-menu"
+            className="flip-menu"
+            ref={menuRef}
+            inert={!open}
+            aria-hidden={!open}
+          >
+            <div className="flip-menu-top">
+              <span>CONTENTS</span>
+            </div>
+            {menu}
+            <p className="flip-hint" lang="en">
+              Swipe left to return <span aria-hidden="true">←</span>
+            </p>
+          </div>
+          <div className="book-spine" aria-hidden="true">
+            <span className="spine-rule spine-rule-top" />
+            <span className="spine-name">Focusgold Helper</span>
+            <span className="spine-rule spine-rule-bottom" />
+          </div>
         </div>
-        <div className="book-front" />
+        <div className="book-front" aria-hidden="true" />
       </div>
       <div className="study-layer" aria-hidden={open} inert={open}>
         {children}

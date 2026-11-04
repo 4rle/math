@@ -1,3 +1,4 @@
+import { LiquidSurface } from "./LiquidSurface";
 import { useEffect, useRef, type ReactNode, type CSSProperties } from "react";
 import { X, ArrowLeft } from "lucide-react";
 export function Modal({
@@ -50,6 +51,7 @@ export function Modal({
         }
       }}
     >
+      {className.includes("grade-dialog") && <LiquidSurface kind="dialog" />}
       {children}
     </dialog>
   );

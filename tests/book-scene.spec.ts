@@ -54,7 +54,7 @@ for (const viewport of [
       await expect(
         page.getByRole("button", { name: "問題の登録と管理", exact: true }),
       ).toBeVisible();
-      await expect(page.locator(".book-volume")).toHaveAttribute("inert", "");
+      await expect(page.locator(".study-layer")).toHaveAttribute("inert", "");
       await expect(page.locator(".grade-dialog")).toHaveCount(0);
       await expect(page.locator(".book-spine")).toContainText(
         "Focusgold Helper",

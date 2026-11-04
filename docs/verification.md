@@ -83,3 +83,14 @@ Cloudflare 本番環境への公開、実機の Safari / iOS / Android による
 - Chromiumで320×568、390×844、844×390、932×430、740×360、1440×900の一覧・メニュー・評価画面を確認。実機Safariでの検証は未実施。学習データ・復習アルゴリズム・認証/同期の処理に変更なし。
 
 [ガラスタイル](images/monochrome-field.png) / [メニュー](images/monochrome-menu.png) / [回転中の独立レイヤー](images/monochrome-transition.png) / [横画面メニュー](images/monochrome-menu-landscape.png) / [評価画面](images/monochrome-grade.png)
+
+## 同一平面のメニューと背表紙・指定LiquidGlassの導入
+
+- メニューと背表紙を共通の`book-side`へ移動。親の書籍が0〜90度回転する間、両者は同じ平面・同じ角度を保つ。開いたときは左半分がメニュー、右半分が背表紙で全高を使用。フェードなし。独立したタブ・カードの遅延移動とハンバーガーの浮き上がりは維持。
+- 横画面の左側のメニュー項目からでも閉じられるよう、閉じるスワイプに必要な移動量を調整。
+- ユーザー指定の`@ybouane/liquidglass@1.0.3`を導入。上流のWebGLシェーダーを共有して、カード・タブ・評価パネル・A〜Eボタンの屈折、反射、影を描画。押下中は厚みと影が変わる。確認待ちの評価は輪郭と文字背景でも示す。
+- 描画器が1つであること、画面内のみの描画、canvasの実ピクセル、押下状態、評価保存、非対応時のCSS表示、WebGLコンテキスト喪失からの復帰、横画面・参考書切り替えを追加ブラウザーテストで確認。
+- クリーンな一時ディレクトリで`npm ci`が成功。型検査・本番ビルド・31件のロジック/SQLテスト・41件のブラウザーテスト・フォーマット検査がすべて成功。依存パッケージのライフサイクルに必要な`patch-package`を開発依存に追加し、理由を[組み込み説明](liquid-glass.md)に記載。
+- 画面確認はChromium。実機Safariの確認は未実施。ログイン・同期は既存のテスト用API応答による検証で、本番Supabaseへの接続は行っていない。問題データ・記録形式・復習アルゴリズム・認証/同期処理は変更していない。
+
+[カード](images/liquid-glass-field.png) / [回転途中](images/liquid-glass-transition.png) / [メニュー](images/liquid-glass-menu.png) / [横画面メニュー](images/liquid-glass-menu-landscape.png) / [評価](images/liquid-glass-grade.png) / [横画面評価](images/liquid-glass-grade-landscape.png)

@@ -62,7 +62,7 @@ for (const viewport of [
       expect(orientation.rotate).toBe(0);
       expect(orientation.scaleX).toBe(1);
       const menuSurface = await page.locator(".flip-menu").evaluate((el) => {
-        const style = getComputedStyle(el),
+        const style = getComputedStyle(el.closest(".book-side")!),
           matrix = new DOMMatrix(style.transform);
         return {
           opacity: style.opacity,
@@ -73,6 +73,15 @@ for (const viewport of [
       expect(menuSurface.opacity).toBe("1");
       expect(menuSurface.rotation).toBeGreaterThan(0.1);
       expect(menuSurface.scaleX).toBeLessThan(0.99);
+      expect(
+        await page
+          .locator(".flip-menu")
+          .evaluate(
+            (el) =>
+              el.parentElement ===
+              document.querySelector(".book-spine")?.parentElement,
+          ),
+      ).toBe(true);
       await expect(page.locator(".floating-tabs")).toHaveCSS("opacity", "1");
       await expect(first).toHaveCSS("opacity", "1");
       // Unlike the turning desk, the slab retains its face and readable width.
