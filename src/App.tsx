@@ -35,6 +35,7 @@ import {
 import { FloatingCard, useReducedMotion } from "./FloatingCard";
 import { useStudyData } from "./useStudyData";
 import { AccountPanel, syncLabels } from "./AccountPanel";
+import { BookScene } from "./BookScene";
 import { CardReveal } from "./CardReveal";
 import { ErrorMessage, Modal, PanelTop } from "./ui";
 import {
@@ -184,188 +185,191 @@ export default function App() {
     <main
       className={`study-desk ${state.settings.motion && !reducedMotion ? "" : "still"}`}
     >
-      <button
-        id="menu-trigger"
-        className="menu-trigger icon-button"
-        aria-label="メニューを開く"
-        onClick={() => setPage("menu")}
+      <BookScene
+        open={page === "menu"}
+        motion={state.settings.motion && !reducedMotion}
+        disabled={!!selected || (!!page && page !== "menu")}
+        onOpenChange={(open) => setPage(open ? "menu" : null)}
+        menu={
+          <>
+            <div className="menu-items">
+              {items.map(([key, label, Icon], i) => (
+                <button key={key} onClick={() => setPage(key)}>
+                  <Icon size={19} strokeWidth={1.5} />
+                  <span>{label}</span>
+                  <span className="menu-index" aria-hidden="true">
+                    0{i + 1}
+                  </span>
+                  <ChevronRight size={15} />
+                </button>
+              ))}
+            </div>
+            <div className="menu-foot">
+              <span>
+                {account.user
+                  ? syncLabels[account.sync.status]
+                  : "この端末に保存"}
+              </span>
+              <span>{state.problems.length} 問登録済み</span>
+            </div>
+          </>
+        }
       >
-        <Menu size={22} strokeWidth={1.5} />
-      </button>
-      <div
-        className="book-tabs"
-        role="tablist"
-        aria-label="参考書"
-        onKeyDown={(e) => {
-          if (!["ArrowRight", "ArrowLeft", "Home", "End"].includes(e.key))
-            return;
-          e.preventDefault();
-          const books = Object.keys(BOOKS) as Book[],
-            index = books.indexOf(state.settings.book);
-          const next =
-            e.key === "Home"
-              ? 0
-              : e.key === "End"
-                ? 2
-                : (index + (e.key === "ArrowRight" ? 1 : 2)) % 3;
-          document.getElementById(`tab-${books[next]}`)?.focus();
-          if (!busy)
-            commit((s) => ({
-              ...s,
-              settings: { ...s.settings, book: books[next], unit: "" },
-            })).catch((e) => notify(e.message));
-        }}
-      >
-        {(Object.entries(BOOKS) as [Book, string][]).map(([book, name]) => (
-          <button
-            id={`tab-${book}`}
-            key={book}
-            role="tab"
-            aria-controls="card-field"
-            tabIndex={state.settings.book === book ? 0 : -1}
-            aria-selected={state.settings.book === book}
-            disabled={busy}
-            onClick={() =>
+        <button
+          id="menu-trigger"
+          className="menu-trigger icon-button"
+          aria-label="メニューを開く"
+          aria-expanded={page === "menu"}
+          onClick={() => setPage("menu")}
+        >
+          <Menu size={22} strokeWidth={1.5} />
+        </button>
+        <div
+          className="book-tabs"
+          role="tablist"
+          aria-label="参考書"
+          onKeyDown={(e) => {
+            if (!["ArrowRight", "ArrowLeft", "Home", "End"].includes(e.key))
+              return;
+            e.preventDefault();
+            const books = Object.keys(BOOKS) as Book[],
+              index = books.indexOf(state.settings.book);
+            const next =
+              e.key === "Home"
+                ? 0
+                : e.key === "End"
+                  ? 2
+                  : (index + (e.key === "ArrowRight" ? 1 : 2)) % 3;
+            document.getElementById(`tab-${books[next]}`)?.focus();
+            if (!busy)
               commit((s) => ({
                 ...s,
-                settings: { ...s.settings, book, unit: "" },
-              })).catch((e) => notify(e.message))
-            }
-          >
-            {name}
-          </button>
-        ))}
-      </div>
-      <span id="card-gesture-help" className="sr-only">
-        タップで記録。横にドラッグ、または長押しで上下左右へ動かせます。離すと元の場所に戻ります。
-      </span>
-      <section
-        id="card-field"
-        className="card-field"
-        role="tabpanel"
-        aria-labelledby={`tab-${state.settings.book}`}
-        key={state.settings.book}
-      >
-        {cards.length ? (
-          <CardReveal
-            enabled={state.settings.motion && !reducedMotion}
-            book={state.settings.book}
-          >
-            {cards.map((p, index) => {
-              const reason = candidateReason(state, p, today),
-                highlighted = daily.has(p.id);
-              return (
-                <FloatingCard
-                  motion={state.settings.motion && !reducedMotion}
-                  key={p.id}
-                  className={`problem-card grade-${p.latest_grade || "new"} ${highlighted ? "suggested" : ""}`}
-                  style={
-                    {
-                      "--offset": `${[0, 8, -3, 5, -5, 3][index % 6]}px`,
-                    } as CSSProperties
-                  }
-                  aria-label={`問題 ${p.number}、☆${p.stars}、${p.latest_grade ? `${p.latest_grade} ${GRADES[p.latest_grade][0]}` : "未着手"}${highlighted ? "、今日の新規候補" : ""}${p.title ? `、${p.title}` : ""}`}
-                  onClick={(e) => {
-                    const rect = e.currentTarget.getBoundingClientRect();
-                    setOrigin({
-                      x: rect.x + rect.width / 2 - innerWidth / 2,
-                      y: rect.y + rect.height / 2 - innerHeight / 2,
-                    });
-                    setSelected(p);
-                    setError("");
-                    setPendingGrade(null);
-                  }}
-                >
-                  <span className="card-top">
-                    <span>☆{p.stars}</span>
-                    {highlighted ? (
-                      <span className="candidate-mark" title="今日の新規候補">
-                        <CandidateMark
-                          size={10}
-                          fill="currentColor"
-                          strokeWidth={1}
-                        />
-                      </span>
-                    ) : reason === "模試前の確認" ? (
-                      <CalendarDays size={13} />
-                    ) : null}
-                  </span>
-                  <span
-                    className={`problem-number ${typeof p.number === "string" && p.number.length > 4 ? "prefixed-number" : ""}`}
-                  >
-                    {p.number}
-                  </span>
-                  {p.title && <span className="card-title">{p.title}</span>}
-                  <span className="card-state">
-                    <i />
-                    {p.latest_grade || "未着手"}
-                    {p.latest_grade === "E" && <span>要再学習</span>}
-                    {reason === "復習候補" && <span>復習候補</span>}
-                  </span>
-                </FloatingCard>
-              );
-            })}
-          </CardReveal>
-        ) : (
-          <div className="empty-field">
-            <div className="empty-emblem">
-              <Bookmark size={30} strokeWidth={1.2} />
-            </div>
-            <h1>
-              {!bookProblems.length
-                ? "最初の問題を、ここに。"
-                : state.settings.mode === "all"
-                  ? "表示対象の問題はありません"
-                  : "今の候補はすべて記録済み"}
-            </h1>
-            <p>
-              {!bookProblems.length
-                ? "左上のメニューから、問題番号を登録できます。"
-                : "表示範囲や全登録問題は、メニューから確認できます。"}
-            </p>
-          </div>
-        )}
-      </section>
-      {page && (
-        <Modal
-          title={title}
-          onClose={close}
-          className={`settings-dialog ${page === "menu" ? "menu-dialog" : ""}`}
+                settings: { ...s.settings, book: books[next], unit: "" },
+              })).catch((e) => notify(e.message));
+          }}
         >
+          {(Object.entries(BOOKS) as [Book, string][]).map(([book, name]) => (
+            <button
+              id={`tab-${book}`}
+              key={book}
+              role="tab"
+              aria-controls="card-field"
+              tabIndex={state.settings.book === book ? 0 : -1}
+              aria-selected={state.settings.book === book}
+              disabled={busy}
+              onClick={() =>
+                commit((s) => ({
+                  ...s,
+                  settings: { ...s.settings, book, unit: "" },
+                })).catch((e) => notify(e.message))
+              }
+            >
+              {name}
+            </button>
+          ))}
+        </div>
+        <span id="card-gesture-help" className="sr-only">
+          タップで記録。横スワイプでメニューを開きます。カードを長押しすると上下左右へ動かせます。離すと元の場所に戻ります。
+        </span>
+        <section
+          id="card-field"
+          className="card-field"
+          role="tabpanel"
+          aria-labelledby={`tab-${state.settings.book}`}
+          key={state.settings.book}
+        >
+          {cards.length ? (
+            <CardReveal
+              enabled={state.settings.motion && !reducedMotion}
+              book={state.settings.book}
+            >
+              {cards.map((p, index) => {
+                const reason = candidateReason(state, p, today),
+                  highlighted = daily.has(p.id);
+                return (
+                  <FloatingCard
+                    motion={state.settings.motion && !reducedMotion}
+                    key={p.id}
+                    className={`problem-card grade-${p.latest_grade || "new"} ${highlighted ? "suggested" : ""}`}
+                    style={
+                      {
+                        "--offset": `${[0, 18, 5, 25, 8, 20][index % 6]}px`,
+                        "--depth": `${[8, 22, 0, 16, 6, 26][index % 6]}px`,
+                        "--tilt-y": `${[-3, 3, -2, 2, -3, 2][index % 6]}deg`,
+                      } as CSSProperties
+                    }
+                    aria-label={`問題 ${p.number}、☆${p.stars}、${p.latest_grade ? `${p.latest_grade} ${GRADES[p.latest_grade][0]}` : "未着手"}${highlighted ? "、今日の新規候補" : ""}${p.title ? `、${p.title}` : ""}`}
+                    onClick={(e) => {
+                      const rect = e.currentTarget.getBoundingClientRect();
+                      setOrigin({
+                        x: rect.x + rect.width / 2 - innerWidth / 2,
+                        y: rect.y + rect.height / 2 - innerHeight / 2,
+                      });
+                      setSelected(p);
+                      setError("");
+                      setPendingGrade(null);
+                    }}
+                  >
+                    <span className="card-top">
+                      <span>☆{p.stars}</span>
+                      {highlighted ? (
+                        <span className="candidate-mark" title="今日の新規候補">
+                          <CandidateMark
+                            size={10}
+                            fill="currentColor"
+                            strokeWidth={1}
+                          />
+                        </span>
+                      ) : reason === "模試前の確認" ? (
+                        <CalendarDays size={13} />
+                      ) : null}
+                    </span>
+                    <span
+                      className={`problem-number ${typeof p.number === "string" && p.number.length > 4 ? "prefixed-number" : ""}`}
+                    >
+                      {p.number}
+                    </span>
+                    {p.title && <span className="card-title">{p.title}</span>}
+                    <span className="card-state">
+                      <i />
+                      {p.latest_grade || "未着手"}
+                      {p.latest_grade === "E" && <span>要再学習</span>}
+                      {reason === "復習候補" && <span>復習候補</span>}
+                    </span>
+                  </FloatingCard>
+                );
+              })}
+            </CardReveal>
+          ) : (
+            <div className="empty-field">
+              <div className="empty-emblem">
+                <Bookmark size={30} strokeWidth={1.2} />
+              </div>
+              <h1>
+                {!bookProblems.length
+                  ? "最初の問題を、ここに。"
+                  : state.settings.mode === "all"
+                    ? "表示対象の問題はありません"
+                    : "今の候補はすべて記録済み"}
+              </h1>
+              <p>
+                {!bookProblems.length
+                  ? "左上のメニューから、問題番号を登録できます。"
+                  : "表示範囲や全登録問題は、メニューから確認できます。"}
+              </p>
+            </div>
+          )}
+        </section>
+      </BookScene>
+      {page && page !== "menu" && (
+        <Modal title={title} onClose={close} className="settings-dialog">
           <PanelTop
             title={title}
-            onBack={page !== "menu" ? () => setPage("menu") : undefined}
+            onBack={() => setPage("menu")}
             onClose={close}
           />
           <div className="panel-body">
-            {page === "menu" ? (
-              <>
-                <div className="menu-identity">
-                  <span className="eyebrow">FOCUS GOLD</span>
-                  <span>自分のペースで、次の一問へ。</span>
-                </div>
-                <div className="menu-items">
-                  {items.map(([key, label, Icon], i) => (
-                    <button key={key} onClick={() => setPage(key)}>
-                      <Icon size={19} strokeWidth={1.5} />
-                      <span>{label}</span>
-                      <span className="menu-index" aria-hidden="true">
-                        0{i + 1}
-                      </span>
-                      <ChevronRight size={15} />
-                    </button>
-                  ))}
-                </div>
-                <div className="menu-foot">
-                  <span>
-                    {account.user
-                      ? syncLabels[account.sync.status]
-                      : "この端末に保存"}
-                  </span>
-                  <span>{state.problems.length} 問登録済み</span>
-                </div>
-              </>
-            ) : page === "account" ? (
+            {page === "account" ? (
               <AccountPanel
                 key={account.user?.id || "guest"}
                 account={account}
@@ -400,8 +404,8 @@ export default function App() {
           className="grade-dialog"
           style={
             {
-              "--from-x": `${origin.x * 0.25}px`,
-              "--from-y": `${origin.y * 0.25}px`,
+              "--from-x": `${origin.x}px`,
+              "--from-y": `${origin.y}px`,
             } as CSSProperties
           }
         >
@@ -423,6 +427,9 @@ export default function App() {
             >
               {selected.number}
             </span>
+            {selected.title && (
+              <p className="selected-title">{selected.title}</p>
+            )}
             <span
               className={`current-grade grade-${selected.latest_grade || "new"}`}
             >
@@ -469,12 +476,9 @@ export default function App() {
               {selectedHistory.length ? ` (${selectedHistory.length})` : ""}
             </summary>
             <div className="detail-body">
-              {(selected.title || selected.page) && (
+              {selected.page && (
                 <div className="source-details">
-                  {selected.title && (
-                    <p className="source-title">{selected.title}</p>
-                  )}
-                  {selected.page && <p>掲載ページ：{selected.page}</p>}
+                  <p>掲載ページ：{selected.page}</p>
                 </div>
               )}
               <MemoEditor

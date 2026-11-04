@@ -167,7 +167,14 @@ export function FloatingCard({
           finish();
           return;
         }
-        if (Math.abs(dx) >= 8) activate();
+        if (Math.abs(dx) >= 8) {
+          // Horizontal swipes turn the book. A deliberate hold still lifts a card.
+          if (card.closest(".book-scene")) {
+            finish();
+            return;
+          }
+          activate();
+        }
       }
       if (gesture.active && e.cancelable) {
         e.preventDefault();

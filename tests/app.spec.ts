@@ -452,7 +452,7 @@ for (const viewport of [
 ]) {
   test.describe(`指のジェスチャー ${viewport.width}×${viewport.height}`, () => {
     test.use({ hasTouch: true, viewport });
-    test("横ドラッグと長押しの自由移動、キャンセル後もタップで記録できる", async ({
+    test("横スワイプの中断と長押しの自由移動、キャンセル後もタップで記録できる", async ({
       page,
       context,
     }) => {
@@ -471,13 +471,22 @@ for (const viewport of [
         type: "touchMove",
         touchPoints: point(65, 10),
       });
-      await expect(card).toHaveAttribute("data-drag-state", "dragging");
-      expect((await card.boundingBox())!.x).toBeGreaterThan(original.x + 25);
+      await expect(page.locator(".book-scene")).toHaveAttribute(
+        "data-turning",
+        "true",
+      );
+      expect(
+        Number(await page.locator(".book-scene").getAttribute("data-turn")),
+      ).toBeGreaterThan(0.05);
+      await expect(card).toHaveAttribute("data-drag-state", "idle");
       await cdp.send("Input.dispatchTouchEvent", {
-        type: "touchEnd",
+        type: "touchCancel",
         touchPoints: [],
       });
-      await expect(card).toHaveAttribute("data-drag-state", "idle");
+      await expect(page.locator(".book-scene")).toHaveAttribute(
+        "data-turn",
+        "0.000",
+      );
       await expect(page.getByRole("dialog")).toHaveCount(0);
       expect(
         await page.locator(".card-field").evaluate((el) => el.scrollTop),

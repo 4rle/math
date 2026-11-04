@@ -22,7 +22,8 @@ export function Modal({
     dialog.showModal();
     return () => {
       dialog.close();
-      if (previous?.isConnected) previous.focus();
+      if (previous?.isConnected && !previous.closest("[inert]"))
+        previous.focus();
       else document.getElementById("menu-trigger")?.focus();
     };
   }, []);
