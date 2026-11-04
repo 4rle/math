@@ -2,13 +2,14 @@ import { useEffect, useRef, type ReactNode } from "react";
 import { Menu } from "lucide-react";
 import "./flip-scene.css";
 
-// The two faces meet at 90°. At the open pose, the study face projects
-// onto the right 20% of the viewport; its original left edge is at 80%.
-const STUDY_SHARE = 0.2;
-const OPEN_ANGLE = Math.acos(STUDY_SHARE);
+// Both edges of the study face meet near 80% of the viewport when open.
+// Aligning the camera with that shared edge lets the face become edge-on.
+const MENU_SHARE = 0.8;
+const OPEN_ANGLE = (89.5 * Math.PI) / 180;
 const PERSPECTIVE = 4; // camera distance in viewport widths
 const MENU_DEPTH =
-  (1 - STUDY_SHARE) / (Math.sin(OPEN_ANGLE) - STUDY_SHARE / PERSPECTIVE);
+  MENU_SHARE /
+  (Math.sin(OPEN_ANGLE) - (MENU_SHARE * Math.cos(OPEN_ANGLE)) / PERSPECTIVE);
 
 type Props = {
   open: boolean;
@@ -62,11 +63,16 @@ export function FlipScene({
       const angle = p * OPEN_ANGLE;
       root.style.setProperty("--turn", String(p));
       root.style.setProperty("--flip-angle", `${angle}rad`);
-      // Keeping the far edge on the camera's right-hand ray prevents a gap
-      // at the right edge, throughout the turn as well as at both endpoints.
+      // The hinge reaches 80%, while the far edge folds toward that hinge.
       root.style.setProperty(
         "--flip-shift",
-        `${width * (1 - Math.cos(angle))}px`,
+        `${(width * MENU_SHARE * (1 - Math.cos(angle))) / (1 - Math.cos(OPEN_ANGLE))}px`,
+      );
+      // A separate screen-facing layer slides away with a slight initial delay.
+      const tabs = Math.max(0, Math.min(1, (p - 0.06) / 0.94));
+      root.style.setProperty(
+        "--tabs-exit",
+        String(tabs * tabs * (3 - 2 * tabs)),
       );
       root.style.setProperty("--button-lift", String(Math.sin(p * Math.PI)));
       root.dataset.turn = p.toFixed(3);
@@ -121,6 +127,7 @@ export function FlipScene({
       if (next !== width) cancel();
       width = next;
       root.style.setProperty("--camera-distance", `${width * PERSPECTIVE}px`);
+      root.style.setProperty("--camera-origin", `${MENU_SHARE * 100}%`);
       root.style.setProperty("--menu-depth", `${width * MENU_DEPTH}px`);
       paint(progress.current);
     });
@@ -331,17 +338,19 @@ export function FlipScene({
         <div className="flip-face flip-face--study">
           <div className="study-face-content" aria-hidden={open} inert={open}>
             {children}
-            {tabs}
           </div>
-          {open && (
-            <button
-              className="flip-return"
-              aria-label="問題一覧に戻る"
-              onClick={() => onOpenChange(false)}
-            />
-          )}
         </div>
       </div>
+      <div className="floating-tabs" aria-hidden={open} inert={open}>
+        {tabs}
+      </div>
+      {open && (
+        <button
+          className="flip-return"
+          aria-label="問題一覧に戻る"
+          onClick={() => onOpenChange(false)}
+        />
+      )}
     </div>
   );
 }

@@ -1,19 +1,21 @@
-/* One rigid corner: the live menu and study screen are perpendicular faces.
-   FlipScene measures the viewport and solves the final projected 80:20 split. */
+/* The live menu and study screen share a rigid corner. The study face folds
+   almost edge-on at 80% of the viewport, below the independent tab layer. */
 .flip-scene {
   --turn: 0;
   --flip-angle: 0rad;
   --flip-shift: 0px;
   --camera-distance: 400vw;
-  --menu-depth: 86.04vw;
+  --camera-origin: 80%;
+  --menu-depth: 80.14vw;
   --button-lift: 0;
+  --tabs-exit: 0;
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
   perspective: var(--camera-distance);
-  perspective-origin: 100% 50%;
-  background: #fafafa;
+  perspective-origin: var(--camera-origin) 50%;
+  background: #fff;
   touch-action: pan-y pinch-zoom;
 }
 .flip-solid {
@@ -59,6 +61,20 @@
   position: absolute;
   inset: 0;
 }
+.floating-tabs {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  pointer-events: none;
+  transform: translate3d(calc(var(--tabs-exit) * 100%), 0, 0);
+  opacity: calc(1 - var(--tabs-exit));
+}
+.floating-tabs .book-tabs {
+  pointer-events: auto;
+}
+.flip-scene[data-turning="true"] .floating-tabs {
+  will-change: transform, opacity;
+}
 .flip-face--menu {
   width: var(--menu-depth);
   transform-origin: left center;
@@ -78,8 +94,8 @@
 }
 .flip-return {
   position: absolute;
-  inset: 0;
-  width: 100%;
+  inset: 0 0 0 80%;
+  width: 20%;
   height: 100%;
   z-index: 6;
   border-radius: 0;

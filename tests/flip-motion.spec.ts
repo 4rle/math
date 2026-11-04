@@ -6,7 +6,7 @@ for (const viewport of [
 ]) {
   test.describe(`剛体としての回転 ${viewport.width}×${viewport.height}`, () => {
     test.use({ viewport, hasTouch: true });
-    test("指を止めた角度で2面がつながり、カードとタブも縮んで見える。逆転とキャンセルで復帰する", async ({
+    test("カード面が回転してもタブは正面のまま右へ移動して薄くなる。逆転とキャンセルで復帰する", async ({
       page,
       context,
     }, info) => {
@@ -16,6 +16,15 @@ for (const viewport of [
       const first = page.locator(".problem-card").first();
       const before = (await first.boundingBox())!;
       const tabWidth = (await page.getByRole("tablist").boundingBox())!.width;
+      await expect(page.locator(".flip-solid .book-tabs")).toHaveCount(0);
+      await expect(scene).toHaveCSS("background-color", "rgb(255, 255, 255)");
+      await expect(page.locator(".flip-face--menu")).toHaveCSS(
+        "background-color",
+        "rgb(255, 255, 255)",
+      );
+      let previousRight = viewport.width,
+        previousOpacity = 1,
+        previousTabX = 0;
       const cdp = await context.newCDPSession(page);
       const startX = 60,
         startY = viewport.height > 500 ? 95 : 76;
@@ -39,11 +48,29 @@ for (const viewport of [
         const study = (await page.locator(".flip-face--study").boundingBox())!;
         const menu = (await page.locator(".flip-face--menu").boundingBox())!;
         expect(menu.x + menu.width).toBeCloseTo(study.x, 0);
-        expect(study.x + study.width).toBeCloseTo(viewport.width, 0);
+        expect(study.x + study.width).toBeLessThan(previousRight);
+        previousRight = study.x + study.width;
         expect((await first.boundingBox())!.width).toBeLessThan(before.width);
         expect(
           (await page.getByRole("tablist").boundingBox())!.width,
-        ).toBeLessThan(tabWidth);
+        ).toBeCloseTo(tabWidth, 1);
+        const tabs = await page.locator(".floating-tabs").evaluate((el) => {
+          const style = getComputedStyle(el),
+            matrix = new DOMMatrix(style.transform);
+          return {
+            x: matrix.m41,
+            rotation: matrix.m13,
+            scale: matrix.m11,
+            opacity: Number(style.opacity),
+          };
+        });
+        expect(tabs.x).toBeGreaterThan(previousTabX);
+        expect(tabs.rotation).toBe(0);
+        expect(tabs.scale).toBe(1);
+        expect(tabs.opacity).toBeGreaterThan(0);
+        expect(tabs.opacity).toBeLessThan(previousOpacity);
+        previousTabX = tabs.x;
+        previousOpacity = tabs.opacity;
         for (const selector of [
           ".flip-solid",
           ".flip-face--menu",
@@ -65,6 +92,7 @@ for (const viewport of [
       await expect(scene).toHaveAttribute("data-turning", "false");
       expect((await first.boundingBox())!.x).toBeCloseTo(before.x, 1);
       expect((await first.boundingBox())!.width).toBeCloseTo(before.width, 1);
+      await expect(page.locator(".floating-tabs")).toHaveCSS("opacity", "1");
       await expect(page.getByRole("dialog")).toHaveCount(0);
       await expect(first).toHaveAttribute("aria-label", /未着手/);
       await first.tap();
@@ -113,8 +141,13 @@ test("開閉・途中反転・動き停止でもスクロール位置と同じ�
   await expect(field).toHaveCSS("visibility", "visible");
   const side = (await page.locator(".flip-face--study").boundingBox())!;
   expect(side.x).toBeCloseTo(312, 0);
-  expect(side.width).toBeCloseTo(78, 0);
+  expect(side.width).toBeGreaterThan(0);
+  expect(side.width).toBeLessThan(390 * 0.01);
+  await expect(page.locator(".floating-tabs")).toHaveCSS("opacity", "0");
+  await expect(page.locator(".floating-tabs")).toHaveAttribute("inert", "");
   await trigger.click();
   await expect(scene).toHaveAttribute("data-turn", "0.000");
   await expect(field).toHaveJSProperty("scrollTop", 570);
+  await expect(page.locator(".floating-tabs")).toHaveCSS("opacity", "1");
+  await expect(page.locator(".floating-tabs")).not.toHaveAttribute("inert", "");
 });

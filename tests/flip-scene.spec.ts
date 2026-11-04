@@ -160,7 +160,9 @@ test("メニューのフォーカス循環、Escapeで復帰、動き停止で�
   await expect(page.getByRole("dialog", { name: "メニュー" })).toBeVisible();
 });
 
-test("右側のタイル面をクリックすると一覧へ戻れる", async ({ page }) => {
+test("タイルが細い側面になっても右側の余白全体から一覧へ戻れる", async ({
+  page,
+}) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");
   await page
@@ -170,8 +172,9 @@ test("右側のタイル面をクリックすると一覧へ戻れる", async ({
     "data-turn",
     "1.000",
   );
-  const face = (await page.locator(".flip-face--study").boundingBox())!;
-  await page.mouse.click(face.x + face.width / 2, face.y + face.height / 2);
+  const area = (await page.locator(".flip-return").boundingBox())!;
+  expect(area.width).toBeCloseTo(1440 * 0.2, 0);
+  await page.mouse.click(1440 * 0.95, 450);
   await expect(page.locator(".flip-scene")).toHaveAttribute(
     "data-turn",
     "0.000",
@@ -179,7 +182,7 @@ test("右側のタイル面をクリックすると一覧へ戻れる", async ({
   await expect(page.getByRole("dialog")).toHaveCount(0);
 });
 
-test("開くと左80%がメニュー・右20%が同じタイル面になり、画面回転後も比率を保つ", async ({
+test("開くとカードの左右の辺が80%位置へ集まり、ほぼ真横になる。画面回転後も位置を保つ", async ({
   page,
 }, info) => {
   await page.goto("/");
@@ -209,12 +212,14 @@ test("開くと左80%がメニュー・右20%が同じタイル面になり、�
     const menu = (await page.locator(".flip-face--menu").boundingBox())!;
     expect(menu.x).toBeCloseTo(0, 0);
     expect(menu.width).toBeCloseTo(width * 0.8, 0);
-    expect(study.width).toBeCloseTo(width * 0.2, 0);
+    expect(study.width).toBeGreaterThan(0);
+    expect(study.width).toBeLessThan(width * 0.01);
     expect(menu.x + menu.width).toBeCloseTo(study.x, 0);
-    expect(study.x + study.width).toBeCloseTo(width, 0);
+    expect(study.x + study.width).toBeGreaterThan(width * 0.8);
+    expect(study.x + study.width).toBeLessThan(width * 0.81);
     expect(study.y).toBeCloseTo(0, 0);
     expect(study.height).toBeCloseTo(height, 0);
-    // Actual cards remain mounted, shaded and visible on the side; no spine/snapshot.
+    // Same cards remain mounted on the nearly edge-on face; no spine/snapshot.
     expect(
       await card!.evaluate(
         (el) => el === document.querySelector(".problem-card"),
@@ -222,7 +227,9 @@ test("開くと左80%がメニュー・右20%が同じタイル面になり、�
     ).toBe(true);
     const rect = (await page.locator(".problem-card").first().boundingBox())!;
     expect(rect.x).toBeGreaterThan(width * 0.8);
-    expect(rect.x + rect.width).toBeLessThan(width);
+    expect(rect.x + rect.width).toBeLessThan(width * 0.81);
+    await expect(page.locator(".floating-tabs")).toHaveCSS("opacity", "0");
+    await expect(page.getByRole("tab")).toHaveCount(0);
     await expect(page.locator(".problem-card").first()).toHaveCSS(
       "visibility",
       "visible",
