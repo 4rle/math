@@ -640,7 +640,7 @@ export function DisplayPanel({ state, commit, busy, notify }: PanelProps) {
         </label>
       </fieldset>
       <Hint>
-        今日の新規候補には、小さな金色の菱形が付きます。ほかの問題も自由に選べます。
+        今日の新規候補には、小さな黒い菱形が付きます。ほかの問題も自由に選べます。
       </Hint>
       <FormFooter busy={busy} />
       <ErrorMessage message={action.error} />

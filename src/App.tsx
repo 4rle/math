@@ -49,6 +49,17 @@ import {
   MotionPanel,
   type PanelProps,
 } from "./panels";
+const menuEnglish: Record<string, string> = {
+  account: "Account & sync",
+  register: "Library",
+  display: "Display",
+  learning: "Study settings",
+  exams: "Exams",
+  history: "History",
+  progress: "Progress",
+  data: "Data",
+  motion: "Motion",
+};
 const items = [
   ["account", "アカウントと同期", UserRound],
   ["register", "問題の登録と管理", Plus],
@@ -189,13 +200,66 @@ export default function App() {
         motion={state.settings.motion && !reducedMotion}
         disabled={!!selected || (!!page && page !== "menu")}
         onOpenChange={(open) => setPage(open ? "menu" : null)}
+        tabs={
+          <div
+            className="book-tabs"
+            role="tablist"
+            aria-label="参考書"
+            onKeyDown={(e) => {
+              if (!["ArrowRight", "ArrowLeft", "Home", "End"].includes(e.key))
+                return;
+              e.preventDefault();
+              const books = Object.keys(BOOKS) as Book[],
+                index = books.indexOf(state.settings.book);
+              const next =
+                e.key === "Home"
+                  ? 0
+                  : e.key === "End"
+                    ? 2
+                    : (index + (e.key === "ArrowRight" ? 1 : 2)) % 3;
+              document.getElementById(`tab-${books[next]}`)?.focus();
+              if (!busy)
+                commit((s) => ({
+                  ...s,
+                  settings: { ...s.settings, book: books[next], unit: "" },
+                })).catch((e) => notify(e.message));
+            }}
+          >
+            {(Object.entries(BOOKS) as [Book, string][]).map(([book, name]) => (
+              <button
+                id={`tab-${book}`}
+                key={book}
+                role="tab"
+                aria-controls="card-field"
+                tabIndex={state.settings.book === book ? 0 : -1}
+                aria-selected={state.settings.book === book}
+                disabled={busy}
+                onClick={() =>
+                  commit((s) => ({
+                    ...s,
+                    settings: { ...s.settings, book, unit: "" },
+                  })).catch((e) => notify(e.message))
+                }
+              >
+                {name}
+              </button>
+            ))}
+          </div>
+        }
         menu={
           <>
             <div className="menu-items">
               {items.map(([key, label, Icon], i) => (
-                <button key={key} onClick={() => setPage(key)}>
+                <button
+                  key={key}
+                  aria-label={label}
+                  onClick={() => setPage(key)}
+                >
                   <Icon size={19} strokeWidth={1.5} />
-                  <span>{label}</span>
+                  <span className="menu-label">
+                    <span lang="en">{menuEnglish[key]}</span>
+                    <small>{label}</small>
+                  </span>
                   <span className="menu-index" aria-hidden="true">
                     0{i + 1}
                   </span>
@@ -214,50 +278,6 @@ export default function App() {
           </>
         }
       >
-        <div
-          className="book-tabs"
-          role="tablist"
-          aria-label="参考書"
-          onKeyDown={(e) => {
-            if (!["ArrowRight", "ArrowLeft", "Home", "End"].includes(e.key))
-              return;
-            e.preventDefault();
-            const books = Object.keys(BOOKS) as Book[],
-              index = books.indexOf(state.settings.book);
-            const next =
-              e.key === "Home"
-                ? 0
-                : e.key === "End"
-                  ? 2
-                  : (index + (e.key === "ArrowRight" ? 1 : 2)) % 3;
-            document.getElementById(`tab-${books[next]}`)?.focus();
-            if (!busy)
-              commit((s) => ({
-                ...s,
-                settings: { ...s.settings, book: books[next], unit: "" },
-              })).catch((e) => notify(e.message));
-          }}
-        >
-          {(Object.entries(BOOKS) as [Book, string][]).map(([book, name]) => (
-            <button
-              id={`tab-${book}`}
-              key={book}
-              role="tab"
-              aria-controls="card-field"
-              tabIndex={state.settings.book === book ? 0 : -1}
-              aria-selected={state.settings.book === book}
-              disabled={busy}
-              onClick={() =>
-                commit((s) => ({
-                  ...s,
-                  settings: { ...s.settings, book, unit: "" },
-                })).catch((e) => notify(e.message))
-              }
-            >
-              {name}
-            </button>
-          ))}
-        </div>
         <span id="card-gesture-help" className="sr-only">
           タップで記録。横スワイプでメニューを開きます。カードを長押しすると上下左右へ動かせます。離すと元の場所に戻ります。
         </span>
@@ -284,8 +304,7 @@ export default function App() {
                     style={
                       {
                         "--offset": `${[0, 18, 5, 25, 8, 20][index % 6]}px`,
-                        "--depth": `${[8, 22, 0, 16, 6, 26][index % 6]}px`,
-                        "--tilt-y": `${[-3, 3, -2, 2, -3, 2][index % 6]}deg`,
+                        "--exit": `var(--tile-exit-${index % 4}, 0)`,
                       } as CSSProperties
                     }
                     aria-label={`問題 ${p.number}、☆${p.stars}、${p.latest_grade ? `${p.latest_grade} ${GRADES[p.latest_grade][0]}` : "未着手"}${highlighted ? "、今日の新規候補" : ""}${p.title ? `、${p.title}` : ""}`}
@@ -301,7 +320,9 @@ export default function App() {
                     }}
                   >
                     <span className="card-top">
-                      <span>☆{p.stars}</span>
+                      <span className="card-difficulty" lang="en">
+                        LEVEL 0{p.stars}
+                      </span>
                       {highlighted ? (
                         <span className="candidate-mark" title="今日の新規候補">
                           <CandidateMark
@@ -322,9 +343,11 @@ export default function App() {
                     {p.title && <span className="card-title">{p.title}</span>}
                     <span className="card-state">
                       <i />
-                      {p.latest_grade || "未着手"}
-                      {p.latest_grade === "E" && <span>要再学習</span>}
-                      {reason === "復習候補" && <span>復習候補</span>}
+                      <span className="state-label" lang="en">
+                        {p.latest_grade || "Not studied"}
+                      </span>
+                      {p.latest_grade === "E" && <span lang="en">Relearn</span>}
+                      {reason === "復習候補" && <span lang="en">Review</span>}
                     </span>
                   </FloatingCard>
                 );

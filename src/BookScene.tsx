@@ -7,6 +7,7 @@ type Props = {
   disabled: boolean;
   onOpenChange: (open: boolean) => void;
   menu: ReactNode;
+  tabs: ReactNode;
   children: ReactNode;
 };
 
@@ -17,6 +18,7 @@ export function BookScene({
   disabled,
   onOpenChange,
   menu,
+  tabs,
   children,
 }: Props) {
   const scene = useRef<HTMLDivElement>(null);
@@ -31,6 +33,55 @@ export function BookScene({
     const root = scene.current!;
     let frame = 0;
     let blockedUntil = 0;
+    // The desk turns immediately; independent glass layers follow on their own clock.
+    const layers = [
+      { name: "--tabs-exit", value: 0, delay: 0.1, response: 0.065 },
+      ...[0, 1, 2, 3].map((i) => ({
+        name: `--tile-exit-${i}`,
+        value: 0,
+        delay: 0.04 + i * 0.035,
+        response: 0.07 + i * 0.018,
+      })),
+    ];
+    let layerFrame = 0;
+    let layerTime = 0;
+    let layerTarget = 0;
+    const paintLayer = (layer: (typeof layers)[number]) =>
+      root.style.setProperty(layer.name, String(layer.value));
+    const tickLayers = (now: number) => {
+      const dt = Math.min((now - layerTime) / 1000, 0.05);
+      layerTime = now;
+      let unfinished = false;
+      for (const layer of layers) {
+        const target = Math.max(
+          0,
+          Math.min(1, (layerTarget - layer.delay) / (1 - layer.delay)),
+        );
+        layer.value +=
+          (target - layer.value) * (1 - Math.exp(-dt / layer.response));
+        if (Math.abs(target - layer.value) < 0.0005) layer.value = target;
+        else unfinished = true;
+        paintLayer(layer);
+      }
+      root.dataset.layersSettled = String(!unfinished);
+      layerFrame = unfinished ? requestAnimationFrame(tickLayers) : 0;
+    };
+    const followLayers = (p: number) => {
+      layerTarget = p;
+      if (!current.current.motion) {
+        cancelAnimationFrame(layerFrame);
+        layerFrame = 0;
+        for (const layer of layers) {
+          layer.value = p;
+          paintLayer(layer);
+        }
+        root.dataset.layersSettled = "true";
+      } else if (!layerFrame) {
+        root.dataset.layersSettled = "false";
+        layerTime = performance.now();
+        layerFrame = requestAnimationFrame(tickLayers);
+      }
+    };
     let gesture: {
       x: number;
       y: number;
@@ -49,6 +100,7 @@ export function BookScene({
         String(Math.sin(progress.current * Math.PI)),
       );
       root.dataset.turn = progress.current.toFixed(3);
+      followLayers(progress.current);
     };
     const settle = (target: number, speed = 0) => {
       cancelAnimationFrame(frame);
@@ -190,6 +242,7 @@ export function BookScene({
     root.addEventListener("click", click, true);
     return () => {
       cancelAnimationFrame(frame);
+      cancelAnimationFrame(layerFrame);
       root.removeEventListener("touchstart", touchStart);
       root.removeEventListener("touchmove", touchMove);
       root.removeEventListener("touchend", touchEnd);
@@ -277,7 +330,9 @@ export function BookScene({
           <span>CONTENTS</span>
         </div>
         {menu}
-        <p className="flip-hint">左にスワイプして問題へ戻る</p>
+        <p className="flip-hint" lang="en">
+          Swipe left to return <span aria-hidden="true">←</span>
+        </p>
       </div>
       <div className="book-volume" aria-hidden={open} inert={open}>
         <div className="book-back" />
@@ -288,7 +343,13 @@ export function BookScene({
           <span className="spine-name">Focusgold Helper</span>
           <span className="spine-rule spine-rule-bottom" />
         </div>
-        <div className="book-front">{children}</div>
+        <div className="book-front" />
+      </div>
+      <div className="study-layer" aria-hidden={open} inert={open}>
+        {children}
+      </div>
+      <div className="floating-tabs" aria-hidden={open} inert={open}>
+        {tabs}
       </div>
       {open && (
         <button
