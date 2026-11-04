@@ -1,6 +1,5 @@
 import { useEffect, useState, type CSSProperties } from "react";
 import {
-  Menu,
   X,
   Plus,
   SlidersHorizontal,
@@ -215,15 +214,6 @@ export default function App() {
           </>
         }
       >
-        <button
-          id="menu-trigger"
-          className="menu-trigger icon-button"
-          aria-label="メニューを開く"
-          aria-expanded={page === "menu"}
-          onClick={() => setPage("menu")}
-        >
-          <Menu size={22} strokeWidth={1.5} />
-        </button>
         <div
           className="book-tabs"
           role="tablist"

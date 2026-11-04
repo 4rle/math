@@ -1646,12 +1646,13 @@ input[type="date"] {
 /* A bound volume in a single perspective space. No canvas or animation library. */
 .book-scene {
   --turn: 0;
-  --book-thickness: 56px;
+  --book-thickness: 50vw;
+  --button-lift: 0;
   position: relative;
   width: 100%;
   height: 100%;
   perspective: 1800px;
-  perspective-origin: 50% 48%;
+  perspective-origin: 100% 50%;
   background: radial-gradient(
     ellipse at 75% 40%,
     #353025 0,
@@ -1666,12 +1667,8 @@ input[type="date"] {
   inset: 0;
   transform-style: preserve-3d;
   transform-origin: left center;
-  transform: translate3d(
-      calc(var(--turn) * min(74vw, 650px)),
-      0,
-      calc(var(--turn) * -100px)
-    )
-    rotateY(calc(var(--turn) * 67deg)) scale(calc(1 - var(--turn) * 0.12));
+  transform: translateX(calc(var(--turn) * 100%))
+    rotateY(calc(var(--turn) * 90deg));
   pointer-events: auto;
 }
 .book-scene[data-turning="true"] .book-volume {
@@ -1689,7 +1686,7 @@ input[type="date"] {
     #0c0c0b 100%
   );
   border: 1px solid #8b75422b;
-  border-radius: calc(var(--turn) * 12px);
+  border-radius: 0;
   box-shadow:
     0 18px 60px #0009,
     inset 2px 0 2px #d3ba7f22;
@@ -1742,7 +1739,7 @@ input[type="date"] {
   transform: translate(-50%, -50%) rotate(90deg);
   white-space: nowrap;
   font-family: "Bodoni MT", Didot, "Times New Roman", serif;
-  font-size: clamp(24px, 4.5dvh, 39px);
+  font-size: clamp(24px, 7dvh, 72px);
   letter-spacing: 0.065em;
   color: #e7cc8b;
   text-shadow:
@@ -1751,8 +1748,8 @@ input[type="date"] {
 }
 .spine-rule {
   position: absolute;
-  left: 8px;
-  right: 8px;
+  left: 10%;
+  right: 10%;
   height: 6px;
   border-block: 1px solid #b39759;
 }
@@ -1781,7 +1778,7 @@ input[type="date"] {
 .flip-menu {
   position: absolute;
   inset: 0 auto 0 0;
-  width: min(65%, 510px);
+  width: 50%;
   padding: max(18px, env(safe-area-inset-top)) 20px
     max(20px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));
   overflow-y: auto;
@@ -1792,6 +1789,7 @@ input[type="date"] {
   transform: translateX(calc((1 - var(--turn)) * -24px));
 }
 .flip-menu-top {
+  min-height: 44px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1835,20 +1833,11 @@ input[type="date"] {
 }
 .book-return {
   position: absolute;
-  left: min(65%, 560px);
+  left: 50%;
   right: 0;
   top: 0;
   bottom: 0;
   z-index: 3;
-}
-.book-return > span {
-  position: absolute;
-  bottom: max(24px, env(safe-area-inset-bottom));
-  right: 16px;
-  color: #d8c59a;
-  font-size: 11px;
-  writing-mode: vertical-rl;
-  letter-spacing: 0.16em;
 }
 .book-return:focus-visible {
   outline-offset: -8px;
@@ -1862,12 +1851,30 @@ input[type="date"] {
 .book-scene .book-tabs button {
   min-height: 44px;
 }
+/* One persistent button leaves the rotating face and travels above the scene. */
 .book-scene .menu-trigger {
+  --trigger-left: max(12px, env(safe-area-inset-left));
+  --trigger-right: max(12px, env(safe-area-inset-right));
+  left: var(--trigger-left);
+  top: calc(16px + env(safe-area-inset-top));
+  z-index: 6;
   border-radius: 50%;
+  background: #161510;
+  transform: translate3d(
+    calc(
+      var(--turn) * (100vw - var(--trigger-left) - var(--trigger-right) - 44px)
+    ),
+    calc(var(--button-lift) * 8px),
+    calc(var(--button-lift) * 32px)
+  );
   box-shadow:
-    0 4px 10px #0005,
-    inset 0 1px #b9a16b22;
+    0 calc(4px + var(--turn) * 10px + var(--button-lift) * 12px) 24px #0009,
+    inset 0 1px #b9a16b44;
 }
+.book-scene[data-turning="true"] .menu-trigger {
+  will-change: transform;
+}
+
 .book-scene .card-field {
   padding-top: calc(112px + env(safe-area-inset-top));
   padding-bottom: 80px;
@@ -1962,7 +1969,6 @@ input[type="date"] {
 }
 @media (max-width: 700px) {
   .book-scene {
-    --book-thickness: 48px;
     perspective: 1300px;
   }
   .book-scene .card-field {
@@ -1985,9 +1991,8 @@ input[type="date"] {
     font-size: 29px;
   }
   .flip-menu {
-    padding-left: max(20px, env(safe-area-inset-left));
+    padding-left: max(12px, env(safe-area-inset-left));
     padding-right: 12px;
-    width: 65%;
   }
   .flip-menu .menu-items button {
     gap: 9px;
@@ -2031,7 +2036,6 @@ input[type="date"] {
     font-size: 12px;
   }
   .flip-menu {
-    width: min(64%, 480px);
     padding-block: max(10px, env(safe-area-inset-top));
   }
   .flip-menu-top {
@@ -2039,8 +2043,8 @@ input[type="date"] {
   }
   .flip-menu .menu-items {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 18px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 12px;
   }
   .flip-menu .menu-items button {
     min-height: 46px;

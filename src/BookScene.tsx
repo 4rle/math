@@ -1,5 +1,5 @@
 import { useEffect, useRef, type ReactNode } from "react";
-import { X } from "lucide-react";
+import { Menu } from "lucide-react";
 
 type Props = {
   open: boolean;
@@ -21,6 +21,7 @@ export function BookScene({
 }: Props) {
   const scene = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const progress = useRef(0);
   const animate = useRef<(target: number, velocity?: number) => void>(() => {});
   const current = useRef({ open, motion, disabled, onOpenChange });
@@ -43,6 +44,10 @@ export function BookScene({
     const draw = (p: number) => {
       progress.current = Math.max(0, Math.min(1, p));
       root.style.setProperty("--turn", String(progress.current));
+      root.style.setProperty(
+        "--button-lift",
+        String(Math.sin(progress.current * Math.PI)),
+      );
       root.dataset.turn = progress.current.toFixed(3);
     };
     const settle = (target: number, speed = 0) => {
@@ -205,9 +210,7 @@ export function BookScene({
     if (!open) return;
     const previous = document.activeElement as HTMLElement | null;
     const panel = menuRef.current!;
-    panel
-      .querySelector<HTMLButtonElement>("button")
-      ?.focus({ preventScroll: true });
+    triggerRef.current?.focus({ preventScroll: true });
     const keydown = (e: KeyboardEvent) => {
       if (current.current.disabled) return;
       if (e.key === "Escape") {
@@ -216,6 +219,7 @@ export function BookScene({
       }
       if (e.key === "Tab") {
         const controls = [
+          triggerRef.current!,
           ...panel.querySelectorAll<HTMLButtonElement>(
             "button:not([disabled])",
           ),
@@ -251,7 +255,19 @@ export function BookScene({
       aria-modal={open ? true : undefined}
       aria-label={open ? "メニュー" : undefined}
     >
+      <button
+        ref={triggerRef}
+        id="menu-trigger"
+        className="menu-trigger icon-button"
+        aria-label={open ? "閉じる" : "メニューを開く"}
+        aria-expanded={open}
+        aria-controls="book-menu"
+        onClick={() => onOpenChange(!open)}
+      >
+        <Menu size={22} strokeWidth={1.5} />
+      </button>
       <div
+        id="book-menu"
         className="flip-menu"
         ref={menuRef}
         inert={!open}
@@ -259,13 +275,6 @@ export function BookScene({
       >
         <div className="flip-menu-top">
           <span>CONTENTS</span>
-          <button
-            className="icon-button"
-            aria-label="閉じる"
-            onClick={() => onOpenChange(false)}
-          >
-            <X size={20} />
-          </button>
         </div>
         {menu}
         <p className="flip-hint">左にスワイプして問題へ戻る</p>
@@ -286,9 +295,7 @@ export function BookScene({
           className="book-return"
           aria-label="問題一覧に戻る"
           onClick={() => onOpenChange(false)}
-        >
-          <span>問題へ戻る</span>
-        </button>
+        />
       )}
     </div>
   );

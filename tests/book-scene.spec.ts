@@ -27,6 +27,13 @@ for (const viewport of [
       await send("touchStart");
       await send("touchMove", 30);
       const first = Number(await root.getAttribute("data-turn"));
+      const midButton = await page.locator("#menu-trigger").evaluate((el) => {
+        const m = new DOMMatrix(getComputedStyle(el).transform);
+        return { x: m.m41, z: m.m43, rotation: m.m13 };
+      });
+      expect(midButton.x).toBeGreaterThan(10);
+      expect(midButton.z).toBeGreaterThan(0);
+      expect(midButton.rotation).toBe(0);
       await send("touchMove", 90);
       expect(Number(await root.getAttribute("data-turn"))).toBeGreaterThan(
         first,
@@ -169,4 +176,55 @@ test("PCでも回転した本をクリックすると一覧へ戻れる", async 
     "0.000",
   );
   await expect(page.getByRole("dialog")).toHaveCount(0);
+});
+
+test("90度回転で右半分を背表紙が埋め、同じメニューボタンが右上へ移動する", async ({
+  page,
+}, info) => {
+  await page.goto("/");
+  const trigger = page.locator("#menu-trigger");
+  const original = await trigger.elementHandle();
+  await trigger.click();
+  await expect(page.locator(".book-scene")).toHaveAttribute(
+    "data-turn",
+    "1.000",
+  );
+  for (const [width, height] of [
+    [320, 568],
+    [390, 844],
+    [844, 390],
+    [932, 430],
+    [740, 360],
+    [1440, 900],
+  ]) {
+    await page.setViewportSize({ width, height });
+    const spine = (await page.locator(".book-spine").boundingBox())!;
+    expect(spine.x).toBeCloseTo(width / 2, 0);
+    expect(spine.y).toBeCloseTo(0, 0);
+    expect(spine.width).toBeCloseTo(width / 2, 0);
+    expect(spine.height).toBeCloseTo(height, 0);
+    const matrix = await page.locator(".book-volume").evaluate((el) => {
+      const m = new DOMMatrix(getComputedStyle(el).transform);
+      return { cosine: m.m11, sine: m.m13, scaleY: m.m22 };
+    });
+    expect(matrix.cosine).toBeCloseTo(0, 5);
+    expect(matrix.sine).toBeCloseTo(-1, 5);
+    expect(matrix.scaleY).toBe(1);
+    const button = (await trigger.boundingBox())!;
+    expect(button.x + button.width).toBeCloseTo(width - 12, 0);
+    expect(button.y).toBeCloseTo(16, 0);
+    expect(
+      await original!.evaluate(
+        (el) => el === document.getElementById("menu-trigger"),
+      ),
+    ).toBe(true);
+    await page.screenshot({ path: info.outputPath(`full-spine-${width}.png`) });
+  }
+  await trigger.click();
+  await expect(page.locator(".book-scene")).toHaveAttribute(
+    "data-turn",
+    "0.000",
+  );
+  expect((await trigger.boundingBox())!.x).toBeCloseTo(12, 0);
+  await expect(trigger).toBeFocused();
 });
