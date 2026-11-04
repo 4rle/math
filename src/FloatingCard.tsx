@@ -169,8 +169,8 @@ export function FloatingCard({
           return;
         }
         if (Math.abs(dx) >= 8) {
-          // Horizontal swipes turn the book. A deliberate hold still lifts a card.
-          if (card.closest(".book-scene")) {
+          // Horizontal swipes turn the two-face scene. A deliberate hold still lifts a card.
+          if (card.closest(".flip-scene")) {
             finish();
             return;
           }

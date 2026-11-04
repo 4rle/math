@@ -1,4 +1,4 @@
-/* Monochrome desk. The glass and controls float independently of the turning body. */
+/* Monochrome glass materials and typography, shared by the two-face scene. */
 :root {
   --bg: #f6f6f6;
   --surface: #fff;
@@ -14,47 +14,10 @@
   color-scheme: light;
 }
 .study-desk,
-.book-scene {
+.flip-scene {
   background: #fafafa;
 }
-.book-front {
-  border: 0;
-  background:
-    linear-gradient(124deg, transparent 30%, #ffffffc4 42%, transparent 54%),
-    radial-gradient(ellipse at 25% 15%, #fafafa 0, #f1f1f1 50%, #e8e8e8 100%);
-  box-shadow:
-    -1px 0 0 #ddd,
-    0 20px 45px #0000000d;
-}
-.book-front::after {
-  background: linear-gradient(90deg, transparent 30%, #00000009);
-}
-.book-back {
-  background: #e8e8e8;
-  border: 1px solid #ddd;
-  box-shadow: -15px 0 50px #0000000d;
-}
-.book-spine {
-  background: linear-gradient(90deg, #f1f1f1, #fff 12%, #fdfdfd 80%, #f2f2f2);
-  border: 1px solid #dedede;
-  box-shadow: inset 2px 0 5px #00000005;
-}
-.spine-name {
-  color: #111;
-  font-weight: 500;
-  letter-spacing: -0.045em;
-  text-shadow: none;
-}
-.spine-rule {
-  height: 1px;
-  border: 0;
-  background: #dedede;
-}
-.book-pages {
-  background: linear-gradient(#fff, #e9e9e9);
-  border: 1px solid #e2e2e2;
-}
-.book-scene .menu-trigger {
+.flip-scene .menu-trigger {
   color: #151515;
   background: #ffffffed;
   border: 1px solid #d6d6d6;
@@ -63,31 +26,11 @@
     0 calc(3px + var(--turn) * 3px + var(--button-lift) * 14px) 22px #00000016,
     inset 0 1px #fff;
 }
-.book-scene .menu-trigger:hover {
+.flip-scene .menu-trigger:hover {
   background: #fff;
   border-color: #9b9b9b;
 }
-.study-layer {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-}
-.study-layer .card-field {
-  pointer-events: auto;
-}
-.floating-tabs {
-  position: absolute;
-  inset: 0;
-  z-index: 4;
-  pointer-events: none;
-  transform: translate3d(calc(var(--tabs-exit, 0) * 112vw), 0, 0);
-  opacity: 1;
-}
-.floating-tabs .book-tabs {
-  pointer-events: auto;
-}
-.book-scene .book-tabs {
+.flip-scene .book-tabs {
   padding: 3px;
   border: 1px solid #fff;
   border-radius: 7px;
@@ -99,33 +42,33 @@
     0 8px 20px #0000000b,
     inset 0 1px 0 #fff;
 }
-.book-scene .book-tabs button {
+.flip-scene .book-tabs button {
   color: #626262;
   border-radius: 4px;
   letter-spacing: 0.015em;
   font-size: 13px;
 }
-.book-scene .book-tabs button[aria-selected="true"] {
+.flip-scene .book-tabs button[aria-selected="true"] {
   color: #fff;
   background: #171717;
   box-shadow: 0 2px 3px #0000001a;
 }
-.book-scene .book-tabs button:hover:not([aria-selected="true"]) {
+.flip-scene .book-tabs button:hover:not([aria-selected="true"]) {
   color: #111;
   background: #00000005;
 }
-.book-scene .card-field {
+.flip-scene .card-field {
   padding-top: calc(113px + env(safe-area-inset-top));
   padding-bottom: 85px;
   overflow-x: hidden;
   scrollbar-color: #c5c5c5 transparent;
 }
-.book-scene .card-grid {
+.flip-scene .card-grid {
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 42px 32px;
 }
-.book-scene .problem-card,
-.book-scene .problem-card.suggested {
+.flip-scene .problem-card,
+.flip-scene .problem-card.suggested {
   --reveal-opacity: 1;
   min-height: 226px;
   padding: 20px 21px 18px;
@@ -150,14 +93,14 @@
     4px 6px 1px -1px #0000002b,
     9px 18px 20px -10px #0000002e;
   transform: translate3d(
-      calc(var(--drag-x, 0px) + var(--exit, 0) * 112vw),
+      var(--drag-x, 0px),
       calc(var(--offset, 0px) + var(--drag-y, 0px)),
       0
     )
     rotate(var(--drag-angle, 0deg)) scale(var(--drag-scale, 1));
   opacity: var(--reveal-opacity);
 }
-.book-scene .problem-card::before {
+.flip-scene .problem-card::before {
   inset: 4px;
   height: auto;
   border-radius: 5px;
@@ -166,7 +109,7 @@
   border-bottom-color: #00000005;
   box-shadow: inset 0 1px 3px #ffffffc9;
 }
-.book-scene .problem-card::after {
+.flip-scene .problem-card::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -184,10 +127,10 @@
   position: relative;
   z-index: 1;
 }
-.book-scene .problem-card[data-reveal="waiting"] {
+.flip-scene .problem-card[data-reveal="waiting"] {
   --reveal-opacity: 0.18;
 }
-.book-scene .problem-card[data-drag-state="dragging"] {
+.flip-scene .problem-card[data-drag-state="dragging"] {
   box-shadow:
     inset 1px 1px 1px #fff,
     inset -1px -1px #0002,
@@ -195,57 +138,57 @@
     4px 7px 0 #0002,
     14px 38px 30px -12px #0003;
 }
-.book-scene .problem-card:focus-visible {
+.flip-scene .problem-card:focus-visible {
   outline: 2px solid #222;
   outline-offset: 7px;
   --reveal-opacity: 1;
 }
-.book-scene .problem-number,
+.flip-scene .problem-number,
 .selected-number {
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: 300;
   letter-spacing: -0.055em;
   color: #171717;
 }
-.book-scene .problem-number {
+.flip-scene .problem-number {
   font-size: 58px;
   margin-block: 24px 14px;
 }
-.book-scene .problem-number.prefixed-number {
+.flip-scene .problem-number.prefixed-number {
   font-size: 35px;
   letter-spacing: -0.04em;
 }
-.book-scene .card-top {
+.flip-scene .card-top {
   color: #5b5b5b;
   font-size: 9px;
   letter-spacing: 0.13em;
 }
-.book-scene .candidate-mark {
+.flip-scene .candidate-mark {
   color: #353535;
 }
-.book-scene .card-title {
+.flip-scene .card-title {
   color: #373737;
   font-size: 13px;
   line-height: 1.8;
   letter-spacing: 0;
   text-wrap: pretty;
 }
-.book-scene .card-state {
+.flip-scene .card-state {
   padding-top: 12px;
   border-color: #0000000f;
   color: #555;
   font-size: 10px;
   letter-spacing: 0.025em;
 }
-.book-scene .card-state > .state-label {
+.flip-scene .card-state > .state-label {
   margin-left: 0;
   color: inherit;
   font-size: inherit;
 }
-.book-scene .card-state > span:not(.state-label) {
+.flip-scene .card-state > span:not(.state-label) {
   color: #555;
 }
-.book-scene .card-state i {
+.flip-scene .card-state i {
   width: 3px;
   height: 3px;
 }
@@ -437,25 +380,22 @@ input[type="radio"] {
   background: #fff;
   border-color: #ccc;
 }
-.book-scene[data-layers-settled="false"] .floating-tabs {
-  will-change: transform;
-}
 @media (max-width: 700px) {
-  .book-scene .card-grid {
+  .flip-scene .card-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 36px 23px;
   }
-  .book-scene .problem-card {
+  .flip-scene .problem-card {
     padding: 18px 13px 16px;
     min-height: 224px;
   }
-  .book-scene .problem-number {
+  .flip-scene .problem-number {
     font-size: 51px;
   }
-  .book-scene .problem-number.prefixed-number {
+  .flip-scene .problem-number.prefixed-number {
     font-size: 29px;
   }
-  .book-scene .book-tabs button {
+  .flip-scene .book-tabs button {
     font-size: 12px;
   }
   .flip-menu {
@@ -466,22 +406,22 @@ input[type="radio"] {
   }
 }
 @media (orientation: landscape) and (max-height: 560px) {
-  .book-scene .card-field {
+  .flip-scene .card-field {
     padding-top: calc(86px + env(safe-area-inset-top));
   }
-  .book-scene .card-grid {
+  .flip-scene .card-grid {
     grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
     gap: 32px 26px;
   }
-  .book-scene .problem-card {
+  .flip-scene .problem-card {
     min-height: 178px;
     padding: 14px 16px;
   }
-  .book-scene .problem-number {
+  .flip-scene .problem-number {
     font-size: 41px;
     margin-block: 12px;
   }
-  .book-scene .card-title {
+  .flip-scene .card-title {
     font-size: 12px;
   }
   .flip-menu .menu-items button {
@@ -503,7 +443,7 @@ input[type="radio"] {
   }
 }
 @media (max-width: 360px) {
-  .book-scene .problem-card {
+  .flip-scene .problem-card {
     padding-inline: 12px;
   }
   .flip-menu {
@@ -513,47 +453,16 @@ input[type="radio"] {
     font-size: 14px;
   }
 }
-.still .study-layer[aria-hidden="true"],
-.still .floating-tabs[aria-hidden="true"] {
-  visibility: hidden;
-}
-.still .book-scene .problem-card {
+/* Reducing motion keeps both solid faces visible; only card play is disabled. */
+.still .flip-scene .problem-card {
   transform: none;
 }
 @media (prefers-reduced-motion: reduce) {
-  .study-layer[aria-hidden="true"],
-  .floating-tabs[aria-hidden="true"] {
-    visibility: hidden;
-  }
-  .book-scene .problem-card {
+  .flip-scene .problem-card {
     transform: none;
   }
 }
 
-/* Menu and spine are two regions of one physical side, with one transform. */
-.book-scene {
-  --book-thickness: 100vw;
-}
-.book-side {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: var(--book-thickness);
-  height: 100%;
-  transform-origin: left center;
-  transform: rotateY(-90deg) translateX(-100%);
-  backface-visibility: hidden;
-  transform-style: preserve-3d;
-}
-.book-side .flip-menu {
-  transform: none;
-  z-index: auto;
-}
-.book-side .book-spine {
-  left: 50%;
-  width: 50%;
-  transform: none;
-}
 /* Real LiquidGlass output sits below native, selectable/readable content. */
 .liquid-surface {
   position: absolute;
@@ -576,8 +485,8 @@ input[type="radio"] {
 .grade-option {
   position: relative;
 }
-.book-scene .problem-card:has(> [data-engine="liquidglass"]),
-.book-scene .book-tabs:has(> [data-engine="liquidglass"]),
+.flip-scene .problem-card:has(> [data-engine="liquidglass"]),
+.flip-scene .book-tabs:has(> [data-engine="liquidglass"]),
 .grade-dialog:has(> [data-engine="liquidglass"]),
 .grade-option:has(> [data-engine="liquidglass"]) {
   background: transparent;
@@ -586,8 +495,8 @@ input[type="radio"] {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 }
-.book-scene .problem-card:has(> [data-engine="liquidglass"])::before,
-.book-scene .problem-card:has(> [data-engine="liquidglass"])::after {
+.flip-scene .problem-card:has(> [data-engine="liquidglass"])::before,
+.flip-scene .problem-card:has(> [data-engine="liquidglass"])::after {
   display: none;
 }
 /* The material canvas is not a grid cell in the landscape evaluation dialog. */

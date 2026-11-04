@@ -1643,153 +1643,6 @@ input[type="date"] {
   }
 }
 
-/* CSS book geometry in one perspective space; glass materials live above it. */
-.book-scene {
-  --turn: 0;
-  --book-thickness: 50vw;
-  --button-lift: 0;
-  position: relative;
-  width: 100%;
-  height: 100%;
-  perspective: 1800px;
-  perspective-origin: 100% 50%;
-  background: radial-gradient(
-    ellipse at 75% 40%,
-    #eeeeee 0,
-    #f8f8f8 44%,
-    #fcfcfc 80%
-  );
-  overflow: hidden;
-  touch-action: pan-y pinch-zoom;
-}
-.book-volume {
-  position: absolute;
-  inset: 0;
-  transform-style: preserve-3d;
-  transform-origin: left center;
-  transform: translateX(calc(var(--turn) * 100%))
-    rotateY(calc(var(--turn) * 90deg));
-  pointer-events: auto;
-}
-.book-scene[data-turning="true"] .book-volume {
-  will-change: transform;
-}
-.book-front {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  backface-visibility: hidden;
-  background: radial-gradient(
-    ellipse at 50% 0,
-    #f2f2f2 0,
-    #f8f8f8 42%,
-    #fbfbfb 100%
-  );
-  border: 1px solid #d6d6d62b;
-  border-radius: 0;
-  box-shadow:
-    0 18px 60px #00000099,
-    inset 2px 0 2px #4d4d4d22;
-}
-.book-front::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(90deg, #00000044, transparent 10%, #000000aa);
-  opacity: var(--turn);
-  z-index: 15;
-}
-.book-back {
-  position: absolute;
-  inset: 0;
-  border-radius: 8px;
-  background: #fcfcfc;
-  border: 1px solid #d6d6d6;
-  transform: translateZ(calc(-1 * var(--book-thickness)));
-  box-shadow: -30px 30px 90px #000000cc;
-}
-.book-spine {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: var(--book-thickness);
-  transform-origin: left center;
-  transform: rotateY(-90deg) translateX(-100%);
-  backface-visibility: hidden;
-  background: linear-gradient(
-    90deg,
-    #fcfcfc 0%,
-    #f1f1f1 14%,
-    #f7f7f7 38%,
-    #f9f9f9 74%,
-    #eeeeee 90%,
-    #fcfcfc 100%
-  );
-  border: 1px solid #d6d6d6;
-  box-shadow:
-    inset 3px 0 4px #000000aa,
-    inset -2px 0 3px #3e3e3e35;
-}
-.spine-name {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%) rotate(90deg);
-  white-space: nowrap;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: clamp(24px, 7dvh, 72px);
-  letter-spacing: 0.065em;
-  color: #3c3c3c;
-  text-shadow:
-    1px 1px 0 #000000,
-    0 -1px 0 #0d0d0d22;
-}
-.spine-rule {
-  position: absolute;
-  left: 10%;
-  right: 10%;
-  height: 6px;
-  border-block: 1px solid #6e6e6e;
-}
-.spine-rule-top {
-  top: 9%;
-}
-.spine-rule-bottom {
-  bottom: 9%;
-}
-.book-pages {
-  position: absolute;
-  left: 2px;
-  right: 4px;
-  height: var(--book-thickness);
-  background: repeating-linear-gradient(0deg, #727272 0 1px, #e3e3e3 1px 3px);
-  transform-origin: top;
-}
-.book-pages-top {
-  top: 2px;
-  transform: rotateX(-90deg);
-}
-.book-pages-bottom {
-  bottom: calc(-1 * var(--book-thickness) + 2px);
-  transform: rotateX(-90deg);
-}
-.flip-menu {
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 50%;
-  padding: max(18px, env(safe-area-inset-top)) 20px
-    max(20px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  scrollbar-width: thin;
-  scrollbar-color: #e0e0e0 transparent;
-  opacity: 1;
-  transform-origin: right center;
-  transform: rotateY(calc((var(--turn) - 1) * 90deg));
-  backface-visibility: hidden;
-}
 .flip-menu-top {
   min-height: 44px;
   display: flex;
@@ -1833,60 +1686,25 @@ input[type="date"] {
   line-height: 1.8;
   color: #585858;
 }
-.book-return {
-  position: absolute;
-  left: 50%;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 3;
-}
-.book-return:focus-visible {
-  outline-offset: -8px;
-}
-.book-scene .book-tabs {
+.flip-scene .book-tabs {
   border-radius: 3px 3px 10px 10px;
   border-top: 0;
   padding-top: 7px;
   box-shadow: 0 8px 18px #00000077;
 }
-.book-scene .book-tabs button {
+.flip-scene .book-tabs button {
   min-height: 44px;
 }
-/* One persistent button leaves the rotating face and travels above the scene. */
-.book-scene .menu-trigger {
-  --trigger-left: max(12px, env(safe-area-inset-left));
-  --trigger-right: max(12px, env(safe-area-inset-right));
-  left: var(--trigger-left);
-  top: calc(16px + env(safe-area-inset-top));
-  z-index: 6;
-  border-radius: 50%;
-  background: #f8f8f8;
-  transform: translate3d(
-    calc(
-      var(--turn) * (100vw - var(--trigger-left) - var(--trigger-right) - 44px)
-    ),
-    calc(var(--button-lift) * 8px),
-    calc(var(--button-lift) * 32px)
-  );
-  box-shadow:
-    0 calc(4px + var(--turn) * 10px + var(--button-lift) * 12px) 24px #00000099,
-    inset 0 1px #65656544;
-}
-.book-scene[data-turning="true"] .menu-trigger {
-  will-change: transform;
-}
-
-.book-scene .card-field {
+.flip-scene .card-field {
   padding-top: calc(112px + env(safe-area-inset-top));
   padding-bottom: 80px;
 }
-.book-scene .card-grid {
+.flip-scene .card-grid {
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 40px 32px;
   padding: 10px 6px;
 }
-.book-scene .problem-card {
+.flip-scene .problem-card {
   min-height: 213px;
   border-radius: 4px 10px 10px 4px;
   border-color: #dddddd;
@@ -1906,27 +1724,27 @@ input[type="date"] {
     scale(var(--drag-scale, 1));
   padding: 19px 20px 16px;
 }
-.book-scene .problem-card.suggested {
+.flip-scene .problem-card.suggested {
   background: linear-gradient(115deg, #ededed, #f1f1f1 9%, #f6f6f6);
   border-color: #6a6a6a;
 }
-.book-scene .problem-card[data-drag-state="dragging"] {
+.flip-scene .problem-card[data-drag-state="dragging"] {
   box-shadow:
     -4px 3px 0 #dcdcdc,
     12px 45px 35px -8px #000000dd,
     inset 1px 1px #35353544;
 }
-.book-scene .card-title {
+.flip-scene .card-title {
   font-size: 13px;
   color: #353535;
 }
-.book-scene .problem-number {
+.flip-scene .problem-number {
   font-size: 47px;
 }
-.book-scene .problem-number.prefixed-number {
+.flip-scene .problem-number.prefixed-number {
   font-size: 33px;
 }
-.book-scene .card-state {
+.flip-scene .card-state {
   border-top-color: #62626222;
   padding-top: 13px;
 }
@@ -1970,26 +1788,23 @@ input[type="date"] {
   }
 }
 @media (max-width: 700px) {
-  .book-scene {
-    perspective: 1300px;
-  }
-  .book-scene .card-field {
+  .flip-scene .card-field {
     padding-inline: max(24px, env(safe-area-inset-left))
       max(24px, env(safe-area-inset-right));
   }
-  .book-scene .card-grid {
+  .flip-scene .card-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 35px 24px;
     padding-inline: 0;
   }
-  .book-scene .problem-card {
+  .flip-scene .problem-card {
     padding: 15px 14px;
     min-height: 217px;
   }
-  .book-scene .problem-number {
+  .flip-scene .problem-number {
     font-size: 40px;
   }
-  .book-scene .problem-number.prefixed-number {
+  .flip-scene .problem-number.prefixed-number {
     font-size: 29px;
   }
   .flip-menu {
@@ -2008,33 +1823,33 @@ input[type="date"] {
   }
 }
 @media (max-width: 360px) {
-  .book-scene .card-field {
+  .flip-scene .card-field {
     padding-inline: 20px;
   }
-  .book-scene .card-grid {
+  .flip-scene .card-grid {
     gap: 32px 20px;
   }
-  .book-scene .problem-card {
+  .flip-scene .problem-card {
     padding-inline: 12px;
   }
 }
 @media (orientation: landscape) and (max-height: 560px) {
-  .book-scene .card-field {
+  .flip-scene .card-field {
     padding-top: calc(85px + env(safe-area-inset-top));
   }
-  .book-scene .card-grid {
+  .flip-scene .card-grid {
     grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
     gap: 32px 26px;
   }
-  .book-scene .problem-card {
+  .flip-scene .problem-card {
     min-height: 175px;
     padding: 13px 16px;
   }
-  .book-scene .problem-number {
+  .flip-scene .problem-number {
     font-size: 35px;
     margin-block: 10px;
   }
-  .book-scene .card-title {
+  .flip-scene .card-title {
     font-size: 12px;
   }
   .flip-menu {
@@ -2068,11 +1883,11 @@ input[type="date"] {
     font-size: 13px;
   }
 }
-.still .book-scene .problem-card {
+.still .flip-scene .problem-card {
   transform: none;
 }
 @media (prefers-reduced-motion: reduce) {
-  .book-scene .problem-card {
+  .flip-scene .problem-card {
     transform: none;
   }
 }

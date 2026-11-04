@@ -471,19 +471,19 @@ for (const viewport of [
         type: "touchMove",
         touchPoints: point(65, 10),
       });
-      await expect(page.locator(".book-scene")).toHaveAttribute(
+      await expect(page.locator(".flip-scene")).toHaveAttribute(
         "data-turning",
         "true",
       );
       expect(
-        Number(await page.locator(".book-scene").getAttribute("data-turn")),
+        Number(await page.locator(".flip-scene").getAttribute("data-turn")),
       ).toBeGreaterThan(0.05);
       await expect(card).toHaveAttribute("data-drag-state", "idle");
       await cdp.send("Input.dispatchTouchEvent", {
         type: "touchCancel",
         touchPoints: [],
       });
-      await expect(page.locator(".book-scene")).toHaveAttribute(
+      await expect(page.locator(".flip-scene")).toHaveAttribute(
         "data-turn",
         "0.000",
       );

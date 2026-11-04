@@ -94,3 +94,14 @@ Cloudflare 本番環境への公開、実機の Safari / iOS / Android による
 - 画面確認はChromium。実機Safariの確認は未実施。ログイン・同期は既存のテスト用API応答による検証で、本番Supabaseへの接続は行っていない。問題データ・記録形式・復習アルゴリズム・認証/同期処理は変更していない。
 
 [カード](images/liquid-glass-field.png) / [回転途中](images/liquid-glass-transition.png) / [メニュー](images/liquid-glass-menu.png) / [横画面メニュー](images/liquid-glass-menu-landscape.png) / [評価](images/liquid-glass-grade.png) / [横画面評価](images/liquid-glass-grade-landscape.png)
+
+## 二面の3D Flipへの再構築（80:20）
+
+- 手描き図を基準に`BookScene`を削除し、`FlipScene`と専用CSSへ置き換えた。背表紙・背面・ページ断面と、独立したタブ/カードの横移動を削除。メニューとタイル画面は、直角に接続した二面を持つ一つの立体になった。
+- カードと参考書タブの実際のDOMをタイル面へ移動。開いた状態でメニューが左80％、斜めに見たタイル面が右20％を占める。共有辺は左から80％、タイル面の右辺は画面右端。開閉中も同じカードとスクロール位置を維持し、右側の面をタップすると一覧へ戻る。
+- 投影と移動量を画面幅から計算。320×568、390×844、844×390、932×430、740×360、1440×900で8:2の実描画領域を確認。回転途中でも共有辺が離れず、カードとタブが面と一緒に細く見え、フェードしないことを確認。
+- 指を止めた角度の保持、スワイプ反転、キャンセル、キーボードでの途中反転、慣性と減衰、縦スクロール、長押しドラッグ、フォーカス循環、動き停止を検証。
+- 型検査・本番ビルド・31件のロジック/SQLテスト・41件のブラウザーテスト・フォーマット検査がすべて成功。LiquidGlass、A〜E評価、問題登録/復元、学習記録、模試、認証/同期の既存テストも成功。
+- GIFはChromiumの実画面を開閉操作中に録画したもの。実機Safariでの確認は未実施。認証/同期のテストはテスト用API応答を使用し、本番Supabaseへの接続・メール送信は行っていない。
+
+[開閉アニメーション](images/flip-animation.gif) / [通常画面](images/flip-field.png) / [回転途中](images/flip-turn.png) / [80:20のメニュー](images/flip-menu.png) / [横画面](images/flip-menu-landscape.png) / [評価画面](images/flip-grade-landscape.png)

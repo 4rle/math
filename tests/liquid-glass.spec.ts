@@ -41,11 +41,11 @@ test("LiquidGlassが実際に描画し、押下に反応する。描画器は一
   await page.reload();
   await expect(page.locator(".problem-card")).toHaveCount(302);
   await page.locator("#menu-trigger").click();
-  await expect(page.locator(".book-scene")).toHaveAttribute(
+  await expect(page.locator(".flip-scene")).toHaveAttribute(
     "data-turn",
     "1.000",
   );
-  await expect(page.locator(".book-side .liquid-surface")).toHaveCount(0);
+  await expect(page.locator(".flip-face--menu .liquid-surface")).toHaveCount(0);
   expect(errors).toEqual([]);
 });
 

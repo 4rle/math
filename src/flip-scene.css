@@ -1,0 +1,109 @@
+/* One rigid corner: the live menu and study screen are perpendicular faces.
+   FlipScene measures the viewport and solves the final projected 80:20 split. */
+.flip-scene {
+  --turn: 0;
+  --flip-angle: 0rad;
+  --flip-shift: 0px;
+  --camera-distance: 400vw;
+  --menu-depth: 86.04vw;
+  --button-lift: 0;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  perspective: var(--camera-distance);
+  perspective-origin: 100% 50%;
+  background: #fafafa;
+  touch-action: pan-y pinch-zoom;
+}
+.flip-solid {
+  position: absolute;
+  inset: 0;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transform: translateX(var(--flip-shift)) rotateY(var(--flip-angle));
+}
+.flip-scene[data-turning="true"] .flip-solid {
+  will-change: transform;
+}
+.flip-face {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.flip-face--study {
+  width: 100%;
+  overflow: hidden;
+  background:
+    linear-gradient(124deg, transparent 30%, #ffffffc4 42%, transparent 54%),
+    radial-gradient(ellipse at 25% 15%, #fafafa 0, #f1f1f1 50%, #e8e8e8 100%);
+  box-shadow: -1px 0 0 #d6d6d6;
+}
+/* The turning face keeps its contents opaque. This is directional lighting. */
+.flip-face--study::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgb(0 0 0 / calc(var(--turn) * 0.02)),
+    rgb(0 0 0 / calc(var(--turn) * 0.14))
+  );
+}
+.study-face-content {
+  position: absolute;
+  inset: 0;
+}
+.flip-face--menu {
+  width: var(--menu-depth);
+  transform-origin: left center;
+  transform: rotateY(-90deg) translateX(-100%);
+  overflow: hidden;
+  background: #fff;
+}
+.flip-menu {
+  position: absolute;
+  inset: 0;
+  padding: max(18px, env(safe-area-inset-top)) 24px
+    max(20px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #d6d6d6 transparent;
+}
+.flip-return {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 6;
+  border-radius: 0;
+  touch-action: pan-y pinch-zoom;
+}
+.flip-return:focus-visible {
+  outline: 3px solid #222;
+  outline-offset: -8px;
+}
+/* The same toggle lifts above the solid, travelling left to right. */
+.flip-scene .menu-trigger {
+  --trigger-left: max(12px, env(safe-area-inset-left));
+  --trigger-right: max(12px, env(safe-area-inset-right));
+  left: var(--trigger-left);
+  top: calc(16px + env(safe-area-inset-top));
+  z-index: 10;
+  transform: translate3d(
+    calc(
+      var(--turn) * (100vw - var(--trigger-left) - var(--trigger-right) - 44px)
+    ),
+    calc(var(--button-lift) * 8px),
+    calc(var(--button-lift) * 32px)
+  );
+}
+.flip-scene[data-turning="true"] .menu-trigger {
+  will-change: transform;
+}

@@ -35,7 +35,7 @@ import {
 import { FloatingCard, useReducedMotion } from "./FloatingCard";
 import { useStudyData } from "./useStudyData";
 import { AccountPanel, syncLabels } from "./AccountPanel";
-import { BookScene } from "./BookScene";
+import { FlipScene } from "./FlipScene";
 import { CardReveal } from "./CardReveal";
 import { ErrorMessage, Modal, PanelTop } from "./ui";
 import {
@@ -196,7 +196,7 @@ export default function App() {
     <main
       className={`study-desk ${state.settings.motion && !reducedMotion ? "" : "still"}`}
     >
-      <BookScene
+      <FlipScene
         open={page === "menu"}
         motion={state.settings.motion && !reducedMotion}
         disabled={!!selected || (!!page && page !== "menu")}
@@ -306,7 +306,6 @@ export default function App() {
                     style={
                       {
                         "--offset": `${[0, 18, 5, 25, 8, 20][index % 6]}px`,
-                        "--exit": `var(--tile-exit-${index % 4}, 0)`,
                       } as CSSProperties
                     }
                     aria-label={`問題 ${p.number}、☆${p.stars}、${p.latest_grade ? `${p.latest_grade} ${GRADES[p.latest_grade][0]}` : "未着手"}${highlighted ? "、今日の新規候補" : ""}${p.title ? `、${p.title}` : ""}`}
@@ -375,7 +374,7 @@ export default function App() {
             </div>
           )}
         </section>
-      </BookScene>
+      </FlipScene>
       {page && page !== "menu" && (
         <Modal title={title} onClose={close} className="settings-dialog">
           <PanelTop

@@ -4,7 +4,7 @@ for (const viewport of [
   { width: 390, height: 844 },
   { width: 844, height: 390 },
 ]) {
-  test.describe(`3D書籍 ${viewport.width}×${viewport.height}`, () => {
+  test.describe(`2面の3D Flip ${viewport.width}×${viewport.height}`, () => {
     test.use({ hasTouch: true, viewport });
     test("指の途中位置に回転が追従し、慣性で開く。メニュー上から逆スワイプで閉じる", async ({
       page,
@@ -13,7 +13,7 @@ for (const viewport of [
       await page.goto("/");
       await expect(page.locator(".problem-card")).toHaveCount(303);
       const cdp = await context.newCDPSession(page);
-      const root = page.locator(".book-scene");
+      const root = page.locator(".flip-scene");
       const x = 95,
         y = 175;
       const send = async (
@@ -38,7 +38,7 @@ for (const viewport of [
       expect(Number(await root.getAttribute("data-turn"))).toBeGreaterThan(
         first,
       );
-      const matrix = await page.locator(".book-volume").evaluate((el) => {
+      const matrix = await page.locator(".flip-solid").evaluate((el) => {
         const m = new DOMMatrix(getComputedStyle(el).transform);
         return { depth: m.m13, rotate: m.m11 };
       });
@@ -54,12 +54,13 @@ for (const viewport of [
       await expect(
         page.getByRole("button", { name: "問題の登録と管理", exact: true }),
       ).toBeVisible();
-      await expect(page.locator(".study-layer")).toHaveAttribute("inert", "");
-      await expect(page.locator(".grade-dialog")).toHaveCount(0);
-      await expect(page.locator(".book-spine")).toContainText(
-        "Focusgold Helper",
+      await expect(page.locator(".study-face-content")).toHaveAttribute(
+        "inert",
+        "",
       );
-      await page.screenshot({ path: info.outputPath("open-book.png") });
+      await expect(page.locator(".grade-dialog")).toHaveCount(0);
+      await expect(page.locator(".book-spine")).toHaveCount(0);
+      await page.screenshot({ path: info.outputPath("open-flip.png") });
       // Start on a menu item: horizontal gestures must not activate that item.
       const item = await page
         .getByRole("button", { name: "表示する問題", exact: true })
@@ -123,7 +124,7 @@ test("メニューのフォーカス循環、Escapeで復帰、動き停止で�
   await expect(close).toBeFocused();
   await page.keyboard.press("Escape");
   await expect(trigger).toBeFocused();
-  await expect(page.locator(".book-scene")).toHaveAttribute(
+  await expect(page.locator(".flip-scene")).toHaveAttribute(
     "data-turn",
     "0.000",
   );
@@ -133,21 +134,21 @@ test("メニューのフォーカス循環、Escapeで復帰、動き停止で�
   await page.mouse.move(290, 95, { steps: 5 });
   expect(
     await page
-      .locator(".book-scene")
+      .locator(".flip-scene")
       .evaluate((el) => el.style.getPropertyValue("--turn")),
   ).toBe("0");
   await page.mouse.up();
-  await expect(page.locator(".book-scene")).toHaveAttribute(
+  await expect(page.locator(".flip-scene")).toHaveAttribute(
     "data-turn",
     "1.000",
   );
   await page.keyboard.press("Escape");
   await trigger.click();
-  await expect(page.locator(".book-scene")).toHaveAttribute(
+  await expect(page.locator(".flip-scene")).toHaveAttribute(
     "data-turn",
     "1.000",
   );
-  await expect(page.locator(".book-scene")).toHaveAttribute(
+  await expect(page.locator(".flip-scene")).toHaveAttribute(
     "data-turning",
     "false",
   );
@@ -159,33 +160,34 @@ test("メニューのフォーカス循環、Escapeで復帰、動き停止で�
   await expect(page.getByRole("dialog", { name: "メニュー" })).toBeVisible();
 });
 
-test("PCでも回転した本をクリックすると一覧へ戻れる", async ({ page }) => {
+test("右側のタイル面をクリックすると一覧へ戻れる", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");
   await page
     .getByRole("button", { name: "メニューを開く", exact: true })
     .click();
-  await expect(page.locator(".book-scene")).toHaveAttribute(
+  await expect(page.locator(".flip-scene")).toHaveAttribute(
     "data-turn",
     "1.000",
   );
-  const spine = (await page.locator(".book-spine").boundingBox())!;
-  await page.mouse.click(spine.x + spine.width / 2, spine.y + spine.height / 2);
-  await expect(page.locator(".book-scene")).toHaveAttribute(
+  const face = (await page.locator(".flip-face--study").boundingBox())!;
+  await page.mouse.click(face.x + face.width / 2, face.y + face.height / 2);
+  await expect(page.locator(".flip-scene")).toHaveAttribute(
     "data-turn",
     "0.000",
   );
   await expect(page.getByRole("dialog")).toHaveCount(0);
 });
 
-test("90度回転で右半分を背表紙が埋め、同じメニューボタンが右上へ移動する", async ({
+test("開くと左80%がメニュー・右20%が同じタイル面になり、画面回転後も比率を保つ", async ({
   page,
 }, info) => {
   await page.goto("/");
   const trigger = page.locator("#menu-trigger");
   const original = await trigger.elementHandle();
+  const card = await page.locator(".problem-card").first().elementHandle();
   await trigger.click();
-  await expect(page.locator(".book-scene")).toHaveAttribute(
+  await expect(page.locator(".flip-scene")).toHaveAttribute(
     "data-turn",
     "1.000",
   );
@@ -198,18 +200,37 @@ test("90度回転で右半分を背表紙が埋め、同じメニューボタン
     [1440, 900],
   ]) {
     await page.setViewportSize({ width, height });
-    const spine = (await page.locator(".book-spine").boundingBox())!;
-    expect(spine.x).toBeCloseTo(width / 2, 0);
-    expect(spine.y).toBeCloseTo(0, 0);
-    expect(spine.width).toBeCloseTo(width / 2, 0);
-    expect(spine.height).toBeCloseTo(height, 0);
-    const matrix = await page.locator(".book-volume").evaluate((el) => {
-      const m = new DOMMatrix(getComputedStyle(el).transform);
-      return { cosine: m.m11, sine: m.m13, scaleY: m.m22 };
-    });
-    expect(matrix.cosine).toBeCloseTo(0, 5);
-    expect(matrix.sine).toBeCloseTo(-1, 5);
-    expect(matrix.scaleY).toBe(1);
+    await expect
+      .poll(
+        async () => (await page.locator(".flip-face--study").boundingBox())!.x,
+      )
+      .toBeCloseTo(width * 0.8, 0);
+    const study = (await page.locator(".flip-face--study").boundingBox())!;
+    const menu = (await page.locator(".flip-face--menu").boundingBox())!;
+    expect(menu.x).toBeCloseTo(0, 0);
+    expect(menu.width).toBeCloseTo(width * 0.8, 0);
+    expect(study.width).toBeCloseTo(width * 0.2, 0);
+    expect(menu.x + menu.width).toBeCloseTo(study.x, 0);
+    expect(study.x + study.width).toBeCloseTo(width, 0);
+    expect(study.y).toBeCloseTo(0, 0);
+    expect(study.height).toBeCloseTo(height, 0);
+    // Actual cards remain mounted, shaded and visible on the side; no spine/snapshot.
+    expect(
+      await card!.evaluate(
+        (el) => el === document.querySelector(".problem-card"),
+      ),
+    ).toBe(true);
+    const rect = (await page.locator(".problem-card").first().boundingBox())!;
+    expect(rect.x).toBeGreaterThan(width * 0.8);
+    expect(rect.x + rect.width).toBeLessThan(width);
+    await expect(page.locator(".problem-card").first()).toHaveCSS(
+      "visibility",
+      "visible",
+    );
+    await expect(page.locator(".problem-card").first()).toHaveCSS(
+      "opacity",
+      "1",
+    );
     const button = (await trigger.boundingBox())!;
     expect(button.x + button.width).toBeCloseTo(width - 12, 0);
     expect(button.y).toBeCloseTo(16, 0);
@@ -218,13 +239,16 @@ test("90度回転で右半分を背表紙が埋め、同じメニューボタン
         (el) => el === document.getElementById("menu-trigger"),
       ),
     ).toBe(true);
-    await page.screenshot({ path: info.outputPath(`full-spine-${width}.png`) });
+    await page.screenshot({ path: info.outputPath(`two-faces-${width}.png`) });
   }
   await trigger.click();
-  await expect(page.locator(".book-scene")).toHaveAttribute(
+  await expect(page.locator(".flip-scene")).toHaveAttribute(
     "data-turn",
     "0.000",
   );
+  const study = (await page.locator(".flip-face--study").boundingBox())!;
+  expect(study.x).toBe(0);
+  expect(study.width).toBe(1440);
   expect((await trigger.boundingBox())!.x).toBeCloseTo(12, 0);
   await expect(trigger).toBeFocused();
 });
