@@ -13,6 +13,7 @@ const MENU_DEPTH =
 
 type Props = {
   open: boolean;
+  expanded?: boolean;
   motion: boolean;
   disabled: boolean;
   onOpenChange: (open: boolean) => void;
@@ -35,6 +36,7 @@ type Gesture = {
 /** Two perpendicular, live HTML faces of one solid. No duplicate card snapshot. */
 export function FlipScene({
   open,
+  expanded = false,
   motion,
   disabled,
   onOpenChange,
@@ -299,14 +301,23 @@ export function FlipScene({
     };
   }, [open]);
 
+  useEffect(() => {
+    if (!expanded && open)
+      menuRef.current
+        ?.querySelector<HTMLButtonElement>("button")
+        ?.focus({ preventScroll: true });
+  }, [expanded]);
+
   return (
     <div
       ref={scene}
       className={`flip-scene ${open ? "menu-open" : ""}`}
       data-turn="0"
-      role={open ? "dialog" : undefined}
-      aria-modal={open ? true : undefined}
-      aria-label={open ? "メニュー" : undefined}
+      inert={expanded}
+      aria-hidden={expanded}
+      role={open && !expanded ? "dialog" : undefined}
+      aria-modal={open && !expanded ? true : undefined}
+      aria-label={open && !expanded ? "メニュー" : undefined}
     >
       <button
         ref={trigger}
@@ -326,13 +337,7 @@ export function FlipScene({
           inert={!open}
         >
           <div id="flip-menu" className="flip-menu" ref={menuRef}>
-            <div className="flip-menu-top">
-              <span>CONTENTS</span>
-            </div>
             {menu}
-            <p className="flip-hint" lang="en">
-              Swipe left to return <span aria-hidden="true">←</span>
-            </p>
           </div>
         </div>
         <div className="flip-face flip-face--study">

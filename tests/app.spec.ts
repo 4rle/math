@@ -5,9 +5,13 @@ async function menu(page: Page, name: string) {
   await page
     .getByRole("button", { name: "メニューを開く", exact: true })
     .click();
+  if (["アカウントと同期", "学習履歴", "データ", "表示と動き"].includes(name))
+    await page.getByRole("button", { name: "General", exact: true }).click();
   await page.getByRole("button", { name, exact: true }).click();
 }
 async function close(page: Page) {
+  if (await page.locator(".settings-screen").count())
+    await page.getByRole("button", { name: "閉じる", exact: true }).click();
   await page.getByRole("button", { name: "閉じる", exact: true }).click();
 }
 async function readState(page: Page): Promise<State> {
@@ -161,7 +165,8 @@ test("CSV検証・難度更新の確認で履歴を保持し、履歴修正が�
   expect(saved.attempts).toHaveLength(1);
   await menu(page, "学習履歴");
   await page.getByRole("button", { name: /A No. 125/ }).click();
-  await page.getByLabel("評価", { exact: true }).selectOption("D");
+  await page.getByRole("combobox", { name: "評価", exact: true }).click();
+  await page.getByRole("option", { name: /^D / }).click();
   await page.getByLabel("この回のメモ").fill("解説を閉じて再現する");
   await page.getByRole("button", { name: "履歴を修正", exact: true }).click();
   saved = await readState(page);

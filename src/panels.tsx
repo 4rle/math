@@ -1,3 +1,5 @@
+import { MonoNumber } from "./MonoNumber";
+import { MonoSelect } from "./MonoSelect";
 import { compareNumbers } from "./problem-number";
 import { useMemo, useRef, useState, type FormEvent } from "react";
 import {
@@ -73,17 +75,17 @@ function BookSelect({
   return (
     <label>
       {label}
-      <select
+      <MonoSelect
         aria-label={label}
         value={value}
-        onChange={(e) => onChange(e.target.value as Book)}
+        onValueChange={(value) => onChange(value as Book)}
       >
         {Object.entries(BOOKS).map(([key, name]) => (
           <option key={key} value={key}>
             {name}
           </option>
         ))}
-      </select>
+      </MonoSelect>
     </label>
   );
 }
@@ -189,28 +191,24 @@ export function RegisterPanel({
           CSV を取り込む
         </button>
       </div>
-      <form
-        onSubmit={check}
-        className="stack"
-        onChange={() => setPreview(null)}
-      >
+      <form onSubmit={check} className="stack" onInput={() => setPreview(null)}>
         {mode === "manual" ? (
           <>
             <div className="form-row">
               <BookSelect value={book} onChange={setBook} />
               <label>
                 難度
-                <select
+                <MonoSelect
                   aria-label="難度"
                   value={stars}
-                  onChange={(e) => setStars(Number(e.target.value) as Stars)}
+                  onValueChange={(value) => setStars(Number(value) as Stars)}
                 >
                   {DIFFICULTIES.map((stars) => (
                     <option key={stars} value={stars}>
                       ☆{stars}
                     </option>
                   ))}
-                </select>
+                </MonoSelect>
               </label>
             </div>
             <label>
@@ -513,17 +511,17 @@ function ProblemEditor({
         </label>
         <label>
           難度
-          <select
+          <MonoSelect
             aria-label="難度"
             value={stars}
-            onChange={(e) => setStars(Number(e.target.value) as Stars)}
+            onValueChange={(value) => setStars(Number(value) as Stars)}
           >
             {DIFFICULTIES.map((stars) => (
               <option key={stars} value={stars}>
                 ☆{stars}
               </option>
             ))}
-          </select>
+          </MonoSelect>
         </label>
       </div>
       <label>
@@ -603,16 +601,12 @@ export function DisplayPanel({ state, commit, busy, notify }: PanelProps) {
       <StarChecks value={stars} onChange={setStars} />
       <label>
         単元
-        <select
-          aria-label="単元"
-          value={unit}
-          onChange={(e) => setUnit(e.target.value)}
-        >
+        <MonoSelect aria-label="単元" value={unit} onValueChange={setUnit}>
           <option value="">すべての単元</option>
           {units.map((u) => (
             <option key={u}>{u}</option>
           ))}
-        </select>
+        </MonoSelect>
       </label>
       <fieldset className="radio-stack">
         <legend>カードフィールド</legend>
@@ -669,13 +663,13 @@ export function LearningPanel({ state, commit, busy, notify }: PanelProps) {
       <label>
         1 日の新規候補数
         <div className="number-input">
-          <input
-            type="number"
+          <MonoNumber
+            aria-label="1 日の新規候補数"
             min={1}
             max={100}
             required
-            value={daily || ""}
-            onChange={(e) => setDaily(Number(e.target.value))}
+            value={daily}
+            onValueChange={setDaily}
           />
           <span>問</span>
         </div>
@@ -692,15 +686,14 @@ export function LearningPanel({ state, commit, busy, notify }: PanelProps) {
             {GRADES[g][0]}
           </span>
           <div className="number-input">
-            <input
+            <MonoNumber
               aria-label={`${g} の復習間隔`}
-              type="number"
               min={1}
               max={365}
               required
-              value={intervals[g] || ""}
-              onChange={(e) =>
-                setIntervals({ ...intervals, [g]: Number(e.target.value) })
+              value={intervals[g]}
+              onValueChange={(value) =>
+                setIntervals({ ...intervals, [g]: value })
               }
             />
             <span>日後</span>
@@ -714,13 +707,13 @@ export function LearningPanel({ state, commit, busy, notify }: PanelProps) {
       <label>
         新しく登録する模試の確認開始
         <div className="number-input">
-          <input
-            type="number"
+          <MonoNumber
+            aria-label="新しく登録する模試の確認開始"
             min={1}
             max={365}
             required
-            value={examDays || ""}
-            onChange={(e) => setExamDays(Number(e.target.value))}
+            value={examDays}
+            onValueChange={setExamDays}
           />
           <span>日前</span>
         </div>
@@ -1092,17 +1085,17 @@ function AttemptEditor({
       <p className="hint">{dateTime(attempt.at)} の記録</p>
       <label>
         評価
-        <select
+        <MonoSelect
           aria-label="評価"
           value={grade}
-          onChange={(e) => setGrade(e.target.value as Grade)}
+          onValueChange={(value) => setGrade(value as Grade)}
         >
           {Object.entries(GRADES).map(([g, labels]) => (
             <option value={g} key={g}>
               {g} · {labels[0]}
             </option>
           ))}
-        </select>
+        </MonoSelect>
       </label>
       <label>
         この回のメモ

@@ -16,6 +16,7 @@ import {
   Diamond,
   BookOpen,
   UserRound,
+  Settings2,
 } from "lucide-react";
 import {
   BOOKS,
@@ -37,7 +38,8 @@ import { useStudyData } from "./useStudyData";
 import { AccountPanel, syncLabels } from "./AccountPanel";
 import { FlipScene } from "./FlipScene";
 import { CardReveal } from "./CardReveal";
-import { ErrorMessage, Modal, PanelTop } from "./ui";
+import { ErrorMessage, Modal } from "./ui";
+import { SettingsScreen } from "./SettingsScreen";
 import {
   RegisterPanel,
   ManagePanel,
@@ -54,7 +56,9 @@ const menuEnglish: Record<string, string> = {
   account: "Account & sync",
   register: "Library",
   display: "Display",
-  learning: "Study settings",
+  learning: "Study",
+  general: "General",
+  manage: "Library",
   exams: "Exams",
   history: "History",
   progress: "Progress",
@@ -62,17 +66,24 @@ const menuEnglish: Record<string, string> = {
   motion: "Motion",
 };
 const items = [
-  ["account", "アカウントと同期", UserRound],
   ["register", "問題の登録と管理", Plus],
   ["display", "表示する問題", SlidersHorizontal],
   ["learning", "学習の設定", BookOpen],
   ["exams", "模試", CalendarDays],
-  ["history", "学習履歴", History],
   ["progress", "進捗", ChartNoAxesCombined],
+  ["general", "General", Settings2],
+] as const;
+const generalItems = [
+  ["account", "アカウントと同期", UserRound],
+  ["history", "学習履歴", History],
   ["data", "データ", Database],
   ["motion", "表示と動き", Diamond],
 ] as const;
-type Page = (typeof items)[number][0] | "menu" | "manage";
+type Page =
+  | (typeof items)[number][0]
+  | (typeof generalItems)[number][0]
+  | "menu"
+  | "manage";
 export default function App() {
   const reducedMotion = useReducedMotion();
   const { state, bootError, busy, commit, account, remoteEpoch, setEditing } =
@@ -186,7 +197,14 @@ export default function App() {
   const title =
     page === "manage"
       ? "登録一覧の編集"
-      : items.find((i) => i[0] === page)?.[1] || "メニュー";
+      : [...items, ...generalItems].find((i) => i[0] === page)?.[1] ||
+        "メニュー";
+  const parentPage = generalItems.some(([key]) => key === page)
+    ? "general"
+    : page === "manage"
+      ? "register"
+      : "menu";
+  const settingsOpen = !!page && page !== "menu";
   const selectedHistory = selected
     ? state.attempts
         .filter((a) => a.problem_id === selected.id)
@@ -197,7 +215,8 @@ export default function App() {
       className={`study-desk ${state.settings.motion && !reducedMotion ? "" : "still"}`}
     >
       <FlipScene
-        open={page === "menu"}
+        open={page !== null}
+        expanded={settingsOpen}
         motion={state.settings.motion && !reducedMotion}
         disabled={!!selected || (!!page && page !== "menu")}
         onOpenChange={(open) => setPage(open ? "menu" : null)}
@@ -251,31 +270,17 @@ export default function App() {
         menu={
           <>
             <div className="menu-items">
-              {items.map(([key, label, Icon], i) => (
+              {items.map(([key, label]) => (
                 <button
                   key={key}
                   aria-label={label}
                   onClick={() => setPage(key)}
                 >
-                  <Icon size={19} strokeWidth={1.5} />
                   <span className="menu-label">
                     <span lang="en">{menuEnglish[key]}</span>
-                    <small>{label}</small>
                   </span>
-                  <span className="menu-index" aria-hidden="true">
-                    0{i + 1}
-                  </span>
-                  <ChevronRight size={15} />
                 </button>
               ))}
-            </div>
-            <div className="menu-foot">
-              <span>
-                {account.user
-                  ? syncLabels[account.sync.status]
-                  : "この端末に保存"}
-              </span>
-              <span>{state.problems.length} 問登録済み</span>
             </div>
           </>
         }
@@ -295,7 +300,7 @@ export default function App() {
               enabled={state.settings.motion && !reducedMotion}
               book={state.settings.book}
             >
-              {cards.map((p, index) => {
+              {cards.map((p) => {
                 const reason = candidateReason(state, p, today),
                   highlighted = daily.has(p.id);
                 return (
@@ -303,11 +308,6 @@ export default function App() {
                     motion={state.settings.motion && !reducedMotion}
                     key={p.id}
                     className={`problem-card grade-${p.latest_grade || "new"} ${highlighted ? "suggested" : ""}`}
-                    style={
-                      {
-                        "--offset": `${[0, 18, 5, 25, 8, 20][index % 6]}px`,
-                      } as CSSProperties
-                    }
                     aria-label={`問題 ${p.number}、☆${p.stars}、${p.latest_grade ? `${p.latest_grade} ${GRADES[p.latest_grade][0]}` : "未着手"}${highlighted ? "、今日の新規候補" : ""}${p.title ? `、${p.title}` : ""}`}
                     onClick={(e) => {
                       const rect = e.currentTarget.getBoundingClientRect();
@@ -376,13 +376,47 @@ export default function App() {
         </section>
       </FlipScene>
       {page && page !== "menu" && (
-        <Modal title={title} onClose={close} className="settings-dialog">
-          <PanelTop
-            title={title}
-            onBack={() => setPage("menu")}
-            onClose={close}
-          />
+        <SettingsScreen
+          title={title}
+          english={menuEnglish[page] || title}
+          parent={
+            parentPage === "general"
+              ? "Generalに戻る"
+              : parentPage === "register"
+                ? "問題の登録と管理に戻る"
+                : "メニューに戻る"
+          }
+          onBack={() => {
+            if (!busy) setPage(parentPage);
+          }}
+          onMenu={() => {
+            if (!busy) setPage("menu");
+          }}
+        >
           <div className="panel-body">
+            {page === "general" && (
+              <div className="general-list">
+                {generalItems.map(([key, label]) => (
+                  <button
+                    key={key}
+                    aria-label={label}
+                    onClick={() => setPage(key)}
+                  >
+                    <span>
+                      {menuEnglish[key]}
+                      <small>{label}</small>
+                    </span>
+                    <ChevronRight size={20} />
+                  </button>
+                ))}
+                <p className="general-summary">
+                  {account.user
+                    ? syncLabels[account.sync.status]
+                    : "この端末に保存"}{" "}
+                  · {state.problems.length} 問
+                </p>
+              </div>
+            )}
             {page === "account" ? (
               <AccountPanel
                 key={account.user?.id || "guest"}
@@ -409,7 +443,7 @@ export default function App() {
               </p>
             )}
           </div>
-        </Modal>
+        </SettingsScreen>
       )}
       {selected && (
         <Modal

@@ -1,0 +1,615 @@
+/* Quiet, legible material for content. Black and white for navigation/settings. */
+.flip-scene .flip-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: safe center;
+  padding-block: max(32px, env(safe-area-inset-top));
+  padding-inline: clamp(24px, 8vw, 120px);
+  color: #000;
+  background: #fff;
+}
+.flip-menu .menu-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.flip-menu .menu-items button {
+  min-height: 46px;
+  padding: 6px 0;
+  border: 0;
+  border-radius: 0;
+  color: #000;
+  background: #fff;
+  justify-content: flex-start;
+}
+.flip-menu .menu-items button:hover {
+  color: #fff;
+  background: #000;
+}
+.flip-menu .menu-label {
+  display: block;
+}
+.flip-menu .menu-label > span {
+  color: inherit;
+  font-size: clamp(24px, 3.5vw, 42px);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 1.3;
+}
+
+.settings-screen {
+  --bg: #fff;
+  --surface: #fff;
+  --line: #000;
+  --muted: #000;
+  --ink: #000;
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: #fff;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: settings-expand 0.34s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  color-scheme: light;
+}
+@keyframes settings-expand {
+  from {
+    clip-path: inset(0 20% 0 0);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+.settings-top {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: max(12px, env(safe-area-inset-top))
+    max(20px, env(safe-area-inset-right)) 12px
+    max(20px, env(safe-area-inset-left));
+  background: #fff;
+  color: #000;
+  flex-shrink: 0;
+  gap: 12px;
+}
+.settings-top h1 {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  outline: none;
+}
+.settings-top > .icon-button {
+  justify-self: end;
+}
+.settings-back {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-self: start;
+  padding: 0;
+  font-size: 13px;
+}
+.settings-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-color: #000 #fff;
+}
+.settings-content {
+  width: min(100%, 800px);
+  margin: 0 auto;
+  padding: 36px max(24px, env(safe-area-inset-left))
+    max(48px, env(safe-area-inset-bottom));
+}
+.settings-content .panel-body {
+  padding: 0;
+}
+.settings-screen .stack {
+  gap: 24px;
+}
+.settings-screen label,
+.settings-screen h2,
+.settings-screen legend {
+  font-size: 14px;
+  color: #000;
+}
+.settings-screen .hint,
+.settings-screen small,
+.settings-screen p,
+.settings-screen .section-caption {
+  color: #000;
+}
+.settings-screen .hint {
+  line-height: 1.8;
+}
+.settings-screen button,
+.settings-screen input,
+.settings-screen textarea {
+  color: #000;
+  background: #fff;
+  box-shadow: none;
+  text-shadow: none;
+}
+.settings-screen .icon-button {
+  color: #000;
+  border-radius: 0;
+}
+.settings-screen button:hover {
+  color: #fff;
+  background: #000;
+}
+.settings-screen button:disabled,
+.settings-screen input:disabled {
+  opacity: 1;
+  border-style: dashed;
+  cursor: default;
+}
+.settings-screen .primary,
+.settings-screen .danger {
+  color: #fff;
+  background: #000;
+  border: 1px solid #000;
+  border-radius: 0;
+}
+.settings-screen .primary:hover,
+.settings-screen .danger:hover {
+  color: #000;
+  background: #fff;
+}
+.settings-screen .secondary {
+  border: 1px solid #000;
+  border-radius: 0;
+  background: #fff;
+  color: #000;
+}
+.settings-screen input:not([type="checkbox"], [type="radio"]),
+.settings-screen textarea {
+  appearance: none;
+  border: 1px solid #000;
+  border-radius: 0;
+  min-height: 48px;
+  padding: 12px;
+  color: #000;
+  background: #fff;
+}
+.settings-screen input::placeholder,
+.settings-screen textarea::placeholder {
+  color: #000;
+  opacity: 1;
+}
+.settings-screen input[type="number"] {
+  appearance: textfield;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  font-size: 18px;
+}
+.settings-screen input::-webkit-inner-spin-button,
+.settings-screen input::-webkit-outer-spin-button {
+  appearance: none;
+  margin: 0;
+}
+.settings-screen input[type="checkbox"],
+.settings-screen input[type="radio"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  border: 1px solid #000;
+  border-radius: 0;
+  background: #fff;
+  display: inline-grid;
+  place-content: center;
+  margin: 0;
+}
+.settings-screen input[type="radio"] {
+  border-radius: 50%;
+}
+.settings-screen input[type="checkbox"]:checked {
+  background: #000;
+}
+.settings-screen input[type="checkbox"]:checked::after {
+  content: "";
+  width: 8px;
+  height: 4px;
+  border: solid #fff;
+  border-width: 0 0 2px 2px;
+  transform: rotate(-45deg) translateY(-1px);
+}
+.settings-screen input[type="radio"]:checked::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #000;
+}
+.settings-screen .radio-stack label,
+.settings-screen .check-line,
+.settings-screen .choice {
+  align-items: center;
+  min-height: 44px;
+}
+.settings-screen .radio-stack label {
+  color: #000;
+  border-color: #000;
+  background: #fff;
+  border-radius: 0;
+}
+.settings-screen .number-input {
+  border: 0;
+  background: #fff;
+  border-radius: 0;
+  gap: 12px;
+}
+.settings-screen .number-input input {
+  width: 100%;
+}
+.settings-screen .number-input span {
+  color: #000;
+}
+.settings-screen .editor,
+.settings-screen .restore-preview,
+.settings-screen .panel-notice,
+.settings-screen .error-message,
+.settings-screen .import-preview,
+.settings-screen .exam-card,
+.settings-screen .account-emblem {
+  background: #fff;
+  color: #000;
+  border: 1px solid #000;
+  border-radius: 0;
+  box-shadow: none;
+}
+.settings-screen .grade-badge,
+.settings-screen .grade-letter {
+  background: #fff;
+  color: #000;
+  border-color: #000;
+  border-radius: 0;
+}
+.settings-screen .tabs button {
+  background: #fff;
+  color: #000;
+  border: 1px solid #000;
+  border-radius: 0;
+}
+.settings-screen .tabs button[aria-selected="true"],
+.settings-screen .tabs button.active {
+  background: #000;
+  color: #fff;
+}
+.general-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.general-list > button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  padding: 24px 0;
+  border-bottom: 1px solid #000;
+  border-radius: 0;
+}
+.general-list > button > span {
+  font-size: 26px;
+  letter-spacing: -0.04em;
+}
+.general-list small {
+  display: block;
+  margin-top: 8px;
+  font-size: 12px;
+  letter-spacing: 0;
+  color: inherit;
+}
+.general-list > button:hover small {
+  color: #fff;
+}
+.general-summary {
+  margin-top: 32px;
+  font-size: 12px;
+}
+.mono-select {
+  position: relative;
+  width: 100%;
+  color: #000;
+}
+.mono-select > button {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px;
+  border: 1px solid #000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  text-align: left;
+  border-radius: 0;
+  color: #000;
+  background: #fff;
+}
+.mono-options {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  max-height: 260px;
+  overflow: auto;
+  z-index: 30;
+  border: 1px solid #000;
+  background: #fff;
+  color: #000;
+  overscroll-behavior: contain;
+}
+.mono-options [role="option"] {
+  min-height: 44px;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.mono-options [role="option"]:hover,
+.mono-options [data-active="true"] {
+  background: #000;
+  color: #fff;
+}
+/* Equal spacing, clear typography, gentle curvature and a single material edge. */
+.flip-face--study {
+  background: #f5f5f5;
+}
+.flip-scene .card-grid {
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  padding: 8px 0;
+}
+.flip-scene .problem-card,
+.flip-scene .problem-card.suggested {
+  min-height: 216px;
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid #fff;
+  color: #000;
+  background: #ffffffa8;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 14px #00000009;
+  transform: translate3d(var(--drag-x, 0px), var(--drag-y, 0px), 0)
+    rotate(var(--drag-angle, 0deg)) scale(var(--drag-scale, 1));
+}
+.flip-scene .problem-card::before,
+.flip-scene .problem-card::after {
+  display: none;
+}
+.flip-scene .problem-card:has(> [data-engine="liquidglass"]) {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+.flip-scene .problem-number {
+  font-size: 48px;
+  font-weight: 400;
+  margin-block: 20px 12px;
+  letter-spacing: -0.06em;
+  color: #000;
+}
+.flip-scene .card-top {
+  font-size: 9px;
+  letter-spacing: 0.075em;
+  color: #555;
+}
+.flip-scene .card-title {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: #111;
+}
+.flip-scene .card-state {
+  font-size: 10px;
+  color: #444;
+  border: 0;
+  padding-top: 16px;
+  margin-top: auto;
+}
+.flip-scene .candidate-mark svg {
+  width: 6px;
+  height: 6px;
+}
+.flip-scene .book-tabs {
+  border-radius: 18px;
+}
+.flip-scene .book-tabs button {
+  border-radius: 14px;
+}
+.grade-dialog {
+  border-radius: 18px;
+  box-shadow: 0 18px 70px #0002;
+}
+@media (max-width: 700px) {
+  .flip-scene .card-field {
+    padding-inline: 20px;
+  }
+  .flip-scene .card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .flip-scene .problem-card {
+    padding: 16px;
+    min-height: 210px;
+  }
+  .flip-scene .problem-number {
+    font-size: 44px;
+  }
+  .flip-scene .card-title {
+    font-size: 13px;
+  }
+  .settings-content {
+    padding-top: 24px;
+  }
+}
+@media (orientation: landscape) and (max-height: 560px) {
+  .flip-menu .menu-items button {
+    min-height: 44px;
+    padding-block: 2px;
+  }
+  .flip-menu .menu-label > span {
+    font-size: 24px;
+  }
+  .flip-scene .card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+    gap: 16px;
+  }
+  .flip-scene .problem-card {
+    min-height: 180px;
+    padding: 16px;
+  }
+  .flip-scene .problem-number {
+    font-size: 36px;
+    margin-block: 12px 8px;
+  }
+  .settings-content {
+    padding-top: 20px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .settings-screen {
+    animation: none;
+  }
+}
+.still .settings-screen {
+  animation: none;
+}
+.settings-screen {
+  --grade-strong: #000;
+  --grade-medium: #000;
+  --grade-soft: #000;
+  --ink-muted: #000;
+}
+.settings-screen .choice,
+.settings-screen .choice:has(input:checked) {
+  background: #fff;
+  color: #000;
+  border: 1px solid #000;
+  border-radius: 0;
+}
+.settings-screen button:hover :is(span, strong, small, svg) {
+  color: inherit;
+}
+.settings-screen * {
+  text-shadow: none;
+  box-shadow: none;
+}
+.settings-screen input::file-selector-button {
+  background: #000;
+  color: #fff;
+  border: 1px solid #000;
+  padding: 8px 12px;
+  font: inherit;
+}
+.mono-number {
+  display: flex;
+  flex: 1;
+  align-items: stretch;
+  min-width: 0;
+}
+.settings-screen .mono-number input {
+  min-width: 0;
+  width: 100%;
+  border-right: 0;
+}
+.number-steps {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid #000;
+  flex-shrink: 0;
+}
+.settings-screen .number-steps button {
+  width: 44px;
+  min-height: 48px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+}
+.settings-screen .number-steps button + button {
+  border-left: 1px solid #000;
+}
+.settings-screen .number-steps button:disabled {
+  opacity: 1;
+  background: #fff;
+  color: #000;
+}
+.settings-screen .segmented {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 0;
+  padding: 0;
+}
+.settings-screen .segmented button {
+  color: #000;
+  background: #fff;
+  border-radius: 0;
+}
+.settings-screen .segmented button.active {
+  color: #fff;
+  background: #000;
+}
+.settings-screen .optional {
+  color: #000;
+}
+.settings-screen .progress-track {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 0;
+  height: 6px;
+}
+.settings-screen .progress-track > div {
+  background: #000;
+}
+.settings-screen .info-note,
+.settings-screen .number-preview span {
+  color: #000;
+  background: #fff;
+  border-color: #000;
+  border-radius: 0;
+}
+.flip-scene.menu-open .menu-trigger {
+  color: #000;
+  background: #fff;
+  border: 1px solid #000;
+  box-shadow: none;
+}
+.settings-screen svg,
+.settings-screen hr {
+  color: #000;
+}
+.settings-screen button svg {
+  color: inherit;
+}
+.settings-screen .interval-row > span {
+  flex: 1;
+  min-width: 0;
+}
+.settings-screen .interval-row .number-input {
+  flex-shrink: 0;
+}
+.settings-screen .interval-row .mono-number input {
+  width: 64px;
+}
+@media (max-width: 360px) {
+  .settings-screen .interval-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .settings-screen .interval-row .number-input {
+    width: 100%;
+  }
+  .settings-screen .interval-row .mono-number input {
+    width: 100%;
+  }
+}

@@ -152,8 +152,12 @@ test("メニューのフォーカス循環、Escapeで復帰、動き停止で�
     "data-turning",
     "false",
   );
+  await page.getByRole("button", { name: "General", exact: true }).click();
   await page.getByRole("button", { name: "表示と動き", exact: true }).click();
-  await expect(page.getByRole("dialog", { name: "表示と動き" })).toBeVisible();
+  await expect(page.getByRole("region", { name: "表示と動き" })).toBeVisible();
+  await page
+    .getByRole("button", { name: "Generalに戻る", exact: true })
+    .click();
   await page
     .getByRole("button", { name: "メニューに戻る", exact: true })
     .click();

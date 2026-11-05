@@ -123,10 +123,10 @@ function draw(s: Surface, width: number, height: number) {
   source.height = h;
   const ctx = source.getContext("2d")!;
   const light = ctx.createLinearGradient(0, 0, w, h);
-  light.addColorStop(0, "#fafafa");
-  light.addColorStop(0.4, "#eeeeee");
-  light.addColorStop(0.52, "#ffffff");
-  light.addColorStop(1, "#e5e5e5");
+  light.addColorStop(0, "#fcfcfc");
+  light.addColorStop(0.4, "#f7f7f7");
+  light.addColorStop(0.75, "#ffffff");
+  light.addColorStop(1, "#f8f8f8");
   ctx.fillStyle = light;
   ctx.fillRect(0, 0, w, h);
   // The selected panel refracts the glass surfaces beneath it, not its own
@@ -157,16 +157,16 @@ function draw(s: Surface, width: number, height: number) {
     chromAberration: 0,
     tintStrength: 0,
     saturation: -1,
-    cornerRadius: s.kind === "button" ? 7 : 12,
-    zRadius: s.pressed ? 5 : s.kind === "dialog" ? 20 : 14,
+    cornerRadius: s.kind === "card" ? 20 : s.kind === "button" ? 12 : 18,
+    zRadius: s.pressed ? 2 : s.kind === "dialog" ? 8 : 4,
     blurAmount: s.kind === "dialog" ? 0.12 : 0,
-    refraction: 0.68,
-    fresnel: 0.65,
-    specular: s.hover ? 0.08 : 0.05,
-    edgeHighlight: 0.08,
-    shadowOpacity: s.pressed ? 0.24 : 0.17,
-    shadowSpread: s.pressed ? 5 : 12,
-    shadowOffsetY: s.pressed ? 2 : 6,
+    refraction: 0.24,
+    fresnel: 0.24,
+    specular: s.hover ? 0.035 : 0.015,
+    edgeHighlight: 0.035,
+    shadowOpacity: s.pressed ? 0.045 : 0.075,
+    shadowSpread: s.pressed ? 4 : 8,
+    shadowOffsetY: s.pressed ? 1 : 4,
     brightness: s.hover ? -0.035 : -0.055,
   };
   renderer.uploadAndBlur(source, 0, 0, w, h, config.blurAmount);

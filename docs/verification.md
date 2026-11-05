@@ -118,3 +118,15 @@ Cloudflare 本番環境への公開、実機の Safari / iOS / Android による
 - 型検査・本番ビルド・31件のロジック/SQLテスト・41件のブラウザーテスト・フォーマット検査がすべて成功。記録・復習ロジック・認証/同期の実装に変更なし。
 
 [更新した開閉アニメーション](images/edge-flip-animation.gif) / [タブが離れる途中](images/edge-flip-turn.png) / [側面表示](images/edge-flip-menu.png) / [横画面](images/edge-flip-landscape.png)
+
+## 中央のメニュー・General・全画面設定・控えめなガラス素材
+
+- メニューはLibrary / Display / Study / Exams / Progress / Generalの6項目を縦中央にまとめ、上下に空間を確保。Account / History / Data / MotionはGeneral内へ移した。
+- 設定を開いても3Dメニューのopen状態を維持。設定用dialogを廃止し、白い面の右辺が80％位置から画面右端へ伸びるSettingsScreenへ置き換えた。BackはGeneralやメニューへ戻り、カード画面への復帰はメニューを閉じる操作で行う。
+- メニュー・設定は純白と黒のみ。computed styleで各ページの文字・背景・境界を確認。チェック、ラジオ、listbox、数値入力と44px幅の増減ボタンを整えた。listboxはキーボード、選択、外側クリック、Escapeに対応。選択後の親labelの既定動作で再度開く問題を修正。入力の変更で古い取り込み確認を無効にする動作も検証。
+- カードは上下の段差と強い斜め反射、多重の縁を削除。均等な間隔、20pxの丸み、黒い数字と問題タイトル、抑えた反射と影へ変更。指定のLiquidGlassと共有描画器を維持。
+- 320×568、390×844、844×390、932×430、740×360、1440×900を確認。数値操作の領域は44px幅で、狭い画面でも横はみ出しなし。Generalの階層、設定がモーダルでないこと、メニューの回転状態、全画面寸法、選択/数値操作と保存を追加テストで確認。
+- 型検査・本番ビルド・フォーマット検査、31件のロジック/SQLテストが成功。ブラウザーテストは全体実行で43件成功後、数値入力のテスト指定をroleと完全一致へ更新。対象4件の再実行も成功し、計44件を確認。保存・復元・評価・認証/同期の検証を含む。
+- AppleのMaterials公式資料はネットワーク制限の403応答で本文を取得できず、最新版への準拠確認は行っていない。可読性、素材と操作の階層、控えめな反射を設計判断に用いた。実機Safariと本番Supabaseへの接続は未検証。認証/同期テストは既存のテスト用API応答を使用。
+
+[設定への移動と戻る操作](images/refined-settings-flow.gif) / [カード](images/refined-cards.png) / [メニュー](images/refined-menu.png) / [General](images/refined-general.png) / [Display](images/refined-display.png) / [Study](images/refined-learning.png) / [横画面メニュー](images/refined-menu-landscape.png) / [横画面設定](images/refined-settings-landscape.png)

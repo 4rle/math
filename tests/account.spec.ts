@@ -139,11 +139,14 @@ async function account(page: Page) {
   await page
     .getByRole("button", { name: "メニューを開く", exact: true })
     .click();
+  await page.getByRole("button", { name: "General", exact: true }).click();
   await page
     .getByRole("button", { name: "アカウントと同期", exact: true })
     .click();
 }
 async function close(page: Page) {
+  if (await page.locator(".settings-screen").count())
+    await page.getByRole("button", { name: "閉じる", exact: true }).click();
   await page.getByRole("button", { name: "閉じる", exact: true }).click();
 }
 async function login(page: Page, email = "alice@example.test") {
@@ -415,7 +418,9 @@ test("設定を編集中に別端末が更新しても、古い入力で黙っ�
   await close(b);
   await a.getByRole("button", { name: "メニューを開く", exact: true }).click();
   await a.getByRole("button", { name: "学習の設定", exact: true }).click();
-  await a.getByLabel("1 日の新規候補数").fill("9");
+  await a
+    .getByRole("spinbutton", { name: "1 日の新規候補数", exact: true })
+    .fill("9");
   await grade(b, 1, "D");
   await expect
     .poll(() => backend.records.get(alice)?.state.attempts.length)
@@ -423,6 +428,7 @@ test("設定を編集中に別端末が更新しても、古い入力で黙っ�
   await a.evaluate(() => dispatchEvent(new Event("focus")));
   await a.getByRole("button", { name: "設定を保存", exact: true }).click();
   await a.getByRole("button", { name: "メニューに戻る", exact: true }).click();
+  await a.getByRole("button", { name: "General", exact: true }).click();
   await a
     .getByRole("button", { name: "アカウントと同期", exact: true })
     .click();
