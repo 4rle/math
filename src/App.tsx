@@ -1,5 +1,6 @@
 import { LiquidSurface } from "./LiquidSurface";
 import { GradeSlider } from "./GradeSlider";
+import { InstallApp } from "./InstallApp";
 import { useEffect, useState, type CSSProperties } from "react";
 import {
   X,
@@ -243,7 +244,6 @@ export default function App() {
                 })).catch((e) => notify(e.message));
             }}
           >
-            <LiquidSurface kind="tabs" />
             {(Object.entries(BOOKS) as [Book, string][]).map(([book, name]) => (
               <button
                 id={`tab-${book}`}
@@ -406,6 +406,7 @@ export default function App() {
                     <ChevronRight size={20} />
                   </button>
                 ))}
+                <InstallApp />
                 <p className="general-summary">
                   {account.user
                     ? syncLabels[account.sync.status]

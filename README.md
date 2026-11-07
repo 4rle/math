@@ -12,6 +12,12 @@ Focus Gold Ⅰ＋A・Ⅱ＋B＋C・Ⅲ＋C の登録問題を、番号カード�
 
 開発時は `.env.example` を参考に、`.env.local` に公開用の接続情報を設定します。`service_role` や `sb_secret_` キーは使用しません。
 
+## アプリとしてインストール
+
+CloudflareへデプロイしたHTTPSのURLを開き、左上メニュー → General →「アプリをインストール」からホーム画面へ追加できます。PixelなどAndroidのChromeでは、Chromeの︙メニュー →「ホーム画面に追加」→「インストール」からも追加できます。iPhoneではSafariの共有 →「ホーム画面に追加」を使います。
+
+初回はオンラインで開いてください。その後はオフラインでも起動して、問題の評価・端末内への保存ができます。ログインや端末間同期には通信が必要です。更新版は操作中に強制再読み込みせず、このサイトのタブとアプリをすべて閉じて開き直すと適用されます。[インストール・更新・開発時の確認](docs/pwa.md)を参照してください。
+
 ## 開発
 
 Node.js 22.12 以上（検証環境：24.19.0）と npm を使用します。
@@ -57,9 +63,9 @@ CSV の重複取り込みで学習履歴は消えません。難度を変更す�
 ## 検証
 
 ```sh
-npm run build       # 型チェック + 本番ビルド
+npm run build       # 型チェック + 本番ビルド + PWAのキャッシュ生成
 npm test            # 候補計算、日付、CSV、バックアップのテスト
-npm run test:e2e    # Chromium で主要操作と5つの画面サイズを検証
+npm run test:e2e    # 上のbuild後に実行。主要操作・画面サイズ・本番PWAを検証
 ```
 
 E2E は環境内の `/usr/bin/chromium` を使用します。他の場所にある場合は `CHROMIUM_PATH=/path/to/chromium npm run test:e2e` で指定できます。システムの Chromium がなければ Playwright 標準のブラウザーを使用します。未導入の場合は `npx playwright install chromium` で導入してください。
@@ -106,15 +112,18 @@ npm run cf:dev
 - `src/style.css`：基本レイアウト、セーフエリア、縦横画面、動きを減らす設定
 - `src/glass.css`：白黒の配色とガラスのフォールバック
 - `src/LiquidSurface.tsx`：指定のLiquidGlassによる共有WebGL描画、押下時の材質変化
+- `src/pwa.ts`・`src/InstallApp.tsx`：インストール案内、更新検出、本番Service Workerの登録
+- `public/manifest.webmanifest`・`public/icons/`：アプリ情報とホーム画面アイコン
+- `scripts/build-sw.mjs`・`scripts/service-worker.js`：本番ファイル一覧に基づくオフライン用キャッシュ
 - `docs/focusgold_spec.md`：提供された仕様書
 
-写真の自動解析、Google カレンダー連携、PWA は将来拡張の範囲です。ログインと端末間同期は Supabase の設定後に利用できます。
+写真の自動解析、Google カレンダー連携は将来拡張の範囲です。ログインと端末間同期は Supabase の設定後に利用できます。
 
 ## 初期データの元ファイル
 
 `data/focusgold-1a.csv` と `data/focusgold-2bc.csv` は提供された CSV の原本です。内容の変更なしで保存しています。ブラウザー用データは `python3 scripts/build-catalog.py` で生成し、`python3 scripts/build-catalog.py --check` で原本との一致を確認できます。Python はデータ更新時だけ必要で、通常の開発・Cloudflare ビルドには不要です。
 
-画面は白背景と黒文字、サンセリフ体、英語の見出しを基調にしています。問題タイトルや操作の説明は日本語を維持します。カード・タブ・評価画面・スライダーには指定の[LiquidGlass](https://github.com/ybouane/liquidglass)を採用し、共有のWebGL描画器で屈折・縁の反射・影を描きます。メニューは白いフラットな側面で、タイル面と辺を共有して回転します。WebGLが利用できない場合もCSSのガラス表現で操作できます。[組み込み方と依存関係](docs/liquid-glass.md)を参照してください。既存ユーザーの記録とデプロイ先を維持するため、内部の IndexedDB 名と Worker 名 `focusgold-orbit` は変更していません。
+画面は白背景と黒文字、サンセリフ体、英語の見出しを基調にしています。問題タイトルや操作の説明は日本語を維持します。参考書タブは白黒のフラットなバーで、選択中だけ黒地に白文字になります。カード・評価画面・スライダーには指定の[LiquidGlass](https://github.com/ybouane/liquidglass)を採用し、共有のWebGL描画器で屈折・縁の反射・影を描きます。メニューは白いフラットな側面で、タイル面と辺を共有して回転します。WebGLが利用できない場合もCSSのガラス表現で操作できます。[組み込み方と依存関係](docs/liquid-glass.md)を参照してください。既存ユーザーの記録とデプロイ先を維持するため、内部の IndexedDB 名と Worker 名 `focusgold-orbit` は変更していません。
 
 ## 同期の実装
 

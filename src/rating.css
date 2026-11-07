@@ -407,3 +407,60 @@
 .rating-thumb > .liquid-surface {
   opacity: 0.98;
 }
+/* Book switching remains a flat foreground control, separate from the glass. */
+.flip-scene .book-tabs {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 0;
+  padding: 0;
+  gap: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.flip-scene .book-tabs button {
+  color: #000;
+  background: #fff;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  min-height: 44px;
+  transition: none;
+}
+.flip-scene .book-tabs button + button {
+  border-left: 1px solid #000;
+}
+.flip-scene .book-tabs button:disabled {
+  opacity: 1;
+  cursor: wait;
+}
+.flip-scene .book-tabs button[aria-selected="true"] {
+  background: #000;
+  color: #fff;
+  box-shadow: none;
+}
+.flip-scene .book-tabs button:hover:not([aria-selected="true"]) {
+  background: #fff;
+  color: #000;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.install-app {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 40px;
+}
+.install-app p {
+  font-size: 12px;
+  line-height: 1.8;
+}
+.install-app .secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 48px;
+  transition: none;
+}
