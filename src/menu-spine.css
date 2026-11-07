@@ -1,3 +1,10 @@
+@font-face {
+  font-family: "Focusgold Spine Serif";
+  src: url("./assets/focusgold-spine-serif.woff?no-inline") format("woff");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
 /* Separate decoration in the free 20% beside the unchanged two-face flip. */
 .menu-spine {
   position: absolute;
@@ -13,7 +20,7 @@
     inset -3px 0 8px #000;
 }
 .menu-spine[data-motion="true"] {
-  animation: menu-spine-arrive 0.36s cubic-bezier(0.45, 0, 0.8, 0.4) both;
+  animation: menu-spine-reveal 0.36s cubic-bezier(0.2, 0.7, 0.3, 1) both;
   animation-play-state: paused;
 }
 /* Start at the final 10% of rotation, with no additional timed wait.
@@ -23,26 +30,48 @@
   visibility: visible;
   animation-play-state: running;
 }
-@keyframes menu-spine-arrive {
+@keyframes menu-spine-reveal {
   from {
-    transform: translateY(-102%);
+    opacity: 0;
   }
   to {
-    transform: translateY(0);
+    opacity: 1;
   }
 }
-.menu-spine-title {
+.menu-spine-print {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%) rotate(90deg);
-  white-space: nowrap;
+  inset: max(76px, 12%) 8% max(24px, 7%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(16px, 4dvh, 36px);
+  font-family:
+    "Focusgold Spine Serif", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  font-weight: 400;
+  font-synthesis: none;
+}
+.menu-spine-brand {
+  display: block;
+  text-align: center;
+  writing-mode: horizontal-tb;
   color: #d8b45c;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: clamp(36px, min(14vw, 12dvh), 96px);
-  font-weight: 500;
-  letter-spacing: -0.055em;
-  line-height: 1;
+  font-size: clamp(18px, min(5.8vw, 7dvh), 36px);
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+}
+.menu-spine-brand > span {
+  display: block;
+}
+.menu-spine-subject {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  white-space: nowrap;
+  margin-top: auto;
+  margin-bottom: auto;
+  color: #fff;
+  font-size: clamp(18px, min(6vw, 5.4dvh), 38px);
+  line-height: 1.1;
+  letter-spacing: 0.14em;
 }
 /* The same bare strokes remain legible over both the white menu and black spine.
    Their position, hit area and movement continue to come from flip-scene.css. */

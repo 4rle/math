@@ -199,6 +199,23 @@ test("オフライン再起動・評価保存ができ、個人向けAPIや認�
   await expect(
     page.locator(".problem-card").first().locator(".liquid-surface"),
   ).toHaveAttribute("data-engine", "liquidglass");
+  // The first menu opening is offline: its bundled Mincho face must be precached.
+  await page.locator("#menu-trigger").click();
+  await expect(page.locator(".menu-spine-subject")).toHaveText("数学Ⅰ+A");
+  await page.evaluate(() => document.fonts.ready);
+  expect(
+    await page.evaluate(() =>
+      [...document.fonts].some(
+        (font) =>
+          font.family === "Focusgold Spine Serif" && font.status === "loaded",
+      ),
+    ),
+  ).toBe(true);
+  await page.locator("#menu-trigger").click();
+  await expect(page.locator(".flip-scene")).toHaveAttribute(
+    "data-turn",
+    "0.000",
+  );
   await page.locator(".problem-card").first().click();
   await recordGrade(page, "B");
   await page.reload();

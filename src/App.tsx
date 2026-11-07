@@ -214,6 +214,7 @@ export default function App() {
       className={`study-desk ${state.settings.motion && !reducedMotion ? "" : "still"}`}
     >
       <FlipScene
+        book={state.settings.book}
         open={page !== null}
         expanded={settingsOpen}
         motion={state.settings.motion && !reducedMotion}

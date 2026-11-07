@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, type ReactNode } from "react";
 import { Menu } from "lucide-react";
 import { MenuSpine } from "./MenuSpine";
+import type { Book } from "./model";
 import "./flip-scene.css";
 
 // Both edges of the study face meet near 80% of the viewport when open.
@@ -13,6 +14,7 @@ const MENU_DEPTH =
   (Math.sin(OPEN_ANGLE) - (MENU_SHARE * Math.cos(OPEN_ANGLE)) / PERSPECTIVE);
 
 type Props = {
+  book: Book;
   open: boolean;
   expanded?: boolean;
   motion: boolean;
@@ -36,6 +38,7 @@ type Gesture = {
 
 /** Two perpendicular, live HTML faces of one solid. No duplicate card snapshot. */
 export function FlipScene({
+  book,
   open,
   expanded = false,
   motion,
@@ -357,7 +360,7 @@ export function FlipScene({
       <div className="floating-tabs" aria-hidden={open} inert={open}>
         {tabs}
       </div>
-      {open && <MenuSpine motion={motion} />}
+      {open && <MenuSpine motion={motion} book={book} />}
       {open && (
         <button
           className="flip-return"

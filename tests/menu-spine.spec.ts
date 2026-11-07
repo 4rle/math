@@ -6,7 +6,7 @@ for (const viewport of [
 ]) {
   test.describe(`後付けの背表紙 ${viewport.width}×${viewport.height}`, () => {
     test.use({ viewport, hasTouch: true });
-    test("スワイプ確定後に短く降下し、メニューに重ならず右20%を満たす。閉じる回転を妨げない", async ({
+    test("スワイプ確定後にその場でフェードインし、メニューに重ならず右20%を満たす。閉じる回転を妨げない", async ({
       page,
       context,
     }) => {
@@ -41,17 +41,25 @@ for (const viewport of [
       });
       expect(Number(timing.delay) + Number(timing.duration)).toBe(360);
       expect(timing.delay).toBe(0);
-      expect((await spine.boundingBox())!.y + viewport.height).toBeLessThan(0);
+      await expect(spine).toHaveCSS("opacity", "0");
+      await expect(spine).toHaveCSS("transform", "none");
+      const initial = (await spine.boundingBox())!;
       await spine.evaluate((el) => {
         el.getAnimations()[0].currentTime = 180;
       });
-      const falling = (await spine.boundingBox())!;
-      expect(falling.y).toBeLessThan(0);
-      expect(falling.y + falling.height).toBeGreaterThan(0);
+      const fading = (await spine.boundingBox())!;
+      expect(fading).toEqual(initial);
+      const alpha = await spine.evaluate((el) =>
+        Number(getComputedStyle(el).opacity),
+      );
+      expect(alpha).toBeGreaterThan(0);
+      expect(alpha).toBeLessThan(1);
       await spine.evaluate((el) => {
         el.getAnimations()[0].currentTime = 360;
       });
       const finished = (await spine.boundingBox())!;
+      await expect(spine).toHaveCSS("opacity", "1");
+      expect(finished).toEqual(initial);
       expect(finished.x).toBeCloseTo(viewport.width * 0.8, 0);
       expect(finished.y).toBeCloseTo(0, 0);
       expect(finished.width).toBeCloseTo(viewport.width * 0.2, 0);
@@ -60,13 +68,16 @@ for (const viewport of [
       expect(menu.x + menu.width).toBeLessThanOrEqual(finished.x + 1);
       await expect(spine).toHaveAttribute("aria-hidden", "true");
       await expect(spine).toHaveCSS("pointer-events", "none");
-      await expect(page.locator(".menu-spine-title")).toHaveText("Focusgold");
-      const title = await page.locator(".menu-spine-title").evaluate((el) => {
-        const matrix = new DOMMatrix(getComputedStyle(el).transform);
-        return { x: matrix.m11, y: matrix.m12 };
-      });
-      expect(title.x).toBeCloseTo(0);
-      expect(title.y).toBeCloseTo(1);
+      await expect(page.locator(".menu-spine-brand")).toHaveText("Focus Gold");
+      await expect(page.locator(".menu-spine-brand")).toHaveCSS(
+        "writing-mode",
+        "horizontal-tb",
+      );
+      await expect(page.locator(".menu-spine-subject")).toHaveText("数学Ⅰ+A");
+      await expect(page.locator(".menu-spine-subject")).toHaveCSS(
+        "writing-mode",
+        "vertical-rl",
+      );
       expect(
         await page
           .locator(".flip-solid")
@@ -89,7 +100,7 @@ for (const viewport of [
   });
 }
 
-test("ボタンで開くと回転の終盤から降下を開始し、完了まで待ちすぎない", async ({
+test("ボタンで開くと回転の終盤からフェードを開始し、完了まで待ちすぎない", async ({
   page,
 }) => {
   await page.goto("/");
@@ -115,7 +126,7 @@ test("ボタンで開くと回転の終盤から降下を開始し、完了ま�
   expect(start.playState).toBe("running");
 });
 
-test("早く閉じても背表紙が残らず、再度開くとやり直す。設定から戻っても降下を再生しない", async ({
+test("早く閉じても背表紙が残らず、再度開くとやり直す。設定から戻ってもフェードを再生しない", async ({
   page,
 }) => {
   await page.goto("/");
@@ -166,7 +177,7 @@ test("早く閉じても背表紙が残らず、再度開くとやり直す。�
   await expect(spine).toHaveCount(0);
 });
 
-test("動きを減らす設定では降下を省略し、背表紙があってもハンバーガーから閉じられる", async ({
+test("動きを減らす設定ではフェードを省略し、背表紙があってもハンバーガーから閉じられる", async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
@@ -177,10 +188,54 @@ test("動きを減らす設定では降下を省略し、背表紙があって�
   await expect(spine).toHaveAttribute("data-motion", "false");
   expect(await spine.evaluate((el) => el.getAnimations().length)).toBe(0);
   expect((await spine.boundingBox())!.y).toBe(0);
+  await expect(spine).toHaveCSS("opacity", "1");
   await page.getByRole("button", { name: "閉じる", exact: true }).click();
   await expect(spine).toHaveCount(0);
   await expect(page.locator(".flip-scene")).toHaveAttribute(
     "data-turn",
     "0.000",
   );
+});
+
+test("選択した参考書の科目名を白い縦組みにし、金の横組みと同梱の明朝体で表示する", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  const subjects = ["数学Ⅰ+A", "数学Ⅱ+B+C", "数学Ⅲ+C"];
+  for (let index = 0; index < subjects.length; index++) {
+    await page.getByRole("tab").nth(index).click();
+    await expect(page.getByRole("tab").nth(index)).toHaveAttribute(
+      "aria-selected",
+      "true",
+    );
+    await page.locator("#menu-trigger").click();
+    const subject = page.locator(".menu-spine-subject");
+    const brand = page.locator(".menu-spine-brand");
+    await expect(subject).toHaveText(subjects[index]);
+    await expect(subject).toHaveCSS("writing-mode", "vertical-rl");
+    await expect(subject).toHaveCSS("text-orientation", "upright");
+    await expect(subject).toHaveCSS("color", "rgb(255, 255, 255)");
+    await expect(brand).toHaveText("Focus Gold");
+    await expect(brand).toHaveCSS("writing-mode", "horizontal-tb");
+    await expect(brand).toHaveCSS("color", "rgb(216, 180, 92)");
+    await page.evaluate(() => document.fonts.ready);
+    expect(
+      await page.evaluate(() =>
+        [...document.fonts].some(
+          (font) =>
+            font.family === "Focusgold Spine Serif" && font.status === "loaded",
+        ),
+      ),
+    ).toBe(true);
+    await expect(subject).toHaveCSS("font-family", /Focusgold Spine Serif/);
+    await page.locator("#menu-trigger").click();
+    await expect(page.locator(".flip-scene")).toHaveAttribute(
+      "data-turn",
+      "0.000",
+    );
+  }
+  await page.reload();
+  await page.locator("#menu-trigger").click();
+  await expect(page.locator(".menu-spine-subject")).toHaveText("数学Ⅲ+C");
 });
