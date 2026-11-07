@@ -6,7 +6,7 @@ for (const viewport of [
 ]) {
   test.describe(`後付けの背表紙 ${viewport.width}×${viewport.height}`, () => {
     test.use({ viewport, hasTouch: true });
-    test("スワイプ確定後に遅れて降下し、2.5秒で右半分を満たす。閉じる回転を妨げない", async ({
+    test("スワイプ確定後に短く降下し、メニューに重ならず右20%を満たす。閉じる回転を妨げない", async ({
       page,
       context,
     }) => {
@@ -36,26 +36,28 @@ for (const viewport of [
       const timing = await spine.evaluate((el) => {
         const animation = el.getAnimations()[0];
         animation.pause();
-        animation.currentTime = 500;
+        animation.currentTime = 0;
         return animation.effect!.getTiming();
       });
-      expect(Number(timing.delay) + Number(timing.duration)).toBe(2500);
-      expect(timing.delay).toBeGreaterThan(0);
+      expect(Number(timing.delay) + Number(timing.duration)).toBe(360);
+      expect(timing.delay).toBe(0);
       expect((await spine.boundingBox())!.y + viewport.height).toBeLessThan(0);
       await spine.evaluate((el) => {
-        el.getAnimations()[0].currentTime = 1400;
+        el.getAnimations()[0].currentTime = 180;
       });
       const falling = (await spine.boundingBox())!;
       expect(falling.y).toBeLessThan(0);
       expect(falling.y + falling.height).toBeGreaterThan(0);
       await spine.evaluate((el) => {
-        el.getAnimations()[0].currentTime = 2500;
+        el.getAnimations()[0].currentTime = 360;
       });
       const finished = (await spine.boundingBox())!;
-      expect(finished.x).toBeCloseTo(viewport.width / 2, 0);
+      expect(finished.x).toBeCloseTo(viewport.width * 0.8, 0);
       expect(finished.y).toBeCloseTo(0, 0);
-      expect(finished.width).toBeCloseTo(viewport.width / 2, 0);
+      expect(finished.width).toBeCloseTo(viewport.width * 0.2, 0);
       expect(finished.height).toBe(viewport.height);
+      const menu = (await page.locator(".flip-face--menu").boundingBox())!;
+      expect(menu.x + menu.width).toBeLessThanOrEqual(finished.x + 1);
       await expect(spine).toHaveAttribute("aria-hidden", "true");
       await expect(spine).toHaveCSS("pointer-events", "none");
       await expect(page.locator(".menu-spine-title")).toHaveText("Focusgold");
@@ -87,6 +89,32 @@ for (const viewport of [
   });
 }
 
+test("ボタンで開くと回転の終盤から降下を開始し、完了まで待ちすぎない", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.locator("#menu-trigger").click();
+  const start = await page.evaluate(
+    () =>
+      new Promise<{ turn: number; playState: string }>((resolve) => {
+        const scene = document.querySelector<HTMLElement>(".flip-scene")!;
+        const sample = () => {
+          const turn = Number(scene.dataset.turn);
+          if (turn >= 0.9) {
+            resolve({
+              turn,
+              playState: getComputedStyle(scene.querySelector(".menu-spine")!)
+                .animationPlayState,
+            });
+          } else requestAnimationFrame(sample);
+        };
+        sample();
+      }),
+  );
+  expect(start.turn).toBeLessThan(1);
+  expect(start.playState).toBe("running");
+});
+
 test("早く閉じても背表紙が残らず、再度開くとやり直す。設定から戻っても降下を再生しない", async ({
   page,
 }) => {
@@ -98,7 +126,7 @@ test("早く閉じても背表紙が残らず、再度開くとやり直す。�
   await spine.evaluate((el) => {
     const a = el.getAnimations()[0];
     a.pause();
-    a.currentTime = 500;
+    a.currentTime = 0;
   });
   await trigger.focus();
   await page.keyboard.press("Enter");
@@ -112,10 +140,10 @@ test("早く閉じても背表紙が残らず、再度開くとやり直す。�
     const a = el.getAnimations()[0];
     const initial = Number(a.currentTime);
     a.pause();
-    a.currentTime = 2500;
+    a.currentTime = 360;
     return initial;
   });
-  expect(time).toBeLessThan(750);
+  expect(time).toBeLessThan(360);
   await expect(page.locator(".flip-scene")).toHaveAttribute(
     "data-turn",
     "1.000",

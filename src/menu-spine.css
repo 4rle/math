@@ -1,19 +1,27 @@
-/* Added after opening: the live two-face flip underneath stays unchanged. */
+/* Separate decoration in the free 20% beside the unchanged two-face flip. */
 .menu-spine {
   position: absolute;
-  inset: 0 0 0 50%;
+  inset: 0 0 0 80%;
   z-index: 9;
+  visibility: hidden;
   pointer-events: none;
   user-select: none;
   background: #080808;
   box-shadow:
-    -12px 0 28px #00000012,
     inset 1px 0 0 #353535,
     inset 8px 0 14px #ffffff05,
     inset -3px 0 8px #000;
 }
 .menu-spine[data-motion="true"] {
-  animation: menu-spine-arrive 1.75s cubic-bezier(0.22, 0.8, 0.2, 1) 0.75s both;
+  animation: menu-spine-arrive 0.36s cubic-bezier(0.45, 0, 0.8, 0.4) both;
+  animation-play-state: paused;
+}
+/* Start at the final 10% of rotation, with no additional timed wait.
+   Before then the animation stays at its first frame, rather than elapsing hidden. */
+.flip-scene.menu-open:is([data-turn^="0.9"], [data-turn="1.000"])
+  > .menu-spine {
+  visibility: visible;
+  animation-play-state: running;
 }
 @keyframes menu-spine-arrive {
   from {
@@ -22,10 +30,6 @@
   to {
     transform: translateY(0);
   }
-}
-/* Never cover an ongoing flip, including a reversed or cancelled gesture. */
-.flip-scene:not([data-turn="1.000"]) > .menu-spine {
-  visibility: hidden;
 }
 .menu-spine-title {
   position: absolute;
@@ -42,13 +46,17 @@
 }
 /* The same bare strokes remain legible over both the white menu and black spine.
    Their position, hit area and movement continue to come from flip-scene.css. */
-.flip-scene.menu-open[data-turn="1.000"]:has(> .menu-spine) .menu-trigger {
+.flip-scene.menu-open:is([data-turn^="0.9"], [data-turn="1.000"]):has(
+    > .menu-spine
+  )
+  .menu-trigger {
   color: #fff;
   mix-blend-mode: difference;
 }
-.flip-scene.menu-open[data-turn="1.000"][data-keyboard="true"]:has(
-    > .menu-spine
-  )
+.flip-scene.menu-open[data-keyboard="true"]:is(
+    [data-turn^="0.9"],
+    [data-turn="1.000"]
+  ):has(> .menu-spine)
   .menu-trigger:focus-visible {
   outline-color: #fff;
 }
