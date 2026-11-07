@@ -35,12 +35,12 @@ for (const viewport of [
     const context = await browser.newContext({ viewport, hasTouch: true });
     await context.addInitScript(() => {
       Object.defineProperty(navigator, "vibrate", {
-        value: (p: number[]) => {
-          (window as unknown as { ticks: number[][] }).ticks.push(p);
+        value: (p: number) => {
+          (window as unknown as { ticks: number[] }).ticks.push(p);
           return true;
         },
       });
-      (window as unknown as { ticks: number[][] }).ticks = [];
+      (window as unknown as { ticks: number[] }).ticks = [];
     });
     const page = await context.newPage();
     const slider = await open(page);
@@ -67,11 +67,11 @@ for (const viewport of [
     });
     await expect(page.locator(".grade-dialog")).toHaveCount(0);
     expect((await saved(page)).attempts.map((a) => a.grade)).toEqual(["A"]);
-    expect(
-      await page.evaluate(
-        () => (window as unknown as { ticks: number[][] }).ticks,
-      ),
-    ).toEqual([[7], [7], [7], [7], [7]]);
+    await expect
+      .poll(() =>
+        page.evaluate(() => (window as unknown as { ticks: number[] }).ticks),
+      )
+      .toEqual([25, 25, 25, 25, 25]);
     await page.getByRole("button", { name: "取り消す", exact: true }).click();
     expect((await saved(page)).attempts).toHaveLength(0);
     await context.close();
@@ -157,4 +157,42 @@ test("キーボード・動きを減らす設定で選択と確定を分け、�
     .click();
   await expect(page.locator(".grade-dialog")).toHaveCount(0);
   expect((await saved(page)).attempts.map((a) => a.grade)).toEqual(["B"]);
+});
+
+test("Motionの振動テストが受付と拒否を表示し、設定の保存とは別に動く", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    (
+      window as unknown as { accepted: boolean; patterns: VibratePattern[] }
+    ).accepted = true;
+    (window as unknown as { patterns: VibratePattern[] }).patterns = [];
+    Object.defineProperty(navigator, "vibrate", {
+      value: (pattern: VibratePattern) => {
+        (window as unknown as { patterns: VibratePattern[] }).patterns.push(
+          pattern,
+        );
+        return (window as unknown as { accepted: boolean }).accepted;
+      },
+    });
+  });
+  await page.goto("/");
+  await page.locator("#menu-trigger").click();
+  await page.getByRole("button", { name: "General", exact: true }).click();
+  await page.getByRole("button", { name: "表示と動き", exact: true }).click();
+  await page.getByRole("button", { name: "振動をテスト", exact: true }).click();
+  await expect(page.getByRole("status")).toContainText("振動を要求しました");
+  expect(
+    await page.evaluate(
+      () => (window as unknown as { patterns: VibratePattern[] }).patterns,
+    ),
+  ).toContainEqual([60, 70, 60]);
+  await page.evaluate(() => {
+    (window as unknown as { accepted: boolean }).accepted = false;
+  });
+  await page.getByRole("button", { name: "振動をテスト", exact: true }).click();
+  await expect(page.getByRole("status")).toContainText("受け付けませんでした");
+  await expect(
+    page.getByRole("checkbox", { name: "カードの動きとドラッグ" }),
+  ).toBeChecked();
 });

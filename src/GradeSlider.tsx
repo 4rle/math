@@ -2,22 +2,10 @@ import { useEffect, useId, useRef, useState, type CSSProperties } from "react";
 import { ArrowRight, Check } from "lucide-react";
 import { GRADES, type Grade } from "./model";
 import { LiquidSurface } from "./LiquidSurface";
+import { detentHaptic as tick, stopHaptics } from "./haptics";
 
 export const SLIDER_GRADES = ["E", "D", "C", "B", "A"] as const;
 const clamp = (n: number) => Math.max(0, Math.min(1, n));
-
-/** Only user input calls this. Unsupported/denied vibration never blocks grading. */
-function tick(steps = 1) {
-  try {
-    if (typeof navigator.vibrate !== "function") return;
-    const pulses = Array.from({ length: Math.min(steps, 4) * 2 - 1 }, (_, i) =>
-      i % 2 ? 16 : 7,
-    );
-    navigator.vibrate(pulses);
-  } catch {
-    /* Optional hardware feedback. */
-  }
-}
 
 type Gesture = {
   id: number;
@@ -68,6 +56,7 @@ export function GradeSlider({
   const cancel = () => {
     const g = gesture.current;
     if (!g) return;
+    stopHaptics();
     gesture.current = null;
     setDragging(false);
     setIndex(g.before);

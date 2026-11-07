@@ -1,3 +1,4 @@
+import { testVibration, type VibrationResult } from "./haptics";
 import { MonoNumber } from "./MonoNumber";
 import { MonoSelect } from "./MonoSelect";
 import { compareNumbers } from "./problem-number";
@@ -1336,6 +1337,7 @@ export function DataPanel({
 }
 export function MotionPanel({ state, commit, busy, notify }: PanelProps) {
   const [motion, setMotion] = useState(state.settings.motion);
+  const [vibration, setVibration] = useState<VibrationResult | null>(null);
   const action = useAction();
   return (
     <form
@@ -1363,6 +1365,35 @@ export function MotionPanel({ state, commit, busy, notify }: PanelProps) {
         オフにすると、カードのドラッグ・選択・スクロール時の演出を停止し、メニューは即座に切り替わります。OS
         の「動きを減らす」が有効な場合も停止します。
       </Hint>
+      <section className="stack haptic-test" aria-label="振動の確認">
+        <h2>触覚フィードバック</h2>
+        <Hint>
+          評価スライダーの段階で短く振動します。振動がない場合は、端末の音量モードをミュートから音あり・バイブへ切り替えてお試しください。
+        </Hint>
+        <button
+          type="button"
+          className="secondary"
+          onClick={() => setVibration(testVibration())}
+        >
+          振動をテスト
+        </button>
+        {vibration && (
+          <p className="hint" role="status">
+            {
+              {
+                requested:
+                  "ブラウザーに振動を要求しました。端末で2回の振動を感じるか確認してください。要求が受け付けられても、端末設定によって振動しない場合があります。",
+                unsupported:
+                  "このブラウザーはWebからの振動に対応していません。",
+                inactive: "ボタンを直接タップして、もう一度お試しください。",
+                hidden: "この画面を表示してから、もう一度お試しください。",
+                rejected:
+                  "ブラウザーが振動要求を受け付けませんでした。Chromeや端末の設定を確認してください。",
+              }[vibration]
+            }
+          </p>
+        )}
+      </section>
       <FormFooter busy={busy} />
       <ErrorMessage message={action.error} />
     </form>

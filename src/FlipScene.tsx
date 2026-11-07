@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, useRef, type ReactNode } from "react";
 import { Menu } from "lucide-react";
 import "./flip-scene.css";
 
@@ -52,7 +52,7 @@ export function FlipScene({
   const current = useRef({ open, motion, disabled, onOpenChange });
   current.current = { open, motion, disabled, onOpenChange };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const root = scene.current!;
     let width = root.clientWidth;
     let frame = 0;
@@ -207,6 +207,7 @@ export function FlipScene({
       current.current.onOpenChange(target);
     };
     const touchStart = (e: TouchEvent) => {
+      root.dataset.keyboard = "false";
       if (e.touches.length !== 1) {
         cancel();
         return;
@@ -221,6 +222,7 @@ export function FlipScene({
       move(e.touches[0].clientX, e.touches[0].clientY, e);
     };
     const pointerDown = (e: PointerEvent) => {
+      root.dataset.keyboard = "false";
       if (e.pointerType !== "touch" && e.isPrimary && e.button === 0)
         start(e.clientX, e.clientY, e.target, e.pointerId);
     };
@@ -236,6 +238,10 @@ export function FlipScene({
         e.stopPropagation();
       }
     };
+    const keyboard = (e: KeyboardEvent) => {
+      if (["Tab", "Enter", " "].includes(e.key)) root.dataset.keyboard = "true";
+    };
+    document.addEventListener("keydown", keyboard);
     root.addEventListener("touchstart", touchStart, { passive: true });
     root.addEventListener("touchmove", touchMove, { passive: false });
     root.addEventListener("touchend", finish);
@@ -249,6 +255,7 @@ export function FlipScene({
     return () => {
       cancelAnimationFrame(frame);
       resize.disconnect();
+      document.removeEventListener("keydown", keyboard);
       root.removeEventListener("touchstart", touchStart);
       root.removeEventListener("touchmove", touchMove);
       root.removeEventListener("touchend", finish);
@@ -262,7 +269,7 @@ export function FlipScene({
     };
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     animate.current(open ? 1 : 0);
   }, [open, motion]);
   useEffect(() => {

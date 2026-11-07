@@ -17,3 +17,7 @@
 評価は左Eから右Aへの5段階で、初期位置を未選択と区別します。12px以上ドラッグし、段階に近い位置で離したときだけ自動保存。タップのみはプレビュー、境界でのリリースは確認待ち、pointercancelやフォーカス喪失は元の選択へ戻します。振動は対応端末でユーザー操作時だけ要求し、非対応・拒否で保存処理を止めません。
 
 振動の互換性参考：[MDN Navigator.vibrate](https://developer.mozilla.org/docs/Web/API/Navigator/vibrate) / [Browser Compatibility Data](https://github.com/mdn/browser-compat-data/blob/main/api/Navigator.json)。Safariは非対応。APIが存在してもOS設定やブラウザーの方針で振動しない場合があり、表示による段階の確認は常に用意します。
+
+振動は`src/haptics.ts`で制御します。7msの連続要求から25msの単発要求へ変更し、30msの休止を含む55ms以上の間隔で送ります。急なスライドでも既存の振動を新しい要求で打ち消さず、待機列は5件に制限。画面非表示とフォーカス喪失、ドラッグキャンセルでは停止します。
+
+General → Motionのテストボタンは60ms・70ms休止・60msのパターンをユーザー操作で送信し、未対応・未操作・非表示・拒否・受付を区別します。受付はモーターの駆動確認ではありません。[ChromiumのAndroid実装](https://github.com/chromium/chromium/blob/main/services/device/vibration/android/java/src/org/chromium/device/vibration/VibrationManagerAndroid.java)では、`RINGER_MODE_SILENT`中は振動しない条件があります。これはPixel実機の設定や原因を特定したという意味ではありません。

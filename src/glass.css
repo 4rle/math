@@ -17,18 +17,25 @@
 .flip-scene {
   background: #fff;
 }
-.flip-scene .menu-trigger {
-  color: #151515;
-  background: #ffffffed;
-  border: 1px solid #d6d6d6;
-  border-radius: 50%;
-  box-shadow:
-    0 calc(3px + var(--turn) * 3px + var(--button-lift) * 14px) 22px #00000016,
-    inset 0 1px #fff;
+/* Only the three strokes are visible; the 44px touch target still moves. */
+.flip-scene .menu-trigger,
+.flip-scene .menu-trigger:hover,
+.flip-scene.menu-open .menu-trigger {
+  color: #000;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  filter: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
-.flip-scene .menu-trigger:hover {
-  background: #fff;
-  border-color: #9b9b9b;
+.flip-scene .menu-trigger:focus {
+  outline: none;
+}
+.flip-scene[data-keyboard="true"] .menu-trigger:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 4px;
 }
 .flip-scene .book-tabs {
   padding: 3px;

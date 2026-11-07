@@ -578,12 +578,6 @@
   border-color: #000;
   border-radius: 0;
 }
-.flip-scene.menu-open .menu-trigger {
-  color: #000;
-  background: #fff;
-  border: 1px solid #000;
-  box-shadow: none;
-}
 .settings-screen svg,
 .settings-screen hr {
   color: #000;
@@ -612,4 +606,7 @@
   .settings-screen .interval-row .mono-number input {
     width: 100%;
   }
+}
+.settings-screen .haptic-test .secondary {
+  transition: none;
 }
