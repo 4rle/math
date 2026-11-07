@@ -163,7 +163,7 @@ function draw(s: Surface, width: number, height: number) {
       s.kind === "rail" || s.kind === "thumb"
         ? Math.min(width, height) / 2
         : s.kind === "card"
-          ? 26
+          ? 0
           : s.kind === "button"
             ? 12
             : 28,

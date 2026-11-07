@@ -1,0 +1,59 @@
+/* Added after opening: the live two-face flip underneath stays unchanged. */
+.menu-spine {
+  position: absolute;
+  inset: 0 0 0 50%;
+  z-index: 9;
+  pointer-events: none;
+  user-select: none;
+  background: #080808;
+  box-shadow:
+    -12px 0 28px #00000012,
+    inset 1px 0 0 #353535,
+    inset 8px 0 14px #ffffff05,
+    inset -3px 0 8px #000;
+}
+.menu-spine[data-motion="true"] {
+  animation: menu-spine-arrive 1.75s cubic-bezier(0.22, 0.8, 0.2, 1) 0.75s both;
+}
+@keyframes menu-spine-arrive {
+  from {
+    transform: translateY(-102%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+/* Never cover an ongoing flip, including a reversed or cancelled gesture. */
+.flip-scene:not([data-turn="1.000"]) > .menu-spine {
+  visibility: hidden;
+}
+.menu-spine-title {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(90deg);
+  white-space: nowrap;
+  color: #d8b45c;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: clamp(36px, min(14vw, 12dvh), 96px);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 1;
+}
+/* The same bare strokes remain legible over both the white menu and black spine.
+   Their position, hit area and movement continue to come from flip-scene.css. */
+.flip-scene.menu-open[data-turn="1.000"]:has(> .menu-spine) .menu-trigger {
+  color: #fff;
+  mix-blend-mode: difference;
+}
+.flip-scene.menu-open[data-turn="1.000"][data-keyboard="true"]:has(
+    > .menu-spine
+  )
+  .menu-trigger:focus-visible {
+  outline-color: #fff;
+}
+@media (prefers-reduced-motion: reduce) {
+  .menu-spine[data-motion="true"] {
+    animation: none;
+  }
+}

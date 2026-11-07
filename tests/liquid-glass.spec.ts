@@ -12,6 +12,7 @@ test("LiquidGlassが実際に描画し、押下に反応する。描画器は一
   const first = page.locator(".problem-card").first();
   const material = first.locator(".liquid-surface");
   await expect(material).toHaveAttribute("data-engine", "liquidglass");
+  await expect(first).toHaveCSS("border-radius", "0px");
   await expect(page.locator("[data-liquid-renderer]")).toHaveCount(1);
   const pixels = await material.evaluate((el: HTMLCanvasElement) => {
     const p = el.getContext("2d")!.getImageData(0, 0, el.width, el.height).data;
@@ -69,6 +70,7 @@ test("WebGL非対応でもカードを読め、評価を保存できる", async 
     "data-engine",
     "fallback",
   );
+  await expect(first).toHaveCSS("border-radius", "0px");
   await expect(page.locator("[data-liquid-renderer]")).toHaveCount(0);
   await expect(first).toContainText("多項式の加法・減法");
   await first.click();

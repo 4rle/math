@@ -9,7 +9,7 @@
 .flip-scene .problem-card.suggested {
   min-height: 220px;
   padding: 22px;
-  border-radius: 26px;
+  border-radius: 0;
   background: #ffffff68;
   border: 1px solid #fff9;
   box-shadow:

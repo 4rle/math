@@ -224,7 +224,7 @@ test("開くとカードの左右の辺が80%位置へ集まり、ほぼ真横�
     expect(study.x + study.width).toBeLessThan(width * 0.81);
     expect(study.y).toBeCloseTo(0, 0);
     expect(study.height).toBeCloseTo(height, 0);
-    // Same cards remain mounted on the nearly edge-on face; no spine/snapshot.
+    // The post-open decoration never replaces the live, nearly edge-on cards.
     expect(
       await card!.evaluate(
         (el) => el === document.querySelector(".problem-card"),

@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, type ReactNode } from "react";
 import { Menu } from "lucide-react";
+import { MenuSpine } from "./MenuSpine";
 import "./flip-scene.css";
 
 // Both edges of the study face meet near 80% of the viewport when open.
@@ -356,6 +357,7 @@ export function FlipScene({
       <div className="floating-tabs" aria-hidden={open} inert={open}>
         {tabs}
       </div>
+      {open && <MenuSpine motion={motion} />}
       {open && (
         <button
           className="flip-return"
