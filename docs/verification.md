@@ -198,3 +198,11 @@ Cloudflare 本番環境への公開、実機の Safari / iOS / Android による
 - 出版社サイトの実物画像は、この環境のネットワーク制限（CONNECT 403）で取得できなかった。実物写真との照合は行っておらず、指定された黒地・金の横組み・白の縦組み・明朝体を基準に設計した。出版社のロゴ画像や未確認の版数・著者名は追加していない。
 
 [フェードのGIF](images/mincho-spine-fade.gif) / [Ⅰ+A](images/mincho-spine-1.png) / [Ⅱ+B+C](images/mincho-spine-2.png) / [Ⅲ+C](images/mincho-spine-3.png) / [横画面](images/mincho-spine-landscape.png)
+
+## ゆっくりしたフェード・金文字全体を90度回転
+
+- フェードを0.36秒から1.2秒のease-in-outへ延長。回転の終盤から開始するタイミングと、右端20％の領域は維持。
+- 金文字を2行組みから一続きの「Focus Gold」へ変更。横組み全体を90度回転し、縦方向へ配置する。白い科目名は正立の縦書きのまま。英字の回転後の高さを確保し、低い横画面でも科目名と重ならないよう調整。
+- 型検査・本番ビルド・フォーマット検査と関連9件のブラウザーテストが成功。文字列全体の回転、1.2秒のフェード、位置の維持、再度開く操作、動き停止、3冊の切り替えを確認。Chromiumで3冊×6画面サイズの計18組を確認し、文字のはみ出し・重なり・実行時エラーなし。実機での確認は未実施。
+
+[ゆっくりしたフェードのGIF](images/rotated-brand-slow-fade.gif) / [縦方向の英字](images/rotated-brand-spine.png) / [横画面](images/rotated-brand-landscape.png)

@@ -39,13 +39,13 @@ for (const viewport of [
         animation.currentTime = 0;
         return animation.effect!.getTiming();
       });
-      expect(Number(timing.delay) + Number(timing.duration)).toBe(360);
+      expect(Number(timing.delay) + Number(timing.duration)).toBe(1200);
       expect(timing.delay).toBe(0);
       await expect(spine).toHaveCSS("opacity", "0");
       await expect(spine).toHaveCSS("transform", "none");
       const initial = (await spine.boundingBox())!;
       await spine.evaluate((el) => {
-        el.getAnimations()[0].currentTime = 180;
+        el.getAnimations()[0].currentTime = 600;
       });
       const fading = (await spine.boundingBox())!;
       expect(fading).toEqual(initial);
@@ -55,7 +55,7 @@ for (const viewport of [
       expect(alpha).toBeGreaterThan(0);
       expect(alpha).toBeLessThan(1);
       await spine.evaluate((el) => {
-        el.getAnimations()[0].currentTime = 360;
+        el.getAnimations()[0].currentTime = 1200;
       });
       const finished = (await spine.boundingBox())!;
       await expect(spine).toHaveCSS("opacity", "1");
@@ -73,6 +73,14 @@ for (const viewport of [
         "writing-mode",
         "horizontal-tb",
       );
+      const brandRotation = await page
+        .locator(".menu-spine-brand-text")
+        .evaluate((el) => {
+          const matrix = new DOMMatrix(getComputedStyle(el).transform);
+          return { x: matrix.m11, y: matrix.m12 };
+        });
+      expect(brandRotation.x).toBeCloseTo(0);
+      expect(brandRotation.y).toBeCloseTo(1);
       await expect(page.locator(".menu-spine-subject")).toHaveText("数学Ⅰ+A");
       await expect(page.locator(".menu-spine-subject")).toHaveCSS(
         "writing-mode",
@@ -151,10 +159,10 @@ test("早く閉じても背表紙が残らず、再度開くとやり直す。�
     const a = el.getAnimations()[0];
     const initial = Number(a.currentTime);
     a.pause();
-    a.currentTime = 360;
+    a.currentTime = 1200;
     return initial;
   });
-  expect(time).toBeLessThan(360);
+  expect(time).toBeLessThan(1200);
   await expect(page.locator(".flip-scene")).toHaveAttribute(
     "data-turn",
     "1.000",
@@ -197,7 +205,7 @@ test("動きを減らす設定ではフェードを省略し、背表紙があ�
   );
 });
 
-test("選択した参考書の科目名を白い縦組みにし、金の横組みと同梱の明朝体で表示する", async ({
+test("科目名は白い縦組み、金の英字は横組み全体を回転して同梱の明朝体で表示する", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });

@@ -13,7 +13,7 @@ export function MenuSpine({ motion, book }: { motion: boolean; book: Book }) {
     <div className="menu-spine" data-motion={motion} aria-hidden="true">
       <div className="menu-spine-print">
         <span className="menu-spine-brand">
-          <span>Focus</span> <span>Gold</span>
+          <span className="menu-spine-brand-text">Focus Gold</span>
         </span>
         <span className="menu-spine-subject">{SUBJECTS[book]}</span>
       </div>
