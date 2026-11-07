@@ -1,3 +1,4 @@
+import { recordGrade } from "./grade-helper";
 import {
   test,
   expect,
@@ -164,7 +165,7 @@ async function grade(page: Page, number: number, grade = "C") {
   await page
     .getByRole("button", { name: new RegExp(`^問題 ${number}、`) })
     .click();
-  await page.getByRole("button", { name: new RegExp(`^${grade} `) }).click();
+  await recordGrade(page, grade);
   await expect(page.getByRole("dialog")).toHaveCount(0);
 }
 async function contextFor(browser: Browser, backend: Backend) {

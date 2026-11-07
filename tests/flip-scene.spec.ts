@@ -1,3 +1,4 @@
+import { recordGrade } from "./grade-helper";
 import { test, expect } from "@playwright/test";
 
 for (const viewport of [
@@ -95,7 +96,7 @@ for (const viewport of [
       await expect(page.locator(".selected-title")).toHaveText(
         "多項式の加法・減法",
       );
-      await page.getByRole("button", { name: /^B / }).tap();
+      await recordGrade(page, "B");
       await page.reload();
       await expect(page.getByRole("button", { name: /^問題 1、/ })).toHaveCount(
         0,

@@ -1,0 +1,409 @@
+/* A glass content layer, with a raised optical control above it. */
+.flip-face--study {
+  background: radial-gradient(ellipse at 20% 0, #fff, #f0f0f0 95%);
+}
+.flip-scene .card-grid {
+  gap: 22px;
+}
+.flip-scene .problem-card,
+.flip-scene .problem-card.suggested {
+  min-height: 220px;
+  padding: 22px;
+  border-radius: 26px;
+  background: #ffffff68;
+  border: 1px solid #fff9;
+  box-shadow:
+    0 9px 28px #0000000a,
+    inset 0 1px 0 #fff;
+  backdrop-filter: blur(18px) saturate(0);
+  -webkit-backdrop-filter: blur(18px) saturate(0);
+}
+.flip-scene .problem-card:has(> [data-engine="liquidglass"]) {
+  background: transparent;
+  box-shadow: none;
+  border-color: transparent;
+}
+.flip-scene .problem-number {
+  font-weight: 300;
+  font-size: 56px;
+  margin-block: 24px 10px;
+  letter-spacing: -0.065em;
+}
+.flip-scene .card-title {
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 500;
+  color: #151515;
+}
+.flip-scene .card-state {
+  font-size: 10px;
+  letter-spacing: 0.01em;
+  padding-top: 22px;
+  color: #555;
+}
+.flip-scene .card-top {
+  font-size: 9px;
+  letter-spacing: 0.09em;
+}
+.grade-dialog,
+.grade-dialog:has(> [data-engine="liquidglass"]) {
+  width: min(480px, calc(100vw - 32px));
+  max-width: none;
+  max-height: calc(100dvh - 32px);
+  display: block;
+  padding: 32px;
+  margin: auto;
+  border: 1px solid #ffffffd9;
+  border-radius: 28px;
+  color: #111;
+  background: #ffffff52;
+  box-shadow: 0 24px 90px #0000001f;
+  backdrop-filter: blur(24px) saturate(0);
+  -webkit-backdrop-filter: blur(24px) saturate(0);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.grade-dialog:not([open]) {
+  display: none;
+}
+.dialog-material {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+  isolation: isolate;
+  z-index: -1;
+  opacity: 0.72;
+}
+.grade-dialog::backdrop {
+  background: #00000012;
+  backdrop-filter: blur(5px) saturate(0);
+}
+.grade-dialog .close-grade {
+  top: 16px;
+  right: 16px;
+  border-radius: 50%;
+  background: #ffffff70;
+  color: #111;
+  z-index: 3;
+}
+.grade-dialog .selected-problem {
+  padding: 4px 34px 24px 0;
+  text-align: left;
+  align-items: flex-start;
+  position: static;
+  gap: 8px;
+}
+.grade-dialog .eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.09em;
+  color: #555;
+}
+.grade-dialog .selected-number {
+  margin: 2px 0 0;
+  font-size: 68px;
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.07em;
+  color: #000;
+}
+.grade-dialog .selected-number.prefixed-number {
+  font-size: 46px;
+  letter-spacing: -0.05em;
+}
+.grade-dialog .selected-title {
+  font-size: 17px;
+  font-weight: 500;
+  color: #111;
+  line-height: 1.5;
+}
+.grade-dialog .current-grade {
+  font-size: 11px;
+  color: #555;
+}
+.grade-dialog .problem-details {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #00000012;
+  font-size: 11px;
+}
+.grade-dialog .problem-details summary {
+  min-height: 32px;
+  color: #444;
+}
+.grade-dialog .detail-body {
+  font-size: 12px;
+}
+.rating {
+  min-width: 0;
+  padding-top: 8px;
+}
+.rating-summary {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 74px;
+  padding-bottom: 20px;
+}
+.rating-value {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  color: #000;
+  font-size: 32px;
+  font-weight: 400;
+  letter-spacing: -0.05em;
+}
+.rating-summary strong {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111;
+}
+.rating-summary p {
+  margin-top: 5px;
+  font-size: 11px;
+  color: #555;
+  line-height: 1.6;
+}
+.rating-track {
+  --rating-position: 0;
+  position: relative;
+  height: 72px;
+  border-radius: 40px;
+  isolation: isolate;
+  background: #ffffff80;
+  border: 1px solid #ffffffb3;
+  box-shadow: inset 0 1px 4px #00000005;
+  cursor: ew-resize;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.rating-track:has(> [data-engine="liquidglass"]) {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+.rating-track:focus-visible {
+  outline: 2px solid #111;
+  outline-offset: 5px;
+}
+.rating-track[aria-disabled="true"] {
+  cursor: wait;
+}
+.rating-path {
+  position: absolute;
+  left: 32px;
+  right: 32px;
+  top: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+.rating-path::before,
+.rating-fill {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 1px;
+  background: #0000001c;
+  width: 100%;
+}
+.rating-fill {
+  width: calc(var(--rating-position) * 100%);
+  background: #111;
+}
+.rating-stop {
+  position: absolute;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #777;
+  transform: translate(-50%, -50%);
+}
+.rating-stop[data-selected="true"] {
+  background: #000;
+  width: 7px;
+  height: 7px;
+}
+.rating-thumb {
+  position: absolute;
+  left: calc(var(--rating-position) * 100%);
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 62px;
+  height: 54px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+  background: #ffffffc9;
+  border: 1px solid #fff;
+  box-shadow: 0 5px 16px #0002;
+  transition:
+    left 0.16s cubic-bezier(0.2, 0.8, 0.2, 1),
+    width 0.16s;
+  pointer-events: none;
+}
+.rating-thumb:has(> [data-engine="liquidglass"]) {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+.rating-thumb > span {
+  color: #000;
+  font-size: 24px;
+  font-weight: 500;
+}
+.rating-track[data-dragging="true"] .rating-thumb {
+  transition: none;
+  width: 68px;
+}
+.rating-labels {
+  display: flex;
+  justify-content: space-between;
+  padding: 13px 27px 0;
+  font-size: 11px;
+  color: #777;
+  pointer-events: none;
+}
+.rating-labels span {
+  width: 12px;
+  text-align: center;
+}
+.rating-labels [data-selected="true"] {
+  color: #000;
+  font-weight: 600;
+}
+.rating-hint {
+  margin-top: 18px;
+  min-height: 16px;
+  text-align: center;
+  font-size: 10px;
+  line-height: 1.6;
+  color: #666;
+}
+.rating-confirm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin: 8px auto 0;
+  min-height: 44px;
+  padding: 10px 20px;
+  color: #111;
+  font-size: 12px;
+  border-radius: 24px;
+  background: #ffffff6b;
+  border: 1px solid #ffffffb3;
+}
+.rating-confirm:disabled {
+  opacity: 1;
+  background: transparent;
+  border-color: transparent;
+  color: #777;
+  cursor: default;
+  letter-spacing: 0.2em;
+  font-size: 10px;
+}
+.rating-confirm:not(:disabled):hover {
+  background: #000;
+  border-color: #000;
+  color: #fff;
+}
+@media (max-width: 700px) {
+  .flip-scene .card-grid {
+    gap: 16px;
+  }
+  .flip-scene .problem-card {
+    min-height: 220px;
+    padding: 18px;
+  }
+  .flip-scene .problem-number {
+    font-size: 48px;
+  }
+  .flip-scene .card-title {
+    font-size: 13px;
+  }
+}
+@media (max-width: 360px) {
+  .grade-dialog,
+  .grade-dialog:has(> [data-engine="liquidglass"]) {
+    padding: 24px;
+    width: calc(100vw - 24px);
+    max-height: calc(100dvh - 24px);
+  }
+  .grade-dialog .selected-number {
+    font-size: 58px;
+  }
+  .rating-hint {
+    font-size: 9px;
+  }
+}
+@media (orientation: landscape) and (max-height: 560px) {
+  .grade-dialog,
+  .grade-dialog:has(> [data-engine="liquidglass"]) {
+    width: min(760px, calc(100vw - 40px));
+    padding: 28px;
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    column-gap: 28px;
+  }
+  .grade-dialog:not([open]) {
+    display: none;
+  }
+  .grade-dialog .selected-problem {
+    padding: 8px 0 0;
+  }
+  .grade-dialog .selected-number {
+    font-size: 60px;
+  }
+  .grade-dialog .selected-title {
+    font-size: 15px;
+  }
+  .grade-dialog .rating {
+    padding: 0 20px 0 0;
+  }
+  .grade-dialog .rating-summary {
+    min-height: 66px;
+    padding-bottom: 16px;
+  }
+  .grade-dialog
+    > :is(.error-message, .saving, .panel-notice, .problem-details) {
+    grid-column: 1/-1;
+  }
+  .grade-dialog .problem-details {
+    margin-top: 14px;
+    padding-top: 10px;
+  }
+  .flip-scene .problem-card {
+    min-height: 178px;
+  }
+  .flip-scene .problem-number {
+    font-size: 38px;
+    margin-block: 14px 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rating-thumb {
+    transition: none;
+  }
+}
+.still .rating-thumb {
+  transition: none;
+}
+
+.flip-scene .problem-card > .liquid-surface {
+  opacity: 0.9;
+}
+.rating-track > .liquid-surface {
+  opacity: 0.9;
+}
+.rating-thumb > .liquid-surface {
+  opacity: 0.98;
+}

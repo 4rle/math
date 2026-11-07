@@ -51,7 +51,11 @@ export function Modal({
         }
       }}
     >
-      {className.includes("grade-dialog") && <LiquidSurface kind="dialog" />}
+      {className.includes("grade-dialog") && (
+        <div className="dialog-material" aria-hidden="true">
+          <LiquidSurface kind="dialog" />
+        </div>
+      )}
       {children}
     </dialog>
   );

@@ -1,3 +1,4 @@
+import { recordGrade } from "./grade-helper";
 import { test, expect } from "@playwright/test";
 
 test.use({ viewport: { width: 390, height: 844 } });
@@ -29,15 +30,16 @@ test("LiquidGlassが実際に描画し、押下に反応する。描画器は一
   await expect(material).toHaveAttribute("data-pressed", "true");
   await page.mouse.up();
   const dialog = page.getByRole("dialog", { name: "問題 1 の記録" });
-  await expect(dialog.locator(":scope > .liquid-surface")).toHaveAttribute(
-    "data-engine",
-    "liquidglass",
-  );
   await expect(
-    dialog.locator('.grade-option > [data-engine="liquidglass"]'),
-  ).toHaveCount(5);
+    dialog.locator(".dialog-material > .liquid-surface"),
+  ).toHaveAttribute("data-engine", "liquidglass");
+  await expect(
+    dialog.locator(
+      '.rating-track > [data-engine="liquidglass"], .rating-thumb > [data-engine="liquidglass"]',
+    ),
+  ).toHaveCount(2);
   await expect(page.locator("[data-liquid-renderer]")).toHaveCount(1);
-  await page.getByRole("button", { name: /^B / }).click();
+  await recordGrade(page, "B");
   await page.reload();
   await expect(page.locator(".problem-card")).toHaveCount(302);
   await page.locator("#menu-trigger").click();
@@ -70,7 +72,7 @@ test("WebGL非対応でもカードを読め、評価を保存できる", async 
   await expect(page.locator("[data-liquid-renderer]")).toHaveCount(0);
   await expect(first).toContainText("多項式の加法・減法");
   await first.click();
-  await page.getByRole("button", { name: /^B / }).click();
+  await recordGrade(page, "B");
   await page.reload();
   await expect(page.locator(".problem-card")).toHaveCount(302);
 });

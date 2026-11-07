@@ -1,3 +1,4 @@
+import { recordGrade } from "./grade-helper";
 import { test, expect, type Page } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 import { initialState, applyImport, recompute, type State } from "../src/model";
@@ -93,13 +94,13 @@ test("空状態から登録、キャンセル、即記録、取り消し、参�
   await page.keyboard.press("Escape");
   await expect(card).toHaveAttribute("aria-label", /未着手/);
   await card.click();
-  await page.getByRole("button", { name: /^C 解説を少し確認/ }).click();
+  await recordGrade(page, "C");
   await expect(page.getByRole("dialog")).toHaveCount(0);
   await expect(card).toHaveCount(0);
   await page.getByRole("button", { name: "取り消す" }).click();
   await expect(card).toBeVisible();
   await card.click();
-  await page.getByRole("button", { name: /^A 自力完答/ }).click();
+  await recordGrade(page, "A");
   await expect(card).toHaveCount(0);
   await page.reload();
   await expect(card).toHaveCount(0);
@@ -260,13 +261,13 @@ test("保存失敗時は評価画面と選択結果を残し、再試行でき�
       throw new DOMException("Quota exceeded", "QuotaExceededError");
     };
   });
-  await page.getByRole("button", { name: /^C 解説を少し確認/ }).click();
+  await recordGrade(page, "C", false);
   await expect(page.getByRole("dialog")).toBeVisible();
   await expect(page.getByRole("alert")).toBeVisible();
   await page.evaluate(() =>
     (window as unknown as { restorePut: () => void }).restorePut(),
   );
-  await page.getByRole("button", { name: /^C 解説を少し確認/ }).click();
+  await recordGrade(page, "C");
   await expect(page.getByRole("dialog")).toHaveCount(0);
   expect((await readState(page)).attempts).toHaveLength(1);
 });
@@ -303,7 +304,7 @@ for (const viewport of [
       .getByRole("dialog")
       .evaluate((el) => Promise.all(el.getAnimations().map((a) => a.finished)));
     await page.screenshot({ path: testInfo.outputPath("grade.png") });
-    await page.getByRole("button", { name: /^E 解説でも不明/ }).click();
+    await recordGrade(page, "E");
     await expect(page.getByRole("dialog")).toHaveCount(0);
     await expect(first).toHaveAttribute("aria-label", /E 解説でも不明/);
     await menu(page, "表示と動き");
@@ -346,7 +347,7 @@ test("模試の登録で A が候補に戻り、確認済みになると再提�
   await expect(page.getByText("確認用模試", { exact: true })).toBeVisible();
   await close(page);
   await page.getByRole("button", { name: /^問題 125、/ }).click();
-  await page.getByRole("button", { name: /^A 自力完答/ }).click();
+  await recordGrade(page, "A");
   await expect(page.getByRole("button", { name: /^問題 125、/ })).toHaveCount(
     0,
   );
@@ -370,10 +371,10 @@ test("別のタブの更新を古い状態で上書きしない", async ({ page,
     other.getByRole("button", { name: /^問題 125、/ }),
   ).toBeVisible();
   await page.getByRole("button", { name: /^問題 125、/ }).click();
-  await page.getByRole("button", { name: /^C 解説を少し確認/ }).click();
+  await recordGrade(page, "C");
   await expect(page.getByRole("dialog")).toHaveCount(0);
   await other.getByRole("button", { name: /^問題 128、/ }).click();
-  await other.getByRole("button", { name: /^A 自力完答/ }).click();
+  await recordGrade(other, "A", false);
   await expect(other.getByRole("alert")).toContainText("別のタブ");
   await expect(other.getByRole("dialog")).toBeVisible();
   const saved = await readState(page);
@@ -516,7 +517,7 @@ for (const viewport of [
       expect((await card.boundingBox())!.y).toBeCloseTo(original.y, 1);
       await page.touchscreen.tap(x, y);
       await expect(page.getByRole("dialog")).toBeVisible();
-      await page.getByRole("button", { name: /^C 解説を少し確認/ }).tap();
+      await recordGrade(page, "C");
       await expect(page.getByRole("dialog")).toHaveCount(0);
       expect((await readState(page)).attempts).toHaveLength(1);
     });
@@ -611,7 +612,7 @@ test("初回から2冊714問を表示し、Ⅱ＋B＋Cの接頭辞付き番号�
   await expect(
     page.getByText("掲載ページ：C1-150", { exact: true }),
   ).toBeVisible();
-  await page.getByRole("button", { name: /^C 解説を少し確認/ }).click();
+  await recordGrade(page, "C");
   await expect(page.getByRole("dialog")).toHaveCount(0);
   await page.reload();
   await expect(page.locator(".problem-card")).toHaveCount(410);

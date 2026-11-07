@@ -130,3 +130,17 @@ Cloudflare 本番環境への公開、実機の Safari / iOS / Android による
 - AppleのMaterials公式資料はネットワーク制限の403応答で本文を取得できず、最新版への準拠確認は行っていない。可読性、素材と操作の階層、控えめな反射を設計判断に用いた。実機Safariと本番Supabaseへの接続は未検証。認証/同期テストは既存のテスト用API応答を使用。
 
 [設定への移動と戻る操作](images/refined-settings-flow.gif) / [カード](images/refined-cards.png) / [メニュー](images/refined-menu.png) / [General](images/refined-general.png) / [Display](images/refined-display.png) / [Study](images/refined-learning.png) / [横画面メニュー](images/refined-menu-landscape.png) / [横画面設定](images/refined-settings-landscape.png)
+
+## Liquid Glassのカード・モーダルと5段階の評価スライダー
+
+- カードと評価モーダルの光学面、薄い境界、白黒のタイポグラフィを再調整。背景が透けすぎないようにし、スライダーのレールとつまみを独立したLiquidGlass材質面として重ねた。描画器は引き続き1つを共有。
+- 5つの評価ボタンを、左E→D→C→B→右Aの水平スライダーへ置き換えた。初期は左端でも未選択。ドラッグは指へ連続追従し、段階を越えると表示と振動要求が切り替わる。境界にはヒステリシスを設け、吸着時のちらつきを抑えた。
+- 12px以上ドラッグし、段階に近い位置・レール付近で離すと一度だけ保存。タップは選択のみで、記録ボタンからも確定できる。段階の間、pointercancel、フォーカス喪失では自動記録しない。キーボードは矢印・Home/Endで選び、Enter/Spaceで確定。保存失敗後の再試行と取り消しを維持。
+- 触覚はユーザー操作に応じたVibration APIの要求。MDN Browser Compatibility DataのNavigator/vibrateを確認し、Safariの非対応を確認。iOS Safariでは振動を実現できたとはしない。振動非対応でも表示・選択・記録は動作する。テストはAPI呼び出しを模擬し、実機の振動強度は未検証。
+- 指で5点を通過するタッチ操作、各点の振動要求、Aの一度だけの保存、Eの明示記録、境界やキャンセルでの非保存、API非対応、キーボード、動き停止、保存失敗後の再試行を追加ブラウザーテストで確認。
+- 320×568、390×844、844×390、932×430、740×360、1440×900でレール幅と横はみ出しを確認。モーダルの装飾canvasを専用のクリップ領域に収め、横スクロールを作らない構造に変更。
+- Apple公式資料の本文取得には引き続きネットワークの制限があり、最新版の文言を確認できたとはしていない。素材の階層、文字の可読性、操作対象の分かりやすさを設計に適用。実機Safariと本番Supabaseは未検証で、同期テストは既存の模擬APIを使用。
+
+- 型検査・本番ビルド・フォーマット検査、31件のロジック/SQLテストと49件のブラウザーテストが成功。保存完了前の再読み込みを避けるため、テストのスライダー操作ヘルパーも保存完了を待つよう更新した。
+
+[スライドしてAを記録](images/liquid-rating-demo.gif) / [カード](images/liquid-rating-cards.png) / [評価モーダル](images/liquid-rating-modal.png) / [Aの位置](images/liquid-rating-a.png) / [横画面](images/liquid-rating-landscape.png)

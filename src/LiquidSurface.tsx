@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import type { LiquidGlass as Engine, GlassConfig } from "@ybouane/liquidglass";
 
-type Kind = "card" | "tabs" | "dialog" | "button";
+type Kind = "card" | "tabs" | "dialog" | "button" | "rail" | "thumb";
 type Surface = {
   canvas: HTMLCanvasElement;
   host: HTMLElement;
@@ -133,6 +133,7 @@ function draw(s: Surface, width: number, height: number) {
   // text. Native form content is never rasterised or hidden by the library.
   if (s.kind === "dialog") {
     const r = s.host.getBoundingClientRect();
+    ctx.globalAlpha = 0.12;
     for (const other of surfaces) {
       if (
         other.kind !== "card" ||
@@ -150,6 +151,7 @@ function draw(s: Surface, width: number, height: number) {
       );
     }
   }
+  ctx.globalAlpha = 1;
   const config: GlassConfig = {
     ...defaults,
     floating: false,
@@ -157,17 +159,32 @@ function draw(s: Surface, width: number, height: number) {
     chromAberration: 0,
     tintStrength: 0,
     saturation: -1,
-    cornerRadius: s.kind === "card" ? 20 : s.kind === "button" ? 12 : 18,
-    zRadius: s.pressed ? 2 : s.kind === "dialog" ? 8 : 4,
-    blurAmount: s.kind === "dialog" ? 0.12 : 0,
-    refraction: 0.24,
-    fresnel: 0.24,
+    cornerRadius:
+      s.kind === "rail" || s.kind === "thumb"
+        ? Math.min(width, height) / 2
+        : s.kind === "card"
+          ? 26
+          : s.kind === "button"
+            ? 12
+            : 28,
+    zRadius: s.pressed
+      ? 4
+      : s.kind === "thumb"
+        ? 16
+        : s.kind === "dialog"
+          ? 18
+          : 9,
+    blurAmount: s.kind === "dialog" ? 0.35 : 0.02,
+    refraction: s.kind === "thumb" ? 0.58 : 0.4,
+    fresnel: 0.45,
     specular: s.hover ? 0.035 : 0.015,
-    edgeHighlight: 0.035,
-    shadowOpacity: s.pressed ? 0.045 : 0.075,
-    shadowSpread: s.pressed ? 4 : 8,
-    shadowOffsetY: s.pressed ? 1 : 4,
-    brightness: s.hover ? -0.035 : -0.055,
+    edgeHighlight: 0.065,
+    shadowOpacity: s.kind === "thumb" ? 0.2 : s.pressed ? 0.04 : 0.085,
+    shadowSpread: s.pressed ? 4 : 12,
+    shadowOffsetY: s.pressed ? 1 : 6,
+    // Keep the upstream framebuffer opaque; CSS composites the material layer.
+    opacity: 1,
+    brightness: s.hover ? 0.008 : -0.012,
   };
   renderer.uploadAndBlur(source, 0, 0, w, h, config.blurAmount);
   renderer.clear();
@@ -224,9 +241,13 @@ export function LiquidSurface({ kind = "card" }: { kind?: Kind }) {
         schedule(s);
       }
     };
-    host.addEventListener("pointerenter", over);
-    host.addEventListener("pointerleave", out);
-    host.addEventListener("pointerdown", down);
+    const inputHost =
+      kind === "thumb"
+        ? host.closest<HTMLElement>('[role="slider"]') || host
+        : host;
+    inputHost.addEventListener("pointerenter", over);
+    inputHost.addEventListener("pointerleave", out);
+    inputHost.addEventListener("pointerdown", down);
     window.addEventListener("pointerup", up);
     window.addEventListener("pointercancel", up);
     window.addEventListener("blur", out);
@@ -235,9 +256,9 @@ export function LiquidSurface({ kind = "card" }: { kind?: Kind }) {
       resize.disconnect();
       surfaces.delete(s);
       dirty.delete(s);
-      host.removeEventListener("pointerenter", over);
-      host.removeEventListener("pointerleave", out);
-      host.removeEventListener("pointerdown", down);
+      inputHost.removeEventListener("pointerenter", over);
+      inputHost.removeEventListener("pointerleave", out);
+      inputHost.removeEventListener("pointerdown", down);
       window.removeEventListener("pointerup", up);
       window.removeEventListener("pointercancel", up);
       window.removeEventListener("blur", out);

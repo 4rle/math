@@ -1,4 +1,5 @@
 import { LiquidSurface } from "./LiquidSurface";
+import { GradeSlider } from "./GradeSlider";
 import { useEffect, useState, type CSSProperties } from "react";
 import {
   X,
@@ -90,7 +91,6 @@ export default function App() {
     useStudyData();
   const [page, setPage] = useState<Page | null>(null),
     [selected, setSelected] = useState<Problem | null>(null);
-  const [pendingGrade, setPendingGrade] = useState<Grade | null>(null);
   const [error, setError] = useState("");
   const [toast, setToast] = useState<{ text: string; undoID?: string } | null>(
     null,
@@ -108,7 +108,6 @@ export default function App() {
   }, [toast]);
   useEffect(() => {
     setSelected(null);
-    setPendingGrade(null);
     setError("");
     setToast(null);
   }, [account.user?.id, remoteEpoch]);
@@ -125,7 +124,6 @@ export default function App() {
   async function grade(grade: Grade) {
     if (!selected || busy) return;
     setError("");
-    setPendingGrade(grade);
     const attempt = {
       id: uid(),
       problem_id: selected.id,
@@ -317,7 +315,6 @@ export default function App() {
                       });
                       setSelected(p);
                       setError("");
-                      setPendingGrade(null);
                     }}
                   >
                     <span className="card-top">
@@ -487,27 +484,12 @@ export default function App() {
               {selected.unit ? ` / ${selected.unit}` : ""}
             </span>
           </div>
-          <div className="grade-options" aria-label="理解度を記録">
-            {(
-              Object.entries(GRADES) as [Grade, readonly [string, string]][]
-            ).map(([key, [label, detail]]) => (
-              <button
-                key={key}
-                disabled={busy}
-                aria-pressed={pendingGrade === key}
-                className={`grade-option grade-${key} ${pendingGrade === key ? "pending-grade" : ""}`}
-                onClick={() => grade(key)}
-              >
-                <LiquidSurface kind="button" />
-                <span className="grade-letter">{key}</span>
-                <span>
-                  <strong>{label}</strong>
-                  <small>{detail}</small>
-                </span>
-                <Check className="grade-check" size={17} />
-              </button>
-            ))}
-          </div>
+          <GradeSlider
+            key={selected.id}
+            disabled={busy}
+            error={!!error}
+            onCommit={grade}
+          />
           <ErrorMessage message={error} />
           {toast && (
             <p className="panel-notice" role="status">
